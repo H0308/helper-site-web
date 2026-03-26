@@ -1,0 +1,504 @@
+<!doctype html><html lang=zh class=no-js> <head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link href=https://www.help-doc.top/Java/obj-oriented-and-inheritance/obj-oriented-and-inheritance/ rel=canonical><link href=../../obj-oriented-and-encapsulation/obj-oriented-and-encapsulation/ rel=prev><link href=../../obj-oriented-and-interface/obj-oriented-and-interface/ rel=next><link rel=icon href=../../../images/favicon.png><meta name=generator content="mkdocs-1.6.1, mkdocs-material-9.7.0"><title>Java面向对象与继承 - 柯懒的知识库</title><link rel=stylesheet href=../../../assets/stylesheets/main.618322db.min.css><link rel=stylesheet href=../../../assets/stylesheets/palette.ab4e12ef.min.css><link rel=stylesheet href=../../../css/timeline.css><script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script><script>
+    (function () {
+        var root = document.documentElement;
+        var storageKey = "kl-force-dark-theme";
+        var systemQuery = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+        var storedMode = "system";
+        var shouldEnableForceDark = false;
+
+        try {
+            storedMode = localStorage.getItem(storageKey) || "system";
+        } catch (error) {
+            storedMode = "system";
+        }
+
+        if (["system", "dark", "light"].indexOf(storedMode) === -1) {
+            storedMode = "system";
+        }
+
+        shouldEnableForceDark = storedMode === "dark"
+            || (storedMode === "system" && systemQuery && systemQuery.matches);
+
+        root.setAttribute("data-force-dark-mode", storedMode);
+        root.setAttribute("data-force-dark-theme", shouldEnableForceDark ? "pending" : "off");
+        root.setAttribute("data-force-dark-transition-lock", shouldEnableForceDark ? "on" : "off");
+    })();
+</script><style>
+    html[data-force-dark-theme="pending"] {
+        background: #0f1115;
+        color-scheme: dark;
+    }
+
+    html[data-force-dark-theme="pending"] body {
+        visibility: hidden;
+    }
+
+    html[data-force-dark-transition-lock="on"] *,
+    html[data-force-dark-transition-lock="on"] *::before,
+    html[data-force-dark-transition-lock="on"] *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+</style><link rel=preload href=../../../stylesheets/docsearch.min.css as=style><link rel=preload href=../../../stylesheets/colors.min.css as=style><link rel=preload href=../../../stylesheets/theme2.min.css as=style><link rel=preload href=https://help-site.oss-cn-hangzhou.aliyuncs.com/images/author/avatar.jpg as=image><link rel=preload href=https://help-site.oss-cn-hangzhou.aliyuncs.com/css/katex.min.css as=style><link rel=dns-prefetch href=//unpkg.com><link rel=dns-prefetch href=//cloud.umami.is><link rel=stylesheet href=../../../stylesheets/colors.min.css><link rel=stylesheet href=../../../stylesheets/theme2.min.css media="screen and (max-width: 1199px)"><link rel=stylesheet href=../../../stylesheets/theme1.min.css media="screen and (min-width: 1200px)"><link rel=stylesheet href=../../../stylesheets/theme2.min.css media="screen and (min-width: 1200px)"><link rel=stylesheet href=../../../stylesheets/print.min.css><link rel=stylesheet href=../../../stylesheets/link-preview.min.css><link rel=stylesheet href=https://help-site.oss-cn-hangzhou.aliyuncs.com/css/katex.min.css><link rel=stylesheet href=https://help-site.oss-cn-hangzhou.aliyuncs.com/css/docsearch3.css><link rel=stylesheet href=../../../stylesheets/docsearch.min.css><script src=https://help-site.oss-cn-hangzhou.aliyuncs.com/js/darkreader.min.js data-darkreader-runtime=true></script><script defer src=https://cloud.umami.is/script.js data-website-id=02f9b8b7-93d4-4026-bdd8-221f2fcea2cf></script> <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../../assets/javascripts/glightbox.min.js"></script></head> <body dir=ltr data-md-color-scheme=default data-md-color-primary=white data-md-color-accent=cyan> <input class=md-toggle data-md-toggle=drawer type=checkbox id=__drawer autocomplete=off> <input class=md-toggle data-md-toggle=search type=checkbox id=__search autocomplete=off> <label class=md-overlay for=__drawer></label> <div data-md-component=skip> <a href=#java class=md-skip> 跳转至 </a> </div> <div data-md-component=announce> </div> <header class=md-header data-md-component=header> <nav class="md-header__inner md-grid" aria-label=页眉> <a href=../../.. title=柯懒的知识库 class="md-header__button md-logo" aria-label=柯懒的知识库 data-md-component=logo> <img src=../../../assets/logo.png alt=logo> </a> <label class="md-header__button md-icon" for=__drawer> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg> </label> <div class=md-header__title data-md-component=header-title> <div class=md-header__ellipsis> <div class=md-header__topic> <span class=md-ellipsis> 柯懒的知识库 </span> </div> <div class=md-header__topic data-md-component=header-topic> <span class=md-ellipsis> Java面向对象与继承 </span> </div> </div> </div> <div class=header-avatar> <img src=https://help-site.oss-cn-hangzhou.aliyuncs.com/images/author/avatar.jpg alt=头像> <div class=avatar-dropdown> <p><strong>柯懒不是柯南</strong></p> <a href=../../../author/contact/contact/ class=avatar-dropdown-item>联系作者</a> <div class=avatar-dropdown-divider></div> <a href=../../../author/about/about/ class=avatar-dropdown-item>关于作者</a> <div class=avatar-dropdown-divider></div> <a href=https://github.com/H0308 class=avatar-dropdown-item>Github仓库</a> </div> </div> <button class="md-header__button md-icon theme-force-toggle" type=button data-theme-force-toggle data-force-dark-state=off data-force-dark-mode=system aria-label=当前为跟随系统，点击切换为深色 aria-pressed=false title=当前为跟随系统，点击切换为深色> <span class="theme-force-toggle__icon theme-force-toggle__icon--system" aria-hidden=true> <svg viewbox="0 0 24 24" focusable=false> <path fill=currentColor d="M4.75 4A2.75 2.75 0 0 0 2 6.75v8.5A2.75 2.75 0 0 0 4.75 18H10v1.5H8.75a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5H14V18h5.25A2.75 2.75 0 0 0 22 15.25v-8.5A2.75 2.75 0 0 0 19.25 4Zm-1.25 2.75c0-.69.56-1.25 1.25-1.25h14.5c.69 0 1.25.56 1.25 1.25v8.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25Z"/> </svg> </span> <span class="theme-force-toggle__icon theme-force-toggle__icon--moon" aria-hidden=true> <svg viewbox="0 0 24 24" focusable=false> <path fill=currentColor d="M20.742 13.045a8.088 8.088 0 0 1-9.787-9.787A.75.75 0 0 0 9.88 2.43 10.5 10.5 0 1 0 21.57 14.12a.75.75 0 0 0-.828-1.075Z"/> </svg> </span> <span class="theme-force-toggle__icon theme-force-toggle__icon--sun" aria-hidden=true> <svg viewbox="0 0 24 24" focusable=false> <path fill=currentColor d="M12 6.25A5.75 5.75 0 1 0 17.75 12 5.757 5.757 0 0 0 12 6.25Zm0 10A4.25 4.25 0 1 1 16.25 12 4.255 4.255 0 0 1 12 16.25ZM12 1.5a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 12 1.5Zm0 18.75a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0V21a.75.75 0 0 1 .75-.75ZM22.5 12a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1 0-1.5h1.5a.75.75 0 0 1 .75.75ZM3.75 12a.75.75 0 0 1-.75.75H1.5a.75.75 0 0 1 0-1.5H3a.75.75 0 0 1 .75.75Zm15.46-6.71a.75.75 0 0 1 1.06 1.06l-1.06 1.06a.75.75 0 0 1-1.06-1.06Zm-13.36 13.36a.75.75 0 0 1 1.06 1.06l-1.06 1.06a.75.75 0 1 1-1.06-1.06Zm14.42 2.12a.75.75 0 0 1-1.06 0l-1.06-1.06a.75.75 0 1 1 1.06-1.06l1.06 1.06a.75.75 0 0 1 0 1.06ZM6.91 7.41a.75.75 0 0 1-1.06 0L4.79 6.35a.75.75 0 1 1 1.06-1.06l1.06 1.06a.75.75 0 0 1 0 1.06Z"/> </svg> </span> <span class=theme-force-toggle__sr>切换主题</span> </button> <div id=docsearch></div> </nav> </header> <!-- <div class="back-to-top-btn" id="backToTopBtn"  onclick="window.scrollTo({top: 0})">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" fill="currentColor"/>
+    </svg>
+</div> --> <div class=md-container data-md-component=container> <nav class=md-tabs aria-label=标签 data-md-component=tabs> <div class=md-grid> <ul class=md-tabs__list> <li class=md-tabs__item> <a href=../../.. class=md-tabs__link> 主页 </a> </li> <li class=md-tabs__item> <a href=../../../timeline/timeline/ class=md-tabs__link> 网站时间线 </a> </li> <li class="md-tabs__item md-tabs__item--active"> <a href=../../../languages/ class=md-tabs__link> 编程语言 </a> </li> <li class=md-tabs__item> <a href=../../../data-structure-algo/ class=md-tabs__link> 数据结构与算法 </a> </li> <li class=md-tabs__item> <a href=../../../Linux/ class=md-tabs__link> Linux </a> </li> <li class=md-tabs__item> <a href=../../../front-end/ class=md-tabs__link> 前端 </a> </li> <li class=md-tabs__item> <a href=../../../basic-service-component/ class=md-tabs__link> 基础服务组件 </a> </li> <li class=md-tabs__item> <a href=../../../JavaEE/ class=md-tabs__link> JavaEE应用开发 </a> </li> <li class=md-tabs__item> <a href=../../../software-test/ class=md-tabs__link> 软件测试 </a> </li> <li class=md-tabs__item> <a href=../../../docker/ class=md-tabs__link> 容器化 </a> </li> <li class=md-tabs__item> <a href=../../../other/ class=md-tabs__link> 扩展知识 </a> </li> <li class=md-tabs__item> <a href=../../../tooltips/ class=md-tabs__link> 工具帮助 </a> </li> <li class=md-tabs__item> <a href=../../../test-encrypt/test-encrypt/ class=md-tabs__link> 测试加密功能 </a> </li> <li class=md-tabs__item> <a href=../../../projects/ class=md-tabs__link> 项目 </a> </li> </ul> </div> </nav> <main class=md-main data-md-component=main> <div class="md-main__inner md-grid"> <div class="md-sidebar md-sidebar--primary" data-md-component=sidebar data-md-type=navigation> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--primary md-nav--lifted" aria-label=导航栏 data-md-level=0> <label class=md-nav__title for=__drawer> <a href=../../.. title=柯懒的知识库 class="md-nav__button md-logo" aria-label=柯懒的知识库 data-md-component=logo> <img src=../../../assets/logo.png alt=logo> </a> 柯懒的知识库 </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../.. class=md-nav__link> <span class=md-ellipsis> 主页 </span> </a> </li> <li class=md-nav__item> <a href=../../../timeline/timeline/ class=md-nav__link> <span class=md-ellipsis> 网站时间线 </span> </a> </li> <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested"> <input class="md-nav__toggle md-toggle " type=checkbox id=__nav_3 checked> <div class="md-nav__link md-nav__container"> <a href=../../../languages/ class="md-nav__link "> <span class=md-ellipsis> 编程语言 </span> </a> <label class="md-nav__link " for=__nav_3 id=__nav_3_label tabindex> <span class="md-nav__icon md-icon"></span> </label> </div> <nav class=md-nav data-md-level=1 aria-labelledby=__nav_3_label aria-expanded=true> <label class=md-nav__title for=__nav_3> <span class="md-nav__icon md-icon"></span> 编程语言 </label> <ul class=md-nav__list data-md-scrollfix> <li class="md-nav__item md-nav__item--section md-nav__item--nested"> <input class="md-nav__toggle md-toggle " type=checkbox id=__nav_3_2> <div class="md-nav__link md-nav__container"> <a href=../../../c-lang/ class="md-nav__link "> <span class=md-ellipsis> C语言 </span> </a> <label class="md-nav__link " for=__nav_3_2 id=__nav_3_2_label tabindex> <span class="md-nav__icon md-icon"></span> </label> </div> <nav class=md-nav data-md-level=2 aria-labelledby=__nav_3_2_label aria-expanded=false> <label class=md-nav__title for=__nav_3_2> <span class="md-nav__icon md-icon"></span> C语言 </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../c-lang/c-base/c-base/ class=md-nav__link> <span class=md-ellipsis> C语言基础知识 </span> </a> </li> <li class=md-nav__item> <a href=../../../c-lang/num-in-memory/num-in-memory/ class=md-nav__link> <span class=md-ellipsis> 进制转换与类型在内存的存储方式 </span> </a> </li> <li class=md-nav__item> <a href=../../../c-lang/var-type/var-type/ class=md-nav__link> <span class=md-ellipsis> C语言数据类型与变量 </span> </a> </li> <li class=md-nav__item> <a href=../../../c-lang/op/op/ class=md-nav__link> <span class=md-ellipsis> C语言操作符 </span> </a> </li> <li class=md-nav__item> <a href=../../../c-lang/scanf-printf/scanf-printf/ class=md-nav__link> <span class=md-ellipsis> C语言的标准输入函数scanf及标准输出函数printf </span> </a> </li> <li class=md-nav__item> <a href=../../../c-lang/branch-line/branch-line/ class=md-nav__link> <span class=md-ellipsis> C语言中的分支语句 </span> </a> </li> <li class=md-nav__item> <a href=../../../c-lang/cycle-line/cycle-line/ class=md-nav__link> <span class=md-ellipsis> C语言中的循环语句 </span> </a> </li> <li class=md-nav__item> <a href=../../../c-lang/func/func/ class=md-nav__link> <span class=md-ellipsis> C语言函数 </span> </a> </li> <li class=md-nav__item> <a href=../../../c-lang/ptr/ptr/ class=md-nav__link> <span class=md-ellipsis> C语言指针 </span> </a> </li> <li class=md-nav__item> <a href=../../../c-lang/char-str-func/char-str-func/ class=md-nav__link> <span class=md-ellipsis> C语言字符函数、字符串函数与内存函数 </span> </a> </li> <li class=md-nav__item> <a href=../../../c-lang/dynamic-memory/dynamic-memory/ class=md-nav__link> <span class=md-ellipsis> C语言动态内存管理 </span> </a> </li> <li class=md-nav__item> <a href=../../../c-lang/fileop/fileop/ class=md-nav__link> <span class=md-ellipsis> C语言文件操作 </span> </a> </li> <li class=md-nav__item> <a href=../../../c-lang/compile-link/compile-link/ class=md-nav__link> <span class=md-ellipsis> C语言编译与链接（基础） </span> </a> </li> <li class=md-nav__item> <a href=../../../c-lang/preprocess/preprocess/ class=md-nav__link> <span class=md-ellipsis> C语言预处理（部分） </span> </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--section md-nav__item--nested"> <input class="md-nav__toggle md-toggle " type=checkbox id=__nav_3_3> <div class="md-nav__link md-nav__container"> <a href=../../../cpp/ class="md-nav__link "> <span class=md-ellipsis> C++ </span> </a> <label class="md-nav__link " for=__nav_3_3 id=__nav_3_3_label tabindex> <span class="md-nav__icon md-icon"></span> </label> </div> <nav class=md-nav data-md-level=2 aria-labelledby=__nav_3_3_label aria-expanded=false> <label class=md-nav__title for=__nav_3_3> <span class="md-nav__icon md-icon"></span> C++ </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../cpp/c-to-cpp/c-to-cpp/ class=md-nav__link> <span class=md-ellipsis> C语言过渡C++基础知识 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/class-obj/class-obj/ class=md-nav__link> <span class=md-ellipsis> C++类和对象 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/member-func/member-func/ class=md-nav__link> <span class=md-ellipsis> C++默认成员函数 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/class-obj-other/class-obj-other/ class=md-nav__link> <span class=md-ellipsis> C++类和对象相关内容 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/memory/memory/ class=md-nav__link> <span class=md-ellipsis> C++内存管理 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/template/template/ class=md-nav__link> <span class=md-ellipsis> C++模版 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/stl-intro-string/stl-intro-string/ class=md-nav__link> <span class=md-ellipsis> C++STL简介与string类 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/sim-string/sim-string/ class=md-nav__link> <span class=md-ellipsis> string类模拟实现 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/vector/vector/ class=md-nav__link> <span class=md-ellipsis> vector类 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/sim-vector/sim-vector/ class=md-nav__link> <span class=md-ellipsis> vector类模拟实现 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/list/list/ class=md-nav__link> <span class=md-ellipsis> list类 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/sim-list/sim-list/ class=md-nav__link> <span class=md-ellipsis> list类模拟实现 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/stack/stack/ class=md-nav__link> <span class=md-ellipsis> stack类 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/queue-priority-queue/queue-priority-queue/ class=md-nav__link> <span class=md-ellipsis> queue与priority_queue类 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/sim-stack-queue/sim-stack-queue/ class=md-nav__link> <span class=md-ellipsis> stack和queue模拟实现 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/sim-priority-queue/sim-priority-queue/ class=md-nav__link> <span class=md-ellipsis> priority_queue模拟实现 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/reverse-iterator/reverse-iterator/ class=md-nav__link> <span class=md-ellipsis> 反向迭代器设计 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/extend/extend/ class=md-nav__link> <span class=md-ellipsis> C++继承 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/polymorphic/polymorphic/ class=md-nav__link> <span class=md-ellipsis> C++多态 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/set/set/ class=md-nav__link> <span class=md-ellipsis> set类 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/map/map/ class=md-nav__link> <span class=md-ellipsis> map类 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/sim-map-set/sim-map-set/ class=md-nav__link> <span class=md-ellipsis> map和set类模拟实现 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/sim-unordered-map-set/sim-unordered-map-set/ class=md-nav__link> <span class=md-ellipsis> unordered_map和unordered_set类模拟实现 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/bitset/bitset/ class=md-nav__link> <span class=md-ellipsis> bitset类 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/initializer-list/initializer-list/ class=md-nav__link> <span class=md-ellipsis> initializer_list类 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/new-in-cpp11/new-in-cpp11/ class=md-nav__link> <span class=md-ellipsis> C++ 11相关新特性 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/exception/exception/ class=md-nav__link> <span class=md-ellipsis> C++异常 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/smart-ptr/smart-ptr/ class=md-nav__link> <span class=md-ellipsis> C++智能指针 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/special-class-design/special-class-design/ class=md-nav__link> <span class=md-ellipsis> 特殊类设计 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/type-cast/type-cast/ class=md-nav__link> <span class=md-ellipsis> C++中的类型转换 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/cppio/cppio/ class=md-nav__link> <span class=md-ellipsis> C++ IO流 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/new-in-cpp17/new-in-cpp17/ class=md-nav__link> <span class=md-ellipsis> C++ 17相关新特性 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/time-rand/time-rand/ class=md-nav__link> <span class=md-ellipsis> C++时间和随机数相关库 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/multi-thread/multi-thread/ class=md-nav__link> <span class=md-ellipsis> C++并发支持库 </span> </a> </li> <li class=md-nav__item> <a href=../../../cpp/format/format/ class=md-nav__link> <span class=md-ellipsis> C++中的格式化字符串 </span> </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested"> <input class="md-nav__toggle md-toggle " type=checkbox id=__nav_3_4 checked> <div class="md-nav__link md-nav__container"> <a href=../../ class="md-nav__link "> <span class=md-ellipsis> Java </span> </a> <label class="md-nav__link " for=__nav_3_4 id=__nav_3_4_label tabindex> <span class="md-nav__icon md-icon"></span> </label> </div> <nav class=md-nav data-md-level=2 aria-labelledby=__nav_3_4_label aria-expanded=true> <label class=md-nav__title for=__nav_3_4> <span class="md-nav__icon md-icon"></span> Java </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../java-basic/java-basic/ class=md-nav__link> <span class=md-ellipsis> Java基础知识 </span> </a> </li> <li class=md-nav__item> <a href=../../java-array/java-array/ class=md-nav__link> <span class=md-ellipsis> Java数组类型 </span> </a> </li> <li class=md-nav__item> <a href=../../obj-oriented-and-method/obj-oriented-and-method/ class=md-nav__link> <span class=md-ellipsis> Java面向对象与方法 </span> </a> </li> <li class=md-nav__item> <a href=../../obj-oriented-and-encapsulation/obj-oriented-and-encapsulation/ class=md-nav__link> <span class=md-ellipsis> Java面向对象与封装 </span> </a> </li> <li class="md-nav__item md-nav__item--active"> <input class="md-nav__toggle md-toggle" type=checkbox id=__toc> <label class="md-nav__link md-nav__link--active" for=__toc> <span class=md-ellipsis> Java面向对象与继承 </span> <span class="md-nav__icon md-icon"></span> </label> <a href=./ class="md-nav__link md-nav__link--active"> <span class=md-ellipsis> Java面向对象与继承 </span> </a> <nav class="md-nav md-nav--secondary" aria-label=本节目录> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> 本节目录 </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#_1 class=md-nav__link> <span class=md-ellipsis> 实现继承 </span> </a> </li> <li class=md-nav__item> <a href=#_2 class=md-nav__link> <span class=md-ellipsis> 方法重写 </span> </a> </li> <li class=md-nav__item> <a href=#_3 class=md-nav__link> <span class=md-ellipsis> 继承中成员变量和成员方法访问的特点 </span> </a> <nav class=md-nav aria-label=继承中成员变量和成员方法访问的特点> <ul class=md-nav__list> <li class=md-nav__item> <a href=#_4 class=md-nav__link> <span class=md-ellipsis> 访问成员变量 </span> </a> </li> <li class=md-nav__item> <a href=#_5 class=md-nav__link> <span class=md-ellipsis> 访问成员方法 </span> </a> </li> <li class=md-nav__item> <a href=#_6 class=md-nav__link> <span class=md-ellipsis> 访问特点总结 </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#superthis class=md-nav__link> <span class=md-ellipsis> super和this关键字 </span> </a> <nav class=md-nav aria-label=super和this关键字> <ul class=md-nav__list> <li class=md-nav__item> <a href=#super class=md-nav__link> <span class=md-ellipsis> super关键字 </span> </a> </li> <li class=md-nav__item> <a href=#this class=md-nav__link> <span class=md-ellipsis> this关键字 </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#java_1 class=md-nav__link> <span class=md-ellipsis> Java继承的特点 </span> </a> </li> <li class=md-nav__item> <a href=#_7 class=md-nav__link> <span class=md-ellipsis> 为父类成员赋值 </span> </a> </li> <li class=md-nav__item> <a href=#_8 class=md-nav__link> <span class=md-ellipsis> 继承案例 </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=../../obj-oriented-and-interface/obj-oriented-and-interface/ class=md-nav__link> <span class=md-ellipsis> Java面向对象与接口 </span> </a> </li> <li class=md-nav__item> <a href=../../obj-oriented-and-polymorphic/obj-oriented-and-polymorphic/ class=md-nav__link> <span class=md-ellipsis> Java面向对象与多态 </span> </a> </li> <li class=md-nav__item> <a href=../../permission-modifier-final-internal-class/permission-modifier-final-internal-class/ class=md-nav__link> <span class=md-ellipsis> Java面向对象与权限修饰符、final、代码块及内部类 </span> </a> </li> <li class=md-nav__item> <a href=../../obj-oriented-and-exception/obj-oriented-and-exception/ class=md-nav__link> <span class=md-ellipsis> Java异常类 </span> </a> </li> <li class=md-nav__item> <a href=../../object-class-method-interface/object-class-method-interface/ class=md-nav__link> <span class=md-ellipsis> Java中的Object类和常用方法、经典接口 </span> </a> </li> <li class=md-nav__item> <a href=../../string-stringbuilder/string-stringbuilder/ class=md-nav__link> <span class=md-ellipsis> Java.lang中的String类和StringBuilder类介绍和常用方法 </span> </a> </li> <li class=md-nav__item> <a href=../../common-class-packed-class/common-class-packed-class/ class=md-nav__link> <span class=md-ellipsis> Java中的常用类及包装类 </span> </a> </li> <li class=md-nav__item> <a href=../../generic/generic/ class=md-nav__link> <span class=md-ellipsis> Java中的泛型 </span> </a> </li> <li class=md-nav__item> <a href=../../collection/collection/ class=md-nav__link> <span class=md-ellipsis> Java单列集合 </span> </a> </li> <li class=md-nav__item> <a href=../../map/map/ class=md-nav__link> <span class=md-ellipsis> Java双列集合 </span> </a> </li> <li class=md-nav__item> <a href=../../bitset/bitset/ class=md-nav__link> <span class=md-ellipsis> Java中的BitSet类 </span> </a> </li> <li class=md-nav__item> <a href=../../string-constant-pool/string-constant-pool/ class=md-nav__link> <span class=md-ellipsis> 了解Java字符串常量池 </span> </a> </li> <li class=md-nav__item> <a href=../../multi-thread/multi-thread/ class=md-nav__link> <span class=md-ellipsis> Java多线程基础 </span> </a> </li> <li class=md-nav__item> <a href=../../javaio/javaio/ class=md-nav__link> <span class=md-ellipsis> Java的IO流 </span> </a> </li> <li class=md-nav__item> <a href=../../net-reg-design-lombok/net-reg-design-lombok/ class=md-nav__link> <span class=md-ellipsis> Java网络编程、正则表达式、设计模式与Lombok </span> </a> </li> <li class=md-nav__item> <a href=../../new-jdk8-and-after/new-jdk8-and-after/ class=md-nav__link> <span class=md-ellipsis> Java中的JDK8及后续的重要新特性 </span> </a> </li> <li class=md-nav__item> <a href=../../junit-reflect-annotation-enum/junit-reflect-annotation-enum/ class=md-nav__link> <span class=md-ellipsis> Java中的Junit、类加载时机与机制、反射、注解及枚举 </span> </a> </li> <li class=md-nav__item> <a href=../../json-in-java/json-in-java/ class=md-nav__link> <span class=md-ellipsis> （补充）JSON在后端的应用 </span> </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--section md-nav__item--nested"> <input class="md-nav__toggle md-toggle " type=checkbox id=__nav_3_5> <div class="md-nav__link md-nav__container"> <a href=../../../python/ class="md-nav__link "> <span class=md-ellipsis> Python </span> </a> <label class="md-nav__link " for=__nav_3_5 id=__nav_3_5_label tabindex> <span class="md-nav__icon md-icon"></span> </label> </div> <nav class=md-nav data-md-level=2 aria-labelledby=__nav_3_5_label aria-expanded=false> <label class=md-nav__title for=__nav_3_5> <span class="md-nav__icon md-icon"></span> Python </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../python/python-basic/python-basic/ class=md-nav__link> <span class=md-ellipsis> Python基础知识 </span> </a> </li> <li class=md-nav__item> <a href=../../../python/composite-data-type/composite-data-type/ class=md-nav__link> <span class=md-ellipsis> Python组合数据类型 </span> </a> </li> <li class=md-nav__item> <a href=../../../python/exception/exception/ class=md-nav__link> <span class=md-ellipsis> Python异常处理 </span> </a> </li> <li class=md-nav__item> <a href=../../../python/func/func/ class=md-nav__link> <span class=md-ellipsis> Python函数 </span> </a> </li> <li class=md-nav__item> <a href=../../../python/module/module/ class=md-nav__link> <span class=md-ellipsis> Python模块 </span> </a> </li> <li class=md-nav__item> <a href=../../../python/output-format-fileop/output-format-fileop/ class=md-nav__link> <span class=md-ellipsis> Python输出与文件操作 </span> </a> </li> <li class=md-nav__item> <a href=../../../python/class-obj-basic/class-obj-basic/ class=md-nav__link> <span class=md-ellipsis> Python类和对象基础 </span> </a> </li> <li class=md-nav__item> <a href=../../../python/class-obj-advanced/class-obj-advanced/ class=md-nav__link> <span class=md-ellipsis> Python类和对象进阶 </span> </a> </li> </ul> </nav> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--pruned md-nav__item--nested"> <a href=../../../data-structure-algo/ class=md-nav__link> <span class=md-ellipsis> 数据结构与算法 </span> <span class="md-nav__icon md-icon"></span> </a> </li> <li class="md-nav__item md-nav__item--pruned md-nav__item--nested"> <a href=../../../Linux/ class=md-nav__link> <span class=md-ellipsis> Linux </span> <span class="md-nav__icon md-icon"></span> </a> </li> <li class="md-nav__item md-nav__item--pruned md-nav__item--nested"> <a href=../../../front-end/ class=md-nav__link> <span class=md-ellipsis> 前端 </span> <span class="md-nav__icon md-icon"></span> </a> </li> <li class="md-nav__item md-nav__item--pruned md-nav__item--nested"> <a href=../../../basic-service-component/ class=md-nav__link> <span class=md-ellipsis> 基础服务组件 </span> <span class="md-nav__icon md-icon"></span> </a> </li> <li class="md-nav__item md-nav__item--pruned md-nav__item--nested"> <a href=../../../JavaEE/ class=md-nav__link> <span class=md-ellipsis> JavaEE应用开发 </span> <span class="md-nav__icon md-icon"></span> </a> </li> <li class="md-nav__item md-nav__item--pruned md-nav__item--nested"> <a href=../../../software-test/ class=md-nav__link> <span class=md-ellipsis> 软件测试 </span> <span class="md-nav__icon md-icon"></span> </a> </li> <li class="md-nav__item md-nav__item--pruned md-nav__item--nested"> <a href=../../../docker/ class=md-nav__link> <span class=md-ellipsis> 容器化 </span> <span class="md-nav__icon md-icon"></span> </a> </li> <li class="md-nav__item md-nav__item--pruned md-nav__item--nested"> <a href=../../../other/ class=md-nav__link> <span class=md-ellipsis> 扩展知识 </span> <span class="md-nav__icon md-icon"></span> </a> </li> <li class="md-nav__item md-nav__item--pruned md-nav__item--nested"> <a href=../../../tooltips/ class=md-nav__link> <span class=md-ellipsis> 工具帮助 </span> <span class="md-nav__icon md-icon"></span> </a> </li> <li class="md-nav__item md-nav__item--pruned md-nav__item--nested"> <a href=../../../test-encrypt/test-encrypt/ class=md-nav__link> <span class=md-ellipsis> 测试加密功能 </span> <span class="md-nav__icon md-icon"></span> </a> </li> <li class="md-nav__item md-nav__item--pruned md-nav__item--nested"> <a href=../../../projects/ class=md-nav__link> <span class=md-ellipsis> 项目 </span> <span class="md-nav__icon md-icon"></span> </a> </li> </ul> </nav> </div> </div> </div> <div class="md-sidebar md-sidebar--secondary" data-md-component=sidebar data-md-type=toc> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--secondary" aria-label=本节目录> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> 本节目录 </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#_1 class=md-nav__link> <span class=md-ellipsis> 实现继承 </span> </a> </li> <li class=md-nav__item> <a href=#_2 class=md-nav__link> <span class=md-ellipsis> 方法重写 </span> </a> </li> <li class=md-nav__item> <a href=#_3 class=md-nav__link> <span class=md-ellipsis> 继承中成员变量和成员方法访问的特点 </span> </a> <nav class=md-nav aria-label=继承中成员变量和成员方法访问的特点> <ul class=md-nav__list> <li class=md-nav__item> <a href=#_4 class=md-nav__link> <span class=md-ellipsis> 访问成员变量 </span> </a> </li> <li class=md-nav__item> <a href=#_5 class=md-nav__link> <span class=md-ellipsis> 访问成员方法 </span> </a> </li> <li class=md-nav__item> <a href=#_6 class=md-nav__link> <span class=md-ellipsis> 访问特点总结 </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#superthis class=md-nav__link> <span class=md-ellipsis> super和this关键字 </span> </a> <nav class=md-nav aria-label=super和this关键字> <ul class=md-nav__list> <li class=md-nav__item> <a href=#super class=md-nav__link> <span class=md-ellipsis> super关键字 </span> </a> </li> <li class=md-nav__item> <a href=#this class=md-nav__link> <span class=md-ellipsis> this关键字 </span> </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#java_1 class=md-nav__link> <span class=md-ellipsis> Java继承的特点 </span> </a> </li> <li class=md-nav__item> <a href=#_7 class=md-nav__link> <span class=md-ellipsis> 为父类成员赋值 </span> </a> </li> <li class=md-nav__item> <a href=#_8 class=md-nav__link> <span class=md-ellipsis> 继承案例 </span> </a> </li> </ul> </nav> </div> </div> </div> <div class=md-content data-md-component=content> <article class="md-content__inner md-typeset"> <script defer src=/javascripts/waline.min.js></script> <p><link rel=stylesheet href=https://help-site.oss-cn-hangzhou.aliyuncs.com/css/waline.css> <link rel=stylesheet href=/stylesheets/waline.min.css></p> <h1 id=java>Java面向对象与继承<a class=headerlink href=#java title="Permanent link">&para;</a></h1> <div style="margin-top: -30px; font-size: 0.75em; opacity: 0.7;"> <p><span class=twemoji><svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10h-2a8 8 0 0 1-8 8 8 8 0 0 1-8-8 8 8 0 0 1 8-8zm6.78 1a.7.7 0 0 0-.48.2l-1.22 1.21 2.5 2.5L20.8 5.7c.26-.26.26-.7 0-.95L19.25 3.2c-.13-.13-.3-.2-.47-.2m-2.41 2.12L9 12.5V15h2.5l7.37-7.38z"/></svg></span> 约 2053 个字 <span class=twemoji><svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 576 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M360.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6m64.6 136.1c-12.5 12.5-12.5 32.8 0 45.3l73.4 73.4-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l96-96c12.5-12.5 12.5-32.8 0-45.3l-96-96c-12.5-12.5-32.8-12.5-45.3 0zm-274.7 0c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-12.5 12.5-12.5 32.8 0 45.3l96 96c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l73.3-73.4c12.5-12.5 12.5-32.8 0-45.3z"/></svg></span> 232 行代码 <span class=twemoji><svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M12 20c4.42 0 8-3.58 8-8s-3.58-8-8-8-8 3.58-8 8 3.58 8 8 8m0-18c5.5 0 10 4.5 10 10s-4.5 10-10 10C6.47 22 2 17.5 2 12S6.5 2 12 2m.5 11H11V7h1.5v4.26l3.7-2.13.75 1.3z"/></svg></span> 预计阅读时间 10 分钟</p> </div> <h2 id=_1>实现继承<a class=headerlink href=#_1 title="Permanent link">&para;</a></h2> <p>在Java中，使用<code>extends</code>关键字进行继承，基本格式如下：</p> <div class="language-java highlight"><table class=highlighttable><tr><th colspan=2 class=filename><span class=filename>Java</span></th></tr><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span></pre></div></td><td class=code><div><pre><span></span><code><span id=__span-0-1><span class=kd>class</span> <span class=nc>子类</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>父类</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-0-2>
+</span><span id=__span-0-3><span class=p>}</span>
+</span></code></pre></div></td></tr></table></div> <p>例如下面的代码：</p> <div class="language-java highlight"><table class=highlighttable><tr><th colspan=2 class=filename><span class=filename>Java</span></th></tr><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span>
+<span class=normal>7</span></pre></div></td><td class=code><div><pre><span></span><code><span id=__span-1-1><span class=c1>// 父类</span>
+</span><span id=__span-1-2><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>Base</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-1-3><span class=p>}</span>
+</span><span id=__span-1-4>
+</span><span id=__span-1-5><span class=c1>// 子类</span>
+</span><span id=__span-1-6><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>Derived</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>Base</span><span class=p>{</span>
+</span><span id=__span-1-7><span class=p>}</span>
+</span></code></pre></div></td></tr></table></div> <p>在上面的代码中<code>Base</code>类为父类，<code>Derived</code>类为子类</p> <p>当子类继承父类时，子类会拥有父类所有的成员，包括私有和公有的成员，但是子类只能使用父类公有的成员，例如下面的代码：</p> <div class="language-java highlight"><table class=highlighttable><tr><th colspan=2 class=filename><span class=filename>Java</span></th></tr><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code><span id=__span-2-1><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>Base</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-2-2><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>str</span><span class=p>;</span>
+</span><span id=__span-2-3><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kt>int</span><span class=w> </span><span class=n>num</span><span class=p>;</span>
+</span><span id=__span-2-4><span class=p>}</span>
+</span></code></pre></div></td></tr></table></div> <p>此时子类继承<code>Base</code>类时，会拥有成员变量<code>str</code>和<code>num</code>，但是子类只能使用<code>str</code></p> <h2 id=_2>方法重写<a class=headerlink href=#_2 title="Permanent link">&para;</a></h2> <p>不同于方法重载，方法重写需要满足函数名相同、返回值（或是被继承类的所有子类（也称为<a href=https://www.help-doc.top/cpp/polymorphic/polymorphic/#_2>协变</a>））和形参列表相同，并且方法重写的前提是继承，如果子类重写了父类方法，则子类优先访问重写后的父类方法，例如下面的代码</p> <div class="language-java highlight"><table class=highlighttable><tr><th colspan=2 class=filename><span class=filename>Java</span></th></tr><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span>
+<span class=normal>23</span>
+<span class=normal>24</span>
+<span class=normal>25</span>
+<span class=normal>26</span>
+<span class=normal>27</span>
+<span class=normal>28</span></pre></div></td><td class=code><div><pre><span></span><code><span id=__span-3-1><span class=c1>// 父类</span>
+</span><span id=__span-3-2><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>Base</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-3-3><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>base</span><span class=p>()</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-3-4><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&quot;父类中的方法&quot;</span><span class=p>);</span>
+</span><span id=__span-3-5><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-3-6><span class=p>}</span>
+</span><span id=__span-3-7>
+</span><span id=__span-3-8><span class=c1>// 子类</span>
+</span><span id=__span-3-9><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>Derived</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>Base</span><span class=p>{</span>
+</span><span id=__span-3-10><span class=w>    </span><span class=nd>@Override</span>
+</span><span id=__span-3-11><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>base</span><span class=p>()</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-3-12><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&quot;子类重写父类方法&quot;</span><span class=p>);</span>
+</span><span id=__span-3-13><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-3-14><span class=p>}</span>
+</span><span id=__span-3-15>
+</span><span id=__span-3-16><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>Test</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-3-17><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>main</span><span class=p>(</span><span class=n>String</span><span class=o>[]</span><span class=w> </span><span class=n>args</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-3-18><span class=w>        </span><span class=n>Base</span><span class=w> </span><span class=n>base</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>Base</span><span class=p>();</span>
+</span><span id=__span-3-19><span class=w>        </span><span class=n>Derived</span><span class=w> </span><span class=n>derived</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>Derived</span><span class=p>();</span>
+</span><span id=__span-3-20>
+</span><span id=__span-3-21><span class=w>        </span><span class=n>base</span><span class=p>.</span><span class=na>base</span><span class=p>();</span><span class=w> </span><span class=c1>// 父类访问自己的方法</span>
+</span><span id=__span-3-22><span class=w>        </span><span class=n>derived</span><span class=p>.</span><span class=na>base</span><span class=p>();</span><span class=w> </span><span class=c1>// 子类访问重写父类的方法</span>
+</span><span id=__span-3-23><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-3-24><span class=p>}</span>
+</span><span id=__span-3-25>
+</span><span id=__span-3-26><span class=n>输出结果</span><span class=err>：</span>
+</span><span id=__span-3-27><span class=n>父类中的方法</span>
+</span><span id=__span-3-28><span class=n>子类重写父类方法</span>
+</span></code></pre></div></td></tr></table></div> <p>子类重写父类方法，子类重写的方法权限不可以比父类被重写方法权限低，方法权限一共有四种（访问权限依次降低）：</p> <ol> <li><code>public</code></li> <li><code>protected</code></li> <li>默认（<code>default</code>，不显式写）</li> <li><code>private</code></li> </ol> <p>例如，父类定义的是<code>public</code>的方法，则子类继承的方法不可以是被<code>public</code>以下的权限修饰符修饰，否则属于权限降低</p> <p>需要注意，重写方法不能对下面的父类方法进行重写：</p> <ol> <li>父类中的私有方法</li> <li>父类中的静态方法</li> <li>父类中的构造方法</li> </ol> <p>在Java中，可以使用注解<code>@Override</code>判断该方法是否是重写了父类方法，如果不是，则使用该注解会报错</p> <h2 id=_3>继承中成员变量和成员方法访问的特点<a class=headerlink href=#_3 title="Permanent link">&para;</a></h2> <h3 id=_4>访问成员变量<a class=headerlink href=#_4 title="Permanent link">&para;</a></h3> <p>当子类继承父类时，子类对象可以访问到父类中的非私有成员变量和自己的成员变量，但是父类对象只能访问父类自己的成员变量，无法访问子类中的成员变量，例如下面的代码：</p> <div class="language-java highlight"><table class=highlighttable><tr><th colspan=2 class=filename><span class=filename>Java</span></th></tr><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span></pre></div></td><td class=code><div><pre><span></span><code><span id=__span-4-1><span class=c1>// 父类</span>
+</span><span id=__span-4-2><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>Base</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-4-3><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>str</span><span class=p>;</span>
+</span><span id=__span-4-4><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kt>int</span><span class=w> </span><span class=n>num</span><span class=p>;</span>
+</span><span id=__span-4-5><span class=p>}</span>
+</span><span id=__span-4-6>
+</span><span id=__span-4-7><span class=c1>// 子类</span>
+</span><span id=__span-4-8><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>Derived</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>Base</span><span class=p>{</span>
+</span><span id=__span-4-9><span class=w>    </span><span class=n>String</span><span class=w> </span><span class=n>newAdded</span><span class=p>;</span><span class=w> </span><span class=c1>// 子类新增成员</span>
+</span><span id=__span-4-10><span class=p>}</span>
+</span><span id=__span-4-11>
+</span><span id=__span-4-12><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>Test</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-4-13><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>main</span><span class=p>(</span><span class=n>String</span><span class=o>[]</span><span class=w> </span><span class=n>args</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-4-14><span class=w>        </span><span class=n>Base</span><span class=w> </span><span class=n>base</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>Base</span><span class=p>();</span>
+</span><span id=__span-4-15><span class=w>        </span><span class=n>base</span><span class=p>.</span><span class=na>str</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=s>&quot;父类&quot;</span><span class=p>;</span>
+</span><span id=__span-4-16><span class=w>        </span><span class=c1>// base.newAdded; // 父类不能访问子类中新增的成员</span>
+</span><span id=__span-4-17><span class=w>        </span><span class=n>Derived</span><span class=w> </span><span class=n>derived</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>Derived</span><span class=p>();</span>
+</span><span id=__span-4-18><span class=w>        </span><span class=c1>// 子类可以访问父类的非私有成员，也可以访问子类自己的成员</span>
+</span><span id=__span-4-19><span class=w>        </span><span class=n>derived</span><span class=p>.</span><span class=na>str</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=s>&quot;子类&quot;</span><span class=p>;</span>
+</span><span id=__span-4-20><span class=w>        </span><span class=n>derived</span><span class=p>.</span><span class=na>newAdded</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=s>&quot;子类新增成员&quot;</span><span class=p>;</span>
+</span><span id=__span-4-21><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-4-22><span class=p>}</span>
+</span></code></pre></div></td></tr></table></div> <p>如果出现父类的成员变量与子类新增的成员变量重名时，子类依旧访问的自己的成员变量而不是与其重名的父类成员变量，父类已经访问自己的成员变量</p> <div class="language-java highlight"><table class=highlighttable><tr><th colspan=2 class=filename><span class=filename>Java</span></th></tr><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span>
+<span class=normal>23</span></pre></div></td><td class=code><div><pre><span></span><code><span id=__span-5-1><span class=c1>// 父类</span>
+</span><span id=__span-5-2><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>Base</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-5-3><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>int</span><span class=w> </span><span class=n>num</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mi>100</span><span class=p>;</span>
+</span><span id=__span-5-4><span class=p>}</span>
+</span><span id=__span-5-5>
+</span><span id=__span-5-6><span class=c1>// 子类</span>
+</span><span id=__span-5-7><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>Derived</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>Base</span><span class=p>{</span>
+</span><span id=__span-5-8><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>int</span><span class=w> </span><span class=n>num</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=mi>1000</span><span class=p>;</span>
+</span><span id=__span-5-9><span class=p>}</span>
+</span><span id=__span-5-10>
+</span><span id=__span-5-11><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>Test</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-5-12><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>main</span><span class=p>(</span><span class=n>String</span><span class=o>[]</span><span class=w> </span><span class=n>args</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-5-13><span class=w>        </span><span class=n>Base</span><span class=w> </span><span class=n>base</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>Base</span><span class=p>();</span>
+</span><span id=__span-5-14><span class=w>        </span><span class=n>Derived</span><span class=w> </span><span class=n>derived</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>Derived</span><span class=p>();</span>
+</span><span id=__span-5-15>
+</span><span id=__span-5-16><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=n>base</span><span class=p>.</span><span class=na>num</span><span class=p>);</span>
+</span><span id=__span-5-17><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=n>derived</span><span class=p>.</span><span class=na>num</span><span class=p>);</span>
+</span><span id=__span-5-18><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-5-19><span class=p>}</span>
+</span><span id=__span-5-20>
+</span><span id=__span-5-21><span class=n>输出结果</span><span class=err>：</span>
+</span><span id=__span-5-22><span class=mi>100</span>
+</span><span id=__span-5-23><span class=mi>1000</span>
+</span></code></pre></div></td></tr></table></div> <h3 id=_5>访问成员方法<a class=headerlink href=#_5 title="Permanent link">&para;</a></h3> <p>当子类继承父类时，子类对象可以访问到子类自己的方法，也可以访问到父类方法；父类对象可以访问到自己的方法，也可以通过接收子类对象访问子类重写父类的方法（见多态），例如下面的代码：</p> <div class="language-java highlight"><table class=highlighttable><tr><th colspan=2 class=filename><span class=filename>Java</span></th></tr><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span>
+<span class=normal>23</span>
+<span class=normal>24</span>
+<span class=normal>25</span>
+<span class=normal>26</span>
+<span class=normal>27</span>
+<span class=normal>28</span></pre></div></td><td class=code><div><pre><span></span><code><span id=__span-6-1><span class=c1>// 父类</span>
+</span><span id=__span-6-2><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>Base</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-6-3><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>str</span><span class=p>;</span>
+</span><span id=__span-6-4><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=kt>int</span><span class=w> </span><span class=n>num</span><span class=p>;</span>
+</span><span id=__span-6-5>
+</span><span id=__span-6-6><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>base</span><span class=p>()</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-6-7><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&quot;父类中的方法&quot;</span><span class=p>);</span>
+</span><span id=__span-6-8><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-6-9><span class=p>}</span>
+</span><span id=__span-6-10>
+</span><span id=__span-6-11><span class=c1>// 子类</span>
+</span><span id=__span-6-12><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>Derived</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>Base</span><span class=p>{</span>
+</span><span id=__span-6-13><span class=w>    </span><span class=n>String</span><span class=w> </span><span class=n>newAdded</span><span class=p>;</span><span class=w> </span><span class=c1>// 子类新增成员</span>
+</span><span id=__span-6-14>
+</span><span id=__span-6-15><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>derived</span><span class=p>()</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-6-16><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&quot;子类方法&quot;</span><span class=p>);</span>
+</span><span id=__span-6-17><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-6-18><span class=p>}</span>
+</span><span id=__span-6-19>
+</span><span id=__span-6-20><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>Test</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-6-21><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kd>static</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>main</span><span class=p>(</span><span class=n>String</span><span class=o>[]</span><span class=w> </span><span class=n>args</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-6-22><span class=w>        </span><span class=n>Base</span><span class=w> </span><span class=n>base</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>Base</span><span class=p>();</span>
+</span><span id=__span-6-23><span class=w>        </span><span class=n>Derived</span><span class=w> </span><span class=n>derived</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=k>new</span><span class=w> </span><span class=n>Derived</span><span class=p>();</span>
+</span><span id=__span-6-24><span class=w>        </span><span class=n>base</span><span class=p>.</span><span class=na>base</span><span class=p>();</span><span class=w> </span><span class=c1>// 父类访问自己的方法</span>
+</span><span id=__span-6-25><span class=w>        </span><span class=n>derived</span><span class=p>.</span><span class=na>base</span><span class=p>();</span><span class=w> </span><span class=c1>// 子类访问父类的方法</span>
+</span><span id=__span-6-26><span class=w>        </span><span class=n>derived</span><span class=p>.</span><span class=na>derived</span><span class=p>();</span><span class=c1>// 子类访问自己的方法</span>
+</span><span id=__span-6-27><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-6-28><span class=p>}</span>
+</span></code></pre></div></td></tr></table></div> <h3 id=_6>访问特点总结<a class=headerlink href=#_6 title="Permanent link">&para;</a></h3> <ul> <li>访问成员变量：关注创建对象时赋值符号的左侧是子类还是父类。如果是父类，则访问的是父类成员变量，如果是子类，则访问的是父类非私有成员和子类自身的成员变量</li> <li>访问成员方法：关注创建对象时赋值符号的右侧是调用子类构造函数和父类构造函数。如果是父类，则访问的是父类中的成员方法，如果是子类，则访问的是父类中非私有的成员方法、子类重写的父类的方法和子类自身的成员方法</li> </ul> <h2 id=superthis><code>super</code>和<code>this</code>关键字<a class=headerlink href=#superthis title="Permanent link">&para;</a></h2> <h3 id=super><code>super</code>关键字<a class=headerlink href=#super title="Permanent link">&para;</a></h3> <p>在继承中，默认情况下，子类则访问的是自己的成员，如果此时子类需要访问父类的成员，则需要使用到<code>super</code>关键字</p> <p>在Java中，<code>super</code>关键字其作用有以下三种：</p> <ol> <li>在子类构造方法中访问父类的构造方法（使用方式与<code>this</code>关键字类似，但是不能和<code>this</code>调用构造函数的方式同时出现）</li> <li>在子类中访问父类的非私有非静态成员变量</li> <li>在子类中访问父类的非私有非静态成员方法</li> </ol> <p>当在子类构造方法中访问父类的构造方法时，一般是用于构造属于父类的成员，而因为父类比子类在创建子类对象时先创建，所以必须写在子类构造方法中的第一行，基本格式如下：</p> <div class="language-java highlight"><table class=highlighttable><tr><th colspan=2 class=filename><span class=filename>Java</span></th></tr><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span></pre></div></td><td class=code><div><pre><span></span><code><span id=__span-7-1><span class=kd>public</span><span class=w> </span><span class=nf>子类</span><span class=p>()</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-7-2><span class=w>    </span><span class=kd>super</span><span class=p>();</span>
+</span><span id=__span-7-3><span class=w>    </span><span class=c1>// super(形参); 使用父类中有参构造时使用</span>
+</span><span id=__span-7-4><span class=p>}</span>
+</span></code></pre></div></td></tr></table></div> <p>默认情况下，子类如果没有构造方法，那么默认提供的构造方法会调用父类的无参构造，即子类会隐含着下面的构造方法：</p> <div class="language-java highlight"><table class=highlighttable><tr><th colspan=2 class=filename><span class=filename>Java</span></th></tr><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span></pre></div></td><td class=code><div><pre><span></span><code><span id=__span-8-1><span class=kd>public</span><span class=w> </span><span class=nf>子类</span><span class=p>()</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-8-2><span class=w>    </span><span class=kd>super</span><span class=p>();</span>
+</span><span id=__span-8-3><span class=p>}</span>
+</span></code></pre></div></td></tr></table></div> <p>当子类需要访问父类的成员时，使用下面的格式：</p> <div class="language-java highlight"><table class=highlighttable><tr><th colspan=2 class=filename><span class=filename>Java</span></th></tr><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span></pre></div></td><td class=code><div><pre><span></span><code><span id=__span-9-1><span class=kd>super</span><span class=p>.</span><span class=na>父类非私有非静态成员</span>
+</span></code></pre></div></td></tr></table></div> <div class="admonition note"> <p class=admonition-title>Note</p> <p>不建议将<code>super</code>理解为父类对象的引用，因为在使用<code>super</code>时并没有直接创建出父类对象</p> </div> <h3 id=this><code>this</code>关键字<a class=headerlink href=#this title="Permanent link">&para;</a></h3> <p>前面在介绍方法时，为了防止方法中出现局部变量与类成员变量重名导致优先访问局部变量的问题，使用<code>this</code>来指代使用类成员变量，下面主要介绍<code>this</code>关键字</p> <p><code>this</code>关键字指代当前调用的对象的引用，即哪个对象调用了成员，<code>this</code>就是哪个对象的引用，同<code>super</code>一样，<code>this</code>关键字的作用一共有三种：</p> <ol> <li>在当前类的一个构造方法中访问当前类的其他构造方法</li> <li>在当前类中调用当前类的成员变量</li> <li>在当前类中调用当前类的成员方法</li> </ol> <p>当使用<code>this</code>在当前类的一个构造方法中访问当前类的其他构造方法时，需要与<code>super</code>一样，将相关语句放在构造方法的第一行，基本格式同<code>super</code>关键字。但是需要注意，如果当前构造方法中已经有了<code>super</code>调用父类构造方法则不能再写<code>this</code>调用其他构造方法，二者会冲突</p> <p>当使用<code>this</code>访问当前类的成员时，使用方法同<code>super</code>一样</p> <div class="admonition note"> <p class=admonition-title>Note</p> <p>注意，不能在静态成员方法中使用<code>this</code></p> </div> <h2 id=java_1>Java继承的特点<a class=headerlink href=#java_1 title="Permanent link">&para;</a></h2> <p>在Java中，子类一次只能继承一个父类，但是父类可以被多个子类继承，并且存在多层继承关系</p> <ul> <li> <p>父类被多个子类继承</p> <div class="language-java highlight"><table class=highlighttable><tr><th colspan=2 class=filename><span class=filename>Java</span></th></tr><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span>
+<span class=normal>7</span>
+<span class=normal>8</span>
+<span class=normal>9</span></pre></div></td><td class=code><div><pre><span></span><code><span id=__span-10-1><span class=c1>// 父类</span>
+</span><span id=__span-10-2><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>Base</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-10-3><span class=p>}</span>
+</span><span id=__span-10-4>
+</span><span id=__span-10-5><span class=c1>// 子类</span>
+</span><span id=__span-10-6><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>Derived01</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>Base</span><span class=p>{</span>
+</span><span id=__span-10-7><span class=p>}</span>
+</span><span id=__span-10-8><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>Derived02</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>Base</span><span class=p>{</span>
+</span><span id=__span-10-9><span class=p>}</span>
+</span></code></pre></div></td></tr></table></div> <p>在上述代码中<code>Base</code>作为父类有两个子类</p> </li> <li> <p>多层继承关系</p> <div class="language-java highlight"><table class=highlighttable><tr><th colspan=2 class=filename><span class=filename>Java</span></th></tr><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal>1</span>
+<span class=normal>2</span>
+<span class=normal>3</span>
+<span class=normal>4</span>
+<span class=normal>5</span>
+<span class=normal>6</span>
+<span class=normal>7</span>
+<span class=normal>8</span>
+<span class=normal>9</span></pre></div></td><td class=code><div><pre><span></span><code><span id=__span-11-1><span class=c1>// 父类</span>
+</span><span id=__span-11-2><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>BaseTop</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-11-3><span class=p>}</span>
+</span><span id=__span-11-4><span class=c1>// 继承自BaseTop</span>
+</span><span id=__span-11-5><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>Base</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>BaseTop</span><span class=p>{</span>
+</span><span id=__span-11-6><span class=p>}</span>
+</span><span id=__span-11-7><span class=c1>// 继承自Base</span>
+</span><span id=__span-11-8><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>Derived</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>Base</span><span class=p>{</span>
+</span><span id=__span-11-9><span class=p>}</span>
+</span></code></pre></div></td></tr></table></div> <p>在多层继承关系中，每一个子类都包含其祖先的所有成员</p> </li> </ul> <h2 id=_7>为父类成员赋值<a class=headerlink href=#_7 title="Permanent link">&para;</a></h2> <p>在继承出现后，当子类对象需要为父类成员赋值时，可以使用两种方法：</p> <ol> <li>子类构造方法中使用<code>super</code>调用父类构造方法</li> <li>父类提供相关成员变量的<code>set</code>方法</li> </ol> <h2 id=_8>继承案例<a class=headerlink href=#_8 title="Permanent link">&para;</a></h2> <p>某IT公司有多名员工，按照员工负责的工作不同，进行了部门的划分（研发部、维护部）</p> <p>研发部(Developer)根据所需研发的内容不同，又分为 JavaEE工程师 、Android工程师</p> <p>维护部(Maintainer)根据所需维护的内容不同，又分为 网络维护工程师(Network) 、硬件维护工程师(Hardware) </p> <p>公司的每名员工都有他们自己的员工编号、姓名，并要做它们所负责的工作</p> <p>工作内容:</p> <ul> <li>JavaEE工程师： 员工号为xxx的xxx员工，正在研发电商网站</li> <li>Android工程师：员工号为xxx的xxx员工，正在研发电商的手机客户端软件</li> <li>网络维护工程师：员工号为xxx的xxx员工，正在检查网络是否畅通</li> <li>硬件维护工程师：员工号为xxx的xxx员工，正在修复电脑主板</li> </ul> <p>请根据描述，完成员工体系中所有类的定义，并指定类之间的继承关系。进行XX工程师类的对象创建，完成工作方法的调用</p> <div class="admonition note"> <p class=admonition-title>Note</p> <p>此处提供一种思路，<code>Employee</code>作为抽象父类，其他员工均作为子类，重写父类中的<code>work</code>方法</p> </div> <p>实现代码如下：</p> <div class="tabbed-set tabbed-alternate" data-tabs=1:5><input checked=checked id=__tabbed_1_1 name=__tabbed_1 type=radio><input id=__tabbed_1_2 name=__tabbed_1 type=radio><input id=__tabbed_1_3 name=__tabbed_1 type=radio><input id=__tabbed_1_4 name=__tabbed_1 type=radio><input id=__tabbed_1_5 name=__tabbed_1 type=radio><div class=tabbed-labels><label for=__tabbed_1_1>父类</label><label for=__tabbed_1_2>子类1</label><label for=__tabbed_1_3>子类2</label><label for=__tabbed_1_4>子类3</label><label for=__tabbed_1_5>子类4</label></div> <div class=tabbed-content> <div class=tabbed-block> <div class="language-java highlight"><table class=highlighttable><tr><th colspan=2 class=filename><span class=filename>Java</span></th></tr><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span>
+<span class=normal>12</span>
+<span class=normal>13</span>
+<span class=normal>14</span>
+<span class=normal>15</span>
+<span class=normal>16</span>
+<span class=normal>17</span>
+<span class=normal>18</span>
+<span class=normal>19</span>
+<span class=normal>20</span>
+<span class=normal>21</span>
+<span class=normal>22</span>
+<span class=normal>23</span>
+<span class=normal>24</span>
+<span class=normal>25</span>
+<span class=normal>26</span>
+<span class=normal>27</span>
+<span class=normal>28</span>
+<span class=normal>29</span>
+<span class=normal>30</span>
+<span class=normal>31</span>
+<span class=normal>32</span>
+<span class=normal>33</span>
+<span class=normal>34</span>
+<span class=normal>35</span>
+<span class=normal>36</span>
+<span class=normal>37</span>
+<span class=normal>38</span>
+<span class=normal>39</span>
+<span class=normal>40</span>
+<span class=normal>41</span>
+<span class=normal>42</span>
+<span class=normal>43</span>
+<span class=normal>44</span>
+<span class=normal>45</span>
+<span class=normal>46</span>
+<span class=normal>47</span></pre></div></td><td class=code><div><pre><span></span><code><span id=__span-12-1><span class=c1>// 父类</span>
+</span><span id=__span-12-2><span class=kn>package</span><span class=w> </span><span class=nn>com.epsda.advanced.extends_exercise</span><span class=p>;</span>
+</span><span id=__span-12-3>
+</span><span id=__span-12-4><span class=cm>/**</span>
+</span><span id=__span-12-5><span class=cm> * ClassName: Employee</span>
+</span><span id=__span-12-6><span class=cm> * Description:</span>
+</span><span id=__span-12-7><span class=cm> *</span>
+</span><span id=__span-12-8><span class=cm> * @author 憨八嘎</span>
+</span><span id=__span-12-9><span class=cm> * @version 1.0</span>
+</span><span id=__span-12-10><span class=cm> */</span>
+</span><span id=__span-12-11><span class=kd>public</span><span class=w> </span><span class=kd>abstract</span><span class=w> </span><span class=kd>class</span> <span class=nc>Employee</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-12-12><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>id</span><span class=p>;</span>
+</span><span id=__span-12-13><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>name</span><span class=p>;</span>
+</span><span id=__span-12-14><span class=w>    </span><span class=kd>private</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>department</span><span class=p>;</span>
+</span><span id=__span-12-15>
+</span><span id=__span-12-16><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=nf>Employee</span><span class=p>(</span><span class=n>String</span><span class=w> </span><span class=n>id</span><span class=p>,</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>name</span><span class=p>,</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>department</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-12-17><span class=w>        </span><span class=k>this</span><span class=p>.</span><span class=na>id</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>id</span><span class=p>;</span>
+</span><span id=__span-12-18><span class=w>        </span><span class=k>this</span><span class=p>.</span><span class=na>name</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>name</span><span class=p>;</span>
+</span><span id=__span-12-19><span class=w>        </span><span class=k>this</span><span class=p>.</span><span class=na>department</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>department</span><span class=p>;</span>
+</span><span id=__span-12-20><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-12-21>
+</span><span id=__span-12-22><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=nf>getId</span><span class=p>()</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-12-23><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>id</span><span class=p>;</span>
+</span><span id=__span-12-24><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-12-25>
+</span><span id=__span-12-26><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>setId</span><span class=p>(</span><span class=n>String</span><span class=w> </span><span class=n>id</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-12-27><span class=w>        </span><span class=k>this</span><span class=p>.</span><span class=na>id</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>id</span><span class=p>;</span>
+</span><span id=__span-12-28><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-12-29>
+</span><span id=__span-12-30><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=nf>getName</span><span class=p>()</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-12-31><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>name</span><span class=p>;</span>
+</span><span id=__span-12-32><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-12-33>
+</span><span id=__span-12-34><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>setName</span><span class=p>(</span><span class=n>String</span><span class=w> </span><span class=n>name</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-12-35><span class=w>        </span><span class=k>this</span><span class=p>.</span><span class=na>name</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>name</span><span class=p>;</span>
+</span><span id=__span-12-36><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-12-37>
+</span><span id=__span-12-38><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=nf>getDepartment</span><span class=p>()</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-12-39><span class=w>        </span><span class=k>return</span><span class=w> </span><span class=n>department</span><span class=p>;</span>
+</span><span id=__span-12-40><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-12-41>
+</span><span id=__span-12-42><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>setDepartment</span><span class=p>(</span><span class=n>String</span><span class=w> </span><span class=n>department</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-12-43><span class=w>        </span><span class=k>this</span><span class=p>.</span><span class=na>department</span><span class=w> </span><span class=o>=</span><span class=w> </span><span class=n>department</span><span class=p>;</span>
+</span><span id=__span-12-44><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-12-45>
+</span><span id=__span-12-46><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kd>abstract</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>work</span><span class=p>();</span>
+</span><span id=__span-12-47><span class=p>}</span>
+</span></code></pre></div></td></tr></table></div> </div> <div class=tabbed-block> <div class="language-java highlight"><table class=highlighttable><tr><th colspan=2 class=filename><span class=filename>Java</span></th></tr><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span></pre></div></td><td class=code><div><pre><span></span><code><span id=__span-13-1><span class=c1>// 子类1</span>
+</span><span id=__span-13-2><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>JavaEE_Engineer</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>Employee</span><span class=p>{</span>
+</span><span id=__span-13-3><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=nf>JavaEE_Engineer</span><span class=p>(</span><span class=n>String</span><span class=w> </span><span class=n>id</span><span class=p>,</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>name</span><span class=p>,</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>department</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-13-4><span class=w>        </span><span class=kd>super</span><span class=p>(</span><span class=n>id</span><span class=p>,</span><span class=w> </span><span class=n>name</span><span class=p>,</span><span class=w> </span><span class=n>department</span><span class=p>);</span>
+</span><span id=__span-13-5><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-13-6>
+</span><span id=__span-13-7><span class=w>    </span><span class=nd>@Override</span>
+</span><span id=__span-13-8><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>work</span><span class=p>()</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-13-9><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&quot;员工号为&quot;</span><span class=o>+</span><span class=n>getId</span><span class=p>()</span><span class=o>+</span><span class=s>&quot;的&quot;</span><span class=o>+</span><span class=n>getDepartment</span><span class=p>()</span><span class=o>+</span><span class=s>&quot;的&quot;</span><span class=o>+</span><span class=n>getName</span><span class=p>()</span><span class=o>+</span><span class=s>&quot;员工&quot;</span><span class=o>+</span><span class=s>&quot;，正在研发电商网站&quot;</span><span class=p>);</span>
+</span><span id=__span-13-10><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-13-11><span class=p>}</span>
+</span></code></pre></div></td></tr></table></div> </div> <div class=tabbed-block> <div class="language-java highlight"><table class=highlighttable><tr><th colspan=2 class=filename><span class=filename>Java</span></th></tr><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span></pre></div></td><td class=code><div><pre><span></span><code><span id=__span-14-1><span class=c1>// 子类2</span>
+</span><span id=__span-14-2><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>Android_Engineer</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>Employee</span><span class=p>{</span>
+</span><span id=__span-14-3><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=nf>Android_Engineer</span><span class=p>(</span><span class=n>String</span><span class=w> </span><span class=n>id</span><span class=p>,</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>name</span><span class=p>,</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>department</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-14-4><span class=w>        </span><span class=kd>super</span><span class=p>(</span><span class=n>id</span><span class=p>,</span><span class=w> </span><span class=n>name</span><span class=p>,</span><span class=w> </span><span class=n>department</span><span class=p>);</span>
+</span><span id=__span-14-5><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-14-6>
+</span><span id=__span-14-7><span class=w>    </span><span class=nd>@Override</span>
+</span><span id=__span-14-8><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>work</span><span class=p>()</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-14-9><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&quot;员工号为&quot;</span><span class=o>+</span><span class=n>getId</span><span class=p>()</span><span class=o>+</span><span class=s>&quot;的&quot;</span><span class=o>+</span><span class=n>getDepartment</span><span class=p>()</span><span class=o>+</span><span class=s>&quot;的&quot;</span><span class=o>+</span><span class=n>getName</span><span class=p>()</span><span class=o>+</span><span class=s>&quot;员工&quot;</span><span class=o>+</span><span class=s>&quot;，正在研发电商的手机客户端软件&quot;</span><span class=p>);</span>
+</span><span id=__span-14-10><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-14-11><span class=p>}</span>
+</span></code></pre></div></td></tr></table></div> </div> <div class=tabbed-block> <div class="language-java highlight"><table class=highlighttable><tr><th colspan=2 class=filename><span class=filename>Java</span></th></tr><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span></pre></div></td><td class=code><div><pre><span></span><code><span id=__span-15-1><span class=c1>// 子类3</span>
+</span><span id=__span-15-2><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>Network_Engineer</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>Employee</span><span class=p>{</span>
+</span><span id=__span-15-3><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=nf>Network_Engineer</span><span class=p>(</span><span class=n>String</span><span class=w> </span><span class=n>id</span><span class=p>,</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>name</span><span class=p>,</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>department</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-15-4><span class=w>        </span><span class=kd>super</span><span class=p>(</span><span class=n>id</span><span class=p>,</span><span class=w> </span><span class=n>name</span><span class=p>,</span><span class=w> </span><span class=n>department</span><span class=p>);</span>
+</span><span id=__span-15-5><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-15-6>
+</span><span id=__span-15-7><span class=w>    </span><span class=nd>@Override</span>
+</span><span id=__span-15-8><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>work</span><span class=p>()</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-15-9><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&quot;员工号为&quot;</span><span class=o>+</span><span class=n>getId</span><span class=p>()</span><span class=o>+</span><span class=s>&quot;的&quot;</span><span class=o>+</span><span class=n>getDepartment</span><span class=p>()</span><span class=o>+</span><span class=s>&quot;的&quot;</span><span class=o>+</span><span class=n>getName</span><span class=p>()</span><span class=o>+</span><span class=s>&quot;员工&quot;</span><span class=o>+</span><span class=s>&quot;，正在检查网络是否畅通&quot;</span><span class=p>);</span>
+</span><span id=__span-15-10><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-15-11><span class=p>}</span>
+</span></code></pre></div></td></tr></table></div> </div> <div class=tabbed-block> <div class="language-java highlight"><table class=highlighttable><tr><th colspan=2 class=filename><span class=filename>Java</span></th></tr><tr><td class=linenos><div class=linenodiv><pre><span></span><span class=normal> 1</span>
+<span class=normal> 2</span>
+<span class=normal> 3</span>
+<span class=normal> 4</span>
+<span class=normal> 5</span>
+<span class=normal> 6</span>
+<span class=normal> 7</span>
+<span class=normal> 8</span>
+<span class=normal> 9</span>
+<span class=normal>10</span>
+<span class=normal>11</span></pre></div></td><td class=code><div><pre><span></span><code><span id=__span-16-1><span class=c1>// 子类4</span>
+</span><span id=__span-16-2><span class=kd>public</span><span class=w> </span><span class=kd>class</span> <span class=nc>Hardware_Engineer</span><span class=w> </span><span class=kd>extends</span><span class=w> </span><span class=n>Employee</span><span class=p>{</span>
+</span><span id=__span-16-3><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=nf>Hardware_Engineer</span><span class=p>(</span><span class=n>String</span><span class=w> </span><span class=n>id</span><span class=p>,</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>name</span><span class=p>,</span><span class=w> </span><span class=n>String</span><span class=w> </span><span class=n>department</span><span class=p>)</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-16-4><span class=w>        </span><span class=kd>super</span><span class=p>(</span><span class=n>id</span><span class=p>,</span><span class=w> </span><span class=n>name</span><span class=p>,</span><span class=w> </span><span class=n>department</span><span class=p>);</span>
+</span><span id=__span-16-5><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-16-6>
+</span><span id=__span-16-7><span class=w>    </span><span class=nd>@Override</span>
+</span><span id=__span-16-8><span class=w>    </span><span class=kd>public</span><span class=w> </span><span class=kt>void</span><span class=w> </span><span class=nf>work</span><span class=p>()</span><span class=w> </span><span class=p>{</span>
+</span><span id=__span-16-9><span class=w>        </span><span class=n>System</span><span class=p>.</span><span class=na>out</span><span class=p>.</span><span class=na>println</span><span class=p>(</span><span class=s>&quot;员工号为&quot;</span><span class=o>+</span><span class=n>getId</span><span class=p>()</span><span class=o>+</span><span class=s>&quot;的&quot;</span><span class=o>+</span><span class=n>getDepartment</span><span class=p>()</span><span class=o>+</span><span class=s>&quot;的&quot;</span><span class=o>+</span><span class=n>getName</span><span class=p>()</span><span class=o>+</span><span class=s>&quot;员工&quot;</span><span class=o>+</span><span class=s>&quot;，正在修复电脑主板&quot;</span><span class=p>);</span>
+</span><span id=__span-16-10><span class=w>    </span><span class=p>}</span>
+</span><span id=__span-16-11><span class=p>}</span>
+</span></code></pre></div></td></tr></table></div> </div> </div> </div> <div class="admonition note"> <p class=admonition-title>Note</p> <p>如果考虑将开发的两个部门继承自<code>Employee</code>，则需要注意，两个部门类不需要重写方法，自然也就定义成<code>abstract</code>类，直到最后一个作为子类的类重写<code>work</code>方法即可</p> </div> <aside class=md-source-file> <span class=md-source-file__fact> <span class=md-icon title=最后更新> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg> </span> <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2026年3月26日</span> </span> </aside> <!-- Waline 评论系统 --> <div id=waline></div> <!-- Waline 评论系统 --> <div id=waline></div> </article> </div> <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script> </div> <button type=button class="md-top md-icon" data-md-component=top hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg> 回到页面顶部 </button> </main> <footer class=md-footer> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class=md-copyright> <div class=md-footer-copyright__highlight> Copyright &copy; 2024-2026 柯懒不是柯南 </div> </div> <div class=md-social> <a href=https://github.com/H0308 target=_blank rel=noopener title=github.com class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 512 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg> </a> <a href=https://www.help-doc.top/author/contact/contact/ target=_blank rel=noopener title=www.help-doc.top class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M434.1 420.4c-11.5 1.4-44.9-52.7-44.9-52.7 0 31.3-16.1 72.2-51 101.8 16.8 5.2 54.8 19.2 45.8 34.4-7.3 12.3-125.5 7.9-159.6 4-34.1 3.8-152.3 8.3-159.6-4-9-15.2 28.9-29.2 45.8-34.4-34.9-29.5-51.1-70.4-51.1-101.8 0 0-33.3 54.1-44.9 52.7-5.4-.6-12.4-29.6 9.3-99.7 10.3-33 22-60.5 40.1-105.8C60.9 98 109.2-.1 224.3-.1 338-.1 387.5 96 384.6 214.9c18.1 45.2 29.9 72.9 40.1 105.8 21.8 70.1 14.7 99.1 9.3 99.7z"/></svg> </a> <a href=mailto:watneymark82@gmail.com target=_blank rel=noopener title class=md-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 576 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M536.4-26.3c9.8-3.5 20.6-1 28 6.3s9.8 18.2 6.3 28l-178 496.9c-5 13.9-18.1 23.1-32.8 23.1-14.2 0-27-8.6-32.3-21.7l-64.2-158c-4.5-11-2.5-23.6 5.2-32.6l94.5-112.4c5.1-6.1 4.7-15-.9-20.6s-14.6-6-20.6-.9l-112.4 94.3c-9.1 7.6-21.6 9.6-32.6 5.2L38.1 216.8c-13.1-5.3-21.7-18.1-21.7-32.3 0-14.7 9.2-27.8 23.1-32.8z"/></svg> </a> </div> </div> </div> </footer> </div> <div class=md-dialog data-md-component=dialog> <div class="md-dialog__inner md-typeset"></div> </div> <script id=__config type=application/json>{"annotate": null, "base": "../../..", "features": ["navigation.indexes", "navigation.prune", "navigation.tabs", "navigation.sections", "toc.follow", "content.code.copy", "navigation.top"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script> <script src=../../../assets/javascripts/bundle.e71a0d61.min.js></script> <script src=../../../javascripts/other.min.js></script> <script src=../../../javascripts/copyright.min.js></script> <script src=../../../javascripts/docsearch.min.js></script> <script src=../../../javascripts/navigation-overlay.min.js></script> <script src=../../../javascripts/link-preview.min.js></script> <script src=../../../javascripts/context-menu.min.js></script> <script src=../../../javascripts/theme-force-dark.min.js></script> <script src=https://help-site.oss-cn-hangzhou.aliyuncs.com/js/docsearch3.js></script> <script src=../../../assets/javascripts/toggle-sidebar.js async></script> <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body> </html>
