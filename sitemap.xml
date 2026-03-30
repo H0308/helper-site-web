@@ -109,27 +109,19 @@
          <lastmod>2026-03-30</lastmod>
     </url>
     <url>
-         <loc>https://www.help-doc.top/JavaEE/Spring/</loc>
-         <lastmod>2026-03-30</lastmod>
-    </url>
-    <url>
-         <loc>https://www.help-doc.top/JavaEE/Spring/springmvc-basic/springmvc-basic/</loc>
-         <lastmod>2026-03-30</lastmod>
-    </url>
-    <url>
-         <loc>https://www.help-doc.top/JavaEE/Spring/springmvc-di-ioc/springmvc-di-ioc/</loc>
-         <lastmod>2026-03-30</lastmod>
-    </url>
-    <url>
-         <loc>https://www.help-doc.top/JavaEE/SpringCloud/</loc>
-         <lastmod>2026-03-30</lastmod>
-    </url>
-    <url>
-         <loc>https://www.help-doc.top/JavaEE/SpringCloud/env-setup/env-setup/</loc>
-         <lastmod>2026-03-30</lastmod>
-    </url>
-    <url>
          <loc>https://www.help-doc.top/JavaEE/mybatis-plus/mybatis-plus/</loc>
+         <lastmod>2026-03-30</lastmod>
+    </url>
+    <url>
+         <loc>https://www.help-doc.top/JavaEE/spring/</loc>
+         <lastmod>2026-03-30</lastmod>
+    </url>
+    <url>
+         <loc>https://www.help-doc.top/JavaEE/spring/springmvc-basic/springmvc-basic/</loc>
+         <lastmod>2026-03-30</lastmod>
+    </url>
+    <url>
+         <loc>https://www.help-doc.top/JavaEE/spring/springmvc-di-ioc/springmvc-di-ioc/</loc>
          <lastmod>2026-03-30</lastmod>
     </url>
     <url>
@@ -137,11 +129,23 @@
          <lastmod>2026-03-30</lastmod>
     </url>
     <url>
-         <loc>https://www.help-doc.top/JavaEE/spring-ai/env-setup/env-setup/</loc>
+         <loc>https://www.help-doc.top/JavaEE/spring-ai/intro-base/intro-base/</loc>
+         <lastmod>2026-03-30</lastmod>
+    </url>
+    <url>
+         <loc>https://www.help-doc.top/JavaEE/spring-cloud/</loc>
+         <lastmod>2026-03-30</lastmod>
+    </url>
+    <url>
+         <loc>https://www.help-doc.top/JavaEE/spring-cloud/env-setup/env-setup/</loc>
          <lastmod>2026-03-30</lastmod>
     </url>
     <url>
          <loc>https://www.help-doc.top/JavaEE/spring-security/spring-security/</loc>
+         <lastmod>2026-03-30</lastmod>
+    </url>
+    <url>
+         <loc>https://www.help-doc.top/JavaEE/spring-sse/spring-sse/</loc>
          <lastmod>2026-03-30</lastmod>
     </url>
     <url>
