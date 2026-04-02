@@ -23,6 +23,53 @@
         root.setAttribute("data-force-dark-theme", shouldEnableForceDark ? "pending" : "off");
         root.setAttribute("data-force-dark-transition-lock", shouldEnableForceDark ? "on" : "off");
     })();
+</script><script>
+    (function () {
+        var root = document.documentElement;
+        var storageKey = "kl-code-theme";
+        var defaultTheme = "atom";
+        var themeAttribute = "data-code-theme";
+        var linkId = "site-code-theme-color";
+        var themes = {
+            atom: {
+                label: "Atom",
+                href: "../../stylesheets/atom-color.min.css"
+            },
+            github: {
+                label: "GitHub",
+                href: "../../stylesheets/github-color.min.css"
+            },
+            vs: {
+                label: "VS",
+                href: "../../stylesheets/vs-color.min.css"
+            },
+            xcode: {
+                label: "Xcode",
+                href: "../../stylesheets/xcode-color.min.css"
+            }
+        };
+        var storedTheme = defaultTheme;
+
+        try {
+            storedTheme = localStorage.getItem(storageKey) || defaultTheme;
+        } catch (error) {
+            storedTheme = defaultTheme;
+        }
+
+        if (!themes[storedTheme]) {
+            storedTheme = defaultTheme;
+        }
+
+        root.setAttribute(themeAttribute, storedTheme);
+        window.__siteCodeThemeConfig = {
+            storageKey: storageKey,
+            attributeName: themeAttribute,
+            defaultTheme: defaultTheme,
+            linkId: linkId,
+            themes: themes
+        };
+
+    })();
 </script><style>
     html[data-force-dark-theme="pending"] {
         background: #0f1115;
@@ -39,7 +86,26 @@
         transition: none !important;
         animation: none !important;
     }
-</style><link rel=preload href=../../stylesheets/docsearch.min.css as=style><link rel=preload href=../../stylesheets/colors.min.css as=style><link rel=preload href=../../stylesheets/theme2.min.css as=style><link rel=preload href=https://help-site.oss-cn-hangzhou.aliyuncs.com/images/author/avatar.jpg as=image><link rel=preload href=https://help-site.oss-cn-hangzhou.aliyuncs.com/fonts/JiangChengHeiTi.woff2 as=font type=font/woff2 crossorigin><link rel=preload href=https://help-site.oss-cn-hangzhou.aliyuncs.com/fonts/STDongGuanTi.woff as=font type=font/woff crossorigin><link rel=preload href=https://help-site.oss-cn-hangzhou.aliyuncs.com/fonts/GoogleSansCode.woff as=font type=font/woff crossorigin><link rel=preload href=https://help-site.oss-cn-hangzhou.aliyuncs.com/css/katex.min.css as=style><link rel=dns-prefetch href=//unpkg.com><link rel=dns-prefetch href=//cloud.umami.is><link rel=stylesheet href=../../stylesheets/colors.min.css><link rel=stylesheet href=../../stylesheets/theme2.min.css media="screen and (max-width: 1199px)"><link rel=stylesheet href=../../stylesheets/theme1.min.css media="screen and (min-width: 1200px)"><link rel=stylesheet href=../../stylesheets/theme2.min.css media="screen and (min-width: 1200px)"><link rel=stylesheet href=../../stylesheets/print.min.css><link rel=stylesheet href=../../stylesheets/link-preview.min.css><link rel=stylesheet href=https://help-site.oss-cn-hangzhou.aliyuncs.com/css/katex.min.css><link rel=stylesheet href=https://help-site.oss-cn-hangzhou.aliyuncs.com/css/docsearch3.css><link rel=stylesheet href=../../stylesheets/docsearch.min.css><script src=https://help-site.oss-cn-hangzhou.aliyuncs.com/js/darkreader.min.js data-darkreader-runtime=true></script><script defer src=https://cloud.umami.is/script.js data-website-id=02f9b8b7-93d4-4026-bdd8-221f2fcea2cf></script> <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+</style><link rel=preload href=../../stylesheets/docsearch.min.css as=style><link rel=preload href=../../stylesheets/colors.min.css as=style><link rel=preload href=../../stylesheets/code.min.css as=style><link rel=preload href=../../stylesheets/atom-color.min.css as=style><link rel=preload href=../../stylesheets/theme2.min.css as=style><link rel=preload href=https://help-site.oss-cn-hangzhou.aliyuncs.com/images/author/avatar.jpg as=image><link rel=preload href=https://help-site.oss-cn-hangzhou.aliyuncs.com/fonts/JiangChengHeiTi.woff2 as=font type=font/woff2 crossorigin><link rel=preload href=https://help-site.oss-cn-hangzhou.aliyuncs.com/fonts/STDongGuanTi.woff as=font type=font/woff crossorigin><link rel=preload href=https://help-site.oss-cn-hangzhou.aliyuncs.com/fonts/GoogleSansCode.woff as=font type=font/woff crossorigin><link rel=preload href=https://help-site.oss-cn-hangzhou.aliyuncs.com/css/katex.min.css as=style><link rel=dns-prefetch href=//unpkg.com><link rel=dns-prefetch href=//cloud.umami.is><link rel=stylesheet href=../../stylesheets/colors.min.css><link rel=stylesheet href=../../stylesheets/theme2.min.css media="screen and (max-width: 1199px)"><link rel=stylesheet href=../../stylesheets/theme1.min.css media="screen and (min-width: 1200px)"><link rel=stylesheet href=../../stylesheets/theme2.min.css media="screen and (min-width: 1200px)"><link rel=stylesheet href=../../stylesheets/code.min.css><link rel=stylesheet href=../../stylesheets/atom-color.min.css><script>
+    (function () {
+        var config = window.__siteCodeThemeConfig;
+        var root = document.documentElement;
+        if (!config) {
+            return;
+        }
+
+        var currentTheme = root.getAttribute(config.attributeName) || config.defaultTheme;
+        if (currentTheme === config.defaultTheme || !config.themes[currentTheme]?.href) {
+            return;
+        }
+
+        var themeLink = document.createElement("link");
+        themeLink.id = config.linkId;
+        themeLink.rel = "stylesheet";
+        themeLink.href = config.themes[currentTheme].href;
+        document.head.appendChild(themeLink);
+    })();
+</script><link rel=stylesheet href=../../stylesheets/print.min.css><link rel=stylesheet href=../../stylesheets/link-preview.min.css><link rel=stylesheet href=https://help-site.oss-cn-hangzhou.aliyuncs.com/css/katex.min.css><link rel=stylesheet href=https://help-site.oss-cn-hangzhou.aliyuncs.com/css/docsearch3.css><link rel=stylesheet href=../../stylesheets/docsearch.min.css><script src=https://help-site.oss-cn-hangzhou.aliyuncs.com/js/darkreader.min.js data-darkreader-runtime=true></script><script defer src=https://cloud.umami.is/script.js data-website-id=02f9b8b7-93d4-4026-bdd8-221f2fcea2cf></script> <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
     html.glightbox-open { overflow: initial; height: 100%; }
     .gslide-title { margin-top: 0px; user-select: text; }
     .gslide-desc { color: #666; user-select: text; }
