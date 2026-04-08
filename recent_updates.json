@@ -1,5 +1,12 @@
 [
   {
+    "title": "Spring AI介绍与基础使用",
+    "url": "JavaEE/spring-ai/intro-base/intro-base/",
+    "nav_path": null,
+    "created_str": "2026-03-26",
+    "modified_str": "2026-04-08"
+  },
+  {
     "title": "检索增强生成（RAG）",
     "url": "JavaEE/spring-ai/rag/rag/",
     "nav_path": null,
@@ -19,12 +26,5 @@
     "nav_path": null,
     "created_str": "2026-03-26",
     "modified_str": "2026-04-04"
-  },
-  {
-    "title": "Spring MVC基础",
-    "url": "JavaEE/springmvc-springboot/springmvc-basic/springmvc-basic/",
-    "nav_path": null,
-    "created_str": "2026-03-26",
-    "modified_str": "2026-04-02"
   }
 ]
