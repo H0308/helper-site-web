@@ -589,6 +589,10 @@
          <lastmod>2026-04-13</lastmod>
     </url>
     <url>
+         <loc>https://www.help-doc.top/backend/</loc>
+         <lastmod>2026-04-13</lastmod>
+    </url>
+    <url>
          <loc>https://www.help-doc.top/basic-service-component/</loc>
          <lastmod>2026-04-13</lastmod>
     </url>
@@ -977,66 +981,6 @@
          <lastmod>2026-04-13</lastmod>
     </url>
     <url>
-         <loc>https://www.help-doc.top/other/</loc>
-         <lastmod>2026-04-13</lastmod>
-    </url>
-    <url>
-         <loc>https://www.help-doc.top/other/cmake/cmake-basic/cmake-basic/</loc>
-         <lastmod>2026-04-13</lastmod>
-    </url>
-    <url>
-         <loc>https://www.help-doc.top/other/easy-excel/easy-excel/</loc>
-         <lastmod>2026-04-13</lastmod>
-    </url>
-    <url>
-         <loc>https://www.help-doc.top/other/func-stack-c/func-stack-c/</loc>
-         <lastmod>2026-04-13</lastmod>
-    </url>
-    <url>
-         <loc>https://www.help-doc.top/other/git/git-basic/git-basic/</loc>
-         <lastmod>2026-04-13</lastmod>
-    </url>
-    <url>
-         <loc>https://www.help-doc.top/other/git/git-collaboration/git-collaboration/</loc>
-         <lastmod>2026-04-13</lastmod>
-    </url>
-    <url>
-         <loc>https://www.help-doc.top/other/json_schema/json_schema/</loc>
-         <lastmod>2026-04-13</lastmod>
-    </url>
-    <url>
-         <loc>https://www.help-doc.top/other/jsoncpp/jsoncpp/</loc>
-         <lastmod>2026-04-13</lastmod>
-    </url>
-    <url>
-         <loc>https://www.help-doc.top/other/knife4j/knife4j/</loc>
-         <lastmod>2026-04-13</lastmod>
-    </url>
-    <url>
-         <loc>https://www.help-doc.top/other/muduo/muduo/</loc>
-         <lastmod>2026-04-13</lastmod>
-    </url>
-    <url>
-         <loc>https://www.help-doc.top/other/regex/regex/</loc>
-         <lastmod>2026-04-13</lastmod>
-    </url>
-    <url>
-         <loc>https://www.help-doc.top/other/shell/shell/</loc>
-         <lastmod>2026-04-13</lastmod>
-    </url>
-    <url>
-         <loc>https://www.help-doc.top/other/spdlog/spdlog/</loc>
-         <lastmod>2026-04-13</lastmod>
-    </url>
-    <url>
-         <loc>https://www.help-doc.top/other/xml/xml/</loc>
-         <lastmod>2026-04-13</lastmod>
-    </url>
-    <url>
-         <loc>https://www.help-doc.top/other/yaml/yaml/</loc>
-         <lastmod>2026-04-13</lastmod>
-    </url>
-    <url>
          <loc>https://www.help-doc.top/projects/</loc>
          <lastmod>2026-04-13</lastmod>
     </url>
@@ -1173,11 +1117,55 @@
          <lastmod>2026-04-13</lastmod>
     </url>
     <url>
+         <loc>https://www.help-doc.top/tooltips/cmake/cmake-basic/cmake-basic/</loc>
+         <lastmod>2026-04-13</lastmod>
+    </url>
+    <url>
+         <loc>https://www.help-doc.top/tooltips/easy-excel/easy-excel/</loc>
+         <lastmod>2026-04-13</lastmod>
+    </url>
+    <url>
          <loc>https://www.help-doc.top/tooltips/frp/frp/</loc>
          <lastmod>2026-04-13</lastmod>
     </url>
     <url>
+         <loc>https://www.help-doc.top/tooltips/func-stack-c/func-stack-c/</loc>
+         <lastmod>2026-04-13</lastmod>
+    </url>
+    <url>
+         <loc>https://www.help-doc.top/tooltips/git/git-basic/git-basic/</loc>
+         <lastmod>2026-04-13</lastmod>
+    </url>
+    <url>
+         <loc>https://www.help-doc.top/tooltips/git/git-collaboration/git-collaboration/</loc>
+         <lastmod>2026-04-13</lastmod>
+    </url>
+    <url>
+         <loc>https://www.help-doc.top/tooltips/json_schema/json_schema/</loc>
+         <lastmod>2026-04-13</lastmod>
+    </url>
+    <url>
+         <loc>https://www.help-doc.top/tooltips/jsoncpp/jsoncpp/</loc>
+         <lastmod>2026-04-13</lastmod>
+    </url>
+    <url>
+         <loc>https://www.help-doc.top/tooltips/knife4j/knife4j/</loc>
+         <lastmod>2026-04-13</lastmod>
+    </url>
+    <url>
          <loc>https://www.help-doc.top/tooltips/mcps/mcps/</loc>
+         <lastmod>2026-04-13</lastmod>
+    </url>
+    <url>
+         <loc>https://www.help-doc.top/tooltips/muduo/muduo/</loc>
+         <lastmod>2026-04-13</lastmod>
+    </url>
+    <url>
+         <loc>https://www.help-doc.top/tooltips/regex/regex/</loc>
+         <lastmod>2026-04-13</lastmod>
+    </url>
+    <url>
+         <loc>https://www.help-doc.top/tooltips/spdlog/spdlog/</loc>
          <lastmod>2026-04-13</lastmod>
     </url>
     <url>
@@ -1198,6 +1186,14 @@
     </url>
     <url>
          <loc>https://www.help-doc.top/tooltips/windows-vmware-linux/windows-vmware-linux/</loc>
+         <lastmod>2026-04-13</lastmod>
+    </url>
+    <url>
+         <loc>https://www.help-doc.top/tooltips/xml/xml/</loc>
+         <lastmod>2026-04-13</lastmod>
+    </url>
+    <url>
+         <loc>https://www.help-doc.top/tooltips/yaml/yaml/</loc>
          <lastmod>2026-04-13</lastmod>
     </url>
     <url>
