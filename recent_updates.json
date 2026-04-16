@@ -1,5 +1,19 @@
 [
   {
+    "title": "Word排版教程参考",
+    "url": "tooltips/word/word/",
+    "nav_path": null,
+    "created_str": "2026-04-16",
+    "modified_str": "2026-04-16"
+  },
+  {
+    "title": "服务注册与发现及负载均衡",
+    "url": "JavaEE/spring-cloud/service-discovery-load-balance/service-discovery-load-balance/",
+    "nav_path": null,
+    "created_str": "2026-04-16",
+    "modified_str": "2026-04-16"
+  },
+  {
     "title": "微服务介绍与示例引入",
     "url": "JavaEE/spring-cloud/intro-base/intro-base/",
     "nav_path": null,
@@ -12,19 +26,5 @@
     "nav_path": null,
     "created_str": "2026-03-26",
     "modified_str": "2026-04-14"
-  },
-  {
-    "title": "多模态、工具调用Tool Calling与MCP",
-    "url": "JavaEE/spring-ai/multimodal-tool-calling-mcp/multimodal-tool-calling-mcp/",
-    "nav_path": null,
-    "created_str": "2026-03-31",
-    "modified_str": "2026-04-10"
-  },
-  {
-    "title": "Spring AI介绍与基础使用",
-    "url": "JavaEE/spring-ai/intro-base/intro-base/",
-    "nav_path": null,
-    "created_str": "2026-03-26",
-    "modified_str": "2026-04-08"
   }
 ]
