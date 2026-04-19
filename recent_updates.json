@@ -1,10 +1,24 @@
 [
   {
+    "title": "数据库设计",
+    "url": "projects/pet-store-community/database-design/database-design/",
+    "nav_path": null,
+    "created_str": "2026-04-17",
+    "modified_str": "2026-04-17"
+  },
+  {
+    "title": "宠物商城与社区系统",
+    "url": "projects/pet-store-community/intro/intro/",
+    "nav_path": null,
+    "created_str": "2026-04-17",
+    "modified_str": "2026-04-17"
+  },
+  {
     "title": "Word排版教程参考",
     "url": "tooltips/word/word/",
     "nav_path": null,
     "created_str": "2026-04-16",
-    "modified_str": "2026-04-16"
+    "modified_str": "2026-04-17"
   },
   {
     "title": "服务注册与发现及负载均衡",
@@ -12,19 +26,5 @@
     "nav_path": null,
     "created_str": "2026-04-16",
     "modified_str": "2026-04-16"
-  },
-  {
-    "title": "微服务介绍与示例引入",
-    "url": "JavaEE/spring-cloud/intro-base/intro-base/",
-    "nav_path": null,
-    "created_str": "2026-03-26",
-    "modified_str": "2026-04-16"
-  },
-  {
-    "title": "UDP编程接口基本使用",
-    "url": "Linux/udp/udp-basic/udp-basic/",
-    "nav_path": null,
-    "created_str": "2026-03-26",
-    "modified_str": "2026-04-14"
   }
 ]
