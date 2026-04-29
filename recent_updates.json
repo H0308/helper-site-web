@@ -1,5 +1,12 @@
 [
   {
+    "title": "MySQL索引与事务",
+    "url": "MySQL/mysql-op/index-routine/index-routine/",
+    "nav_path": null,
+    "created_str": "2026-03-26",
+    "modified_str": "2026-04-29"
+  },
+  {
     "title": "数据库设计",
     "url": "projects/pet-store-community/database-design/database-design/",
     "nav_path": null,
@@ -19,12 +26,5 @@
     "nav_path": null,
     "created_str": "2026-04-16",
     "modified_str": "2026-04-17"
-  },
-  {
-    "title": "服务注册与发现及负载均衡",
-    "url": "JavaEE/spring-cloud/service-discovery-load-balance/service-discovery-load-balance/",
-    "nav_path": null,
-    "created_str": "2026-04-16",
-    "modified_str": "2026-04-16"
   }
 ]
