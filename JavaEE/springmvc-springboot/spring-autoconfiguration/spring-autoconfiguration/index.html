@@ -1,0 +1,947 @@
+<!DOCTYPE html><html lang="zh" class="no-js"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="柯懒不是柯南的个人知识库，整理前端开发、后端开发、数据结构与算法、Linux、基础服务组件、软件测试、工具帮助与项目实践等学习笔记"><meta name="author" content="柯懒不是柯南"><link href="https://www.help-doc.top/JavaEE/springmvc-springboot/spring-autoconfiguration/spring-autoconfiguration/" rel="canonical"><link href="../../spring-aop/spring-aop/" rel="prev"><link href="../../../spring-cloud/" rel="next"><link rel="icon" href="../../../../images/favicon.png"><meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0"><title>Spring的Bean相关知识及Spring Boot自动配置 - 柯懒的知识库</title><link rel="stylesheet" href="../../../../assets/stylesheets/main.618322db.min.css"><link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css"><link rel="stylesheet" href="../../../../css/timeline.css"><script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script><script>
+    (function () {
+        var root = document.documentElement;
+        var storageKey = "kl-site-layout";
+        var layout = "embedded";
+
+        try {
+            layout = localStorage.getItem(storageKey) || "embedded";
+        } catch (error) {
+            layout = "embedded";
+        }
+
+        if (["embedded", "floating", "flat"].indexOf(layout) === -1) {
+            layout = "embedded";
+        }
+
+        root.setAttribute("data-site-layout", layout);
+    })();
+</script><script>
+    (function () {
+        var root = document.documentElement;
+        var storageKey = "kl-force-dark-theme";
+        var systemQuery = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+        var storedMode = "system";
+        var shouldEnableForceDark = false;
+
+        try {
+            storedMode = localStorage.getItem(storageKey) || "system";
+        } catch (error) {
+            storedMode = "system";
+        }
+
+        if (["system", "dark", "light"].indexOf(storedMode) === -1) {
+            storedMode = "system";
+        }
+
+        shouldEnableForceDark = storedMode === "dark"
+            || (storedMode === "system" && systemQuery && systemQuery.matches);
+
+        root.setAttribute("data-force-dark-mode", storedMode);
+        root.setAttribute("data-force-dark-theme", shouldEnableForceDark ? "pending" : "off");
+        root.setAttribute("data-force-dark-transition-lock", shouldEnableForceDark ? "on" : "off");
+    })();
+</script><script>
+    (function () {
+        var root = document.documentElement;
+        var storageKey = "kl-code-theme";
+        var defaultTheme = "atom";
+        var themeAttribute = "data-code-theme";
+        var linkId = "site-code-theme-color";
+        var themes = {
+            atom: {
+                label: "Atom",
+                href: "../../../../stylesheets/atom-color.min.css"
+            },
+            github: {
+                label: "GitHub",
+                href: "../../../../stylesheets/github-color.min.css"
+            },
+            vs: {
+                label: "VS",
+                href: "../../../../stylesheets/vs-color.min.css"
+            },
+            xcode: {
+                label: "Xcode",
+                href: "../../../../stylesheets/xcode-color.min.css"
+            }
+        };
+        var storedTheme = defaultTheme;
+
+        try {
+            storedTheme = localStorage.getItem(storageKey) || defaultTheme;
+        } catch (error) {
+            storedTheme = defaultTheme;
+        }
+
+        if (!themes[storedTheme]) {
+            storedTheme = defaultTheme;
+        }
+
+        root.setAttribute(themeAttribute, storedTheme);
+        window.__siteCodeThemeConfig = {
+            storageKey: storageKey,
+            attributeName: themeAttribute,
+            defaultTheme: defaultTheme,
+            linkId: linkId,
+            themes: themes
+        };
+
+    })();
+</script><script>
+    (function () {
+        var root = document.documentElement;
+        var storageKey = "kl-site-font";
+        var defaultFonts = { header: "site", text: "site", code: "site" };
+        var storedFonts;
+        try {
+            storedFonts = JSON.parse(localStorage.getItem(storageKey)) || defaultFonts;
+        } catch (error) {
+            storedFonts = defaultFonts;
+        }
+        var validFonts = {
+            header: ["system", "site", "simhei", "simsun", "kaiti", "fangsong"],
+            text: ["system", "site", "simhei", "simsun", "kaiti", "fangsong"],
+            code: ["system", "site"]
+        };
+        ["header", "text", "code"].forEach(function (key) {
+            if (validFonts[key].indexOf(storedFonts[key]) === -1) {
+                storedFonts[key] = defaultFonts[key];
+            }
+            root.setAttribute("data-site-font-" + key, storedFonts[key]);
+        });
+        window.__siteFontConfig = {
+            storageKey: storageKey,
+            defaultFonts: defaultFonts
+        };
+    })();
+</script><style>
+    html[data-force-dark-theme="pending"] {
+        background: #0f1115;
+        color-scheme: dark;
+    }
+
+    html[data-force-dark-theme="pending"] body {
+        visibility: hidden;
+    }
+
+    html[data-force-dark-transition-lock="on"] *,
+    html[data-force-dark-transition-lock="on"] *::before,
+    html[data-force-dark-transition-lock="on"] *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+</style><link rel="preload" href="../../../../stylesheets/docsearch.min.css" as="style"><link rel="preload" href="../../../../stylesheets/colors.min.css" as="style"><link rel="preload" href="../../../../stylesheets/code.min.css" as="style"><link rel="preload" href="../../../../stylesheets/atom-color.min.css" as="style"><link rel="preload" href="../../../../stylesheets/theme2.min.css" as="style"><link rel="preload" href="https://help-site.oss-cn-hangzhou.aliyuncs.com/images/author/avatar.jpg" as="image"><link rel="preload" href="https://help-site.oss-cn-hangzhou.aliyuncs.com/fonts/STDongGuanTi.woff" as="font" type="font/woff" crossorigin=""><link rel="preload" href="https://help-site.oss-cn-hangzhou.aliyuncs.com/fonts/GoogleSansCode.woff" as="font" type="font/woff" crossorigin=""><link rel="preload" href="https://help-site.oss-cn-hangzhou.aliyuncs.com/css/katex.min.css" as="style"><link rel="dns-prefetch" href="//unpkg.com"><link rel="dns-prefetch" href="//cloud.umami.is"><link rel="stylesheet" href="../../../../stylesheets/colors.min.css"><link rel="stylesheet" href="../../../../stylesheets/theme1.min.css" media="screen and (min-width: 1200px)"><link rel="stylesheet" href="../../../../stylesheets/theme2.min.css"><link rel="stylesheet" href="../../../../stylesheets/code.min.css"><link rel="stylesheet" href="../../../../stylesheets/atom-color.min.css"><script>
+    (function () {
+        var config = window.__siteCodeThemeConfig;
+        var root = document.documentElement;
+        if (!config) {
+            return;
+        }
+
+        var currentTheme = root.getAttribute(config.attributeName) || config.defaultTheme;
+        if (currentTheme === config.defaultTheme || !config.themes[currentTheme]?.href) {
+            return;
+        }
+
+        var themeLink = document.createElement("link");
+        themeLink.id = config.linkId;
+        themeLink.rel = "stylesheet";
+        themeLink.href = config.themes[currentTheme].href;
+        document.head.appendChild(themeLink);
+    })();
+</script><link rel="stylesheet" href="../../../../stylesheets/print.min.css"><link rel="stylesheet" href="../../../../stylesheets/link-preview.min.css"><link rel="stylesheet" href="https://help-site.oss-cn-hangzhou.aliyuncs.com/css/katex.min.css"><link rel="stylesheet" href="https://help-site.oss-cn-hangzhou.aliyuncs.com/css/docsearch3.css"><!-- 添加对Katex的支持 --><script defer="" src="https://help-site.oss-cn-hangzhou.aliyuncs.com/js/katex.min.js"></script><script defer="" src="https://help-site.oss-cn-hangzhou.aliyuncs.com/js/auto-render.min.js"></script><!-- 评论系统支持 --><link rel="stylesheet" href="https://help-site.oss-cn-hangzhou.aliyuncs.com/css/waline.css"><!-- 添加mermaid支持 --><script defer="" src="https://help-site.oss-cn-hangzhou.aliyuncs.com/js/mermaid.min.js"></script><link rel="stylesheet" href="/stylesheets/waline.min.css"><link rel="stylesheet" href="../../../../stylesheets/docsearch.min.css"><script src="https://help-site.oss-cn-hangzhou.aliyuncs.com/js/darkreader.min.js" data-darkreader-runtime="true"></script><script defer="" src="https://cloud.umami.is/script.js" data-website-id="02f9b8b7-93d4-4026-bdd8-221f2fcea2cf"></script><link href="../../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head> <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="white" data-md-color-accent="deep-orange"> <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off"> <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off"> <label class="md-overlay" for="__drawer"></label> <div data-md-component="skip"> <a href="#springbeanspring_boot" class="md-skip"> 跳转至 </a> </div> <div data-md-component="announce"> </div> <header class="md-header" data-md-component="header"> <nav class="md-header__inner md-grid" aria-label="页眉"> <a href="../../../.." title="柯懒的知识库" class="md-header__button md-logo" aria-label="柯懒的知识库" data-md-component="logo"> <img src="../../../../assets/logo.png" alt="logo"> </a> <label class="md-header__button md-icon" for="__drawer"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg> </label> <div class="md-header__title" data-md-component="header-title"> <div class="md-header__ellipsis"> <div class="md-header__topic"> <span class="md-ellipsis"> 柯懒的知识库 </span> </div> <div class="md-header__topic" data-md-component="header-topic"> <span class="md-ellipsis"> Spring的Bean相关知识及Spring Boot自动配置 </span> </div> </div> </div> <div class="header-avatar"> <img src="https://help-site.oss-cn-hangzhou.aliyuncs.com/images/author/avatar.jpg" alt="头像"> <div class="avatar-dropdown"> <p><strong>柯懒不是柯南</strong></p> <a href="../../../../author/contact/contact/" class="avatar-dropdown-item">联系作者</a> <div class="avatar-dropdown-divider"></div> <a href="https://github.com/H0308" class="avatar-dropdown-item">Github仓库</a> </div> </div> <div class="site-font-toggle" aria-label="字体设置" title="字体设置"> <button class="site-font-toggle__button" type="button"> <svg viewBox="0 0 24 24" focusable="false"> <path fill="currentColor" d="M9 4v3h5v12h3V7h5V4H9zm-6 8h3v7h3v-7h3V9H3v3z"></path> </svg> </button> <div class="site-font-dropdown"> <div class="site-font-dropdown__item" data-font-type="header"> <span class="site-font-dropdown__text">标题字体</span> <svg class="site-font-dropdown__arrow" viewBox="0 0 24 24" focusable="false"> <path fill="currentColor" d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"></path> </svg> <div class="site-font-dropdown__submenu"> <button class="site-font-dropdown__option" data-font-value="system">系统默认</button> <button class="site-font-dropdown__option" data-font-value="site">网站字体</button> <button class="site-font-dropdown__option" data-font-value="simhei">黑体</button> <button class="site-font-dropdown__option" data-font-value="simsun">宋体</button> <button class="site-font-dropdown__option" data-font-value="kaiti">楷体</button> <button class="site-font-dropdown__option" data-font-value="fangsong">仿宋</button> </div> </div> <div class="site-font-dropdown__divider"></div> <div class="site-font-dropdown__item" data-font-type="text"> <span class="site-font-dropdown__text">正文字体</span> <svg class="site-font-dropdown__arrow" viewBox="0 0 24 24" focusable="false"> <path fill="currentColor" d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"></path> </svg> <div class="site-font-dropdown__submenu"> <button class="site-font-dropdown__option" data-font-value="system">系统默认</button> <button class="site-font-dropdown__option" data-font-value="site">网站字体</button> <button class="site-font-dropdown__option" data-font-value="simhei">黑体</button> <button class="site-font-dropdown__option" data-font-value="simsun">宋体</button> <button class="site-font-dropdown__option" data-font-value="kaiti">楷体</button> <button class="site-font-dropdown__option" data-font-value="fangsong">仿宋</button> </div> </div> <div class="site-font-dropdown__divider"></div> <div class="site-font-dropdown__item" data-font-type="code"> <span class="site-font-dropdown__text">代码字体</span> <svg class="site-font-dropdown__arrow" viewBox="0 0 24 24" focusable="false"> <path fill="currentColor" d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"></path> </svg> <div class="site-font-dropdown__submenu"> <button class="site-font-dropdown__option" data-font-value="system">系统默认</button> <button class="site-font-dropdown__option" data-font-value="site">网站字体</button> </div> </div> </div> </div> <button class="md-header__button md-icon theme-force-toggle" type="button" data-theme-force-toggle="" data-force-dark-state="off" data-force-dark-mode="system" aria-label="当前为跟随系统，点击切换为深色" aria-pressed="false" title="当前为跟随系统，点击切换为深色"> <span class="theme-force-toggle__icon theme-force-toggle__icon--system" aria-hidden="true"> <svg viewBox="0 0 24 24" focusable="false"> <path fill="currentColor" d="M4.75 4A2.75 2.75 0 0 0 2 6.75v8.5A2.75 2.75 0 0 0 4.75 18H10v1.5H8.75a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5H14V18h5.25A2.75 2.75 0 0 0 22 15.25v-8.5A2.75 2.75 0 0 0 19.25 4Zm-1.25 2.75c0-.69.56-1.25 1.25-1.25h14.5c.69 0 1.25.56 1.25 1.25v8.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25Z"></path> </svg> </span> <span class="theme-force-toggle__icon theme-force-toggle__icon--moon" aria-hidden="true"> <svg viewBox="0 0 24 24" focusable="false"> <path fill="currentColor" d="M20.742 13.045a8.088 8.088 0 0 1-9.787-9.787A.75.75 0 0 0 9.88 2.43 10.5 10.5 0 1 0 21.57 14.12a.75.75 0 0 0-.828-1.075Z"></path> </svg> </span> <span class="theme-force-toggle__icon theme-force-toggle__icon--sun" aria-hidden="true"> <svg viewBox="0 0 24 24" focusable="false"> <path fill="currentColor" d="M12 6.25A5.75 5.75 0 1 0 17.75 12 5.757 5.757 0 0 0 12 6.25Zm0 10A4.25 4.25 0 1 1 16.25 12 4.255 4.255 0 0 1 12 16.25ZM12 1.5a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 12 1.5Zm0 18.75a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0V21a.75.75 0 0 1 .75-.75ZM22.5 12a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1 0-1.5h1.5a.75.75 0 0 1 .75.75ZM3.75 12a.75.75 0 0 1-.75.75H1.5a.75.75 0 0 1 0-1.5H3a.75.75 0 0 1 .75.75Zm15.46-6.71a.75.75 0 0 1 1.06 1.06l-1.06 1.06a.75.75 0 0 1-1.06-1.06Zm-13.36 13.36a.75.75 0 0 1 1.06 1.06l-1.06 1.06a.75.75 0 1 1-1.06-1.06Zm14.42 2.12a.75.75 0 0 1-1.06 0l-1.06-1.06a.75.75 0 1 1 1.06-1.06l1.06 1.06a.75.75 0 0 1 0 1.06ZM6.91 7.41a.75.75 0 0 1-1.06 0L4.79 6.35a.75.75 0 1 1 1.06-1.06l1.06 1.06a.75.75 0 0 1 0 1.06Z"></path> </svg> </span> <span class="theme-force-toggle__sr">切换主题</span> </button> <div class="site-layout-toggle"> <button class="md-header__button md-icon site-layout-toggle__button" type="button" data-layout-toggle="" aria-label="切换页面布局" title="切换页面布局" aria-haspopup="true" aria-expanded="false"> <svg viewBox="0 0 24 24" focusable="false"> <rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"></rect> <rect x="14.5" y="7.5" width="4" height="9" rx="0.8" fill="currentColor"></rect> </svg> </button> <div class="site-layout-dropdown"> <div class="site-layout-dropdown__title">页面布局</div> <div class="site-layout-dropdown__options"> <button class="site-layout-option" type="button" data-layout-option="embedded" aria-pressed="true"> <span class="site-layout-option__check" aria-hidden="true"> <svg viewBox="0 0 24 24" width="11" height="11" focusable="false"> <path fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" d="M20 6L9 17l-5-5"></path> </svg> </span> <svg viewBox="0 0 96 64" class="site-layout-option__thumb" aria-hidden="true"> <rect class="slt-bg" x="0" y="0" width="96" height="64" rx="4"></rect> <circle class="slt-strong" cx="9" cy="13" r="2"></circle> <rect class="slt-faint" x="14" y="11.4" width="12" height="3.2" rx="1.6"></rect> <circle class="slt-line" cx="9" cy="23" r="2"></circle> <rect class="slt-faint" x="14" y="21.4" width="10" height="3.2" rx="1.6"></rect> <circle class="slt-line" cx="9" cy="33" r="2"></circle> <rect class="slt-faint" x="14" y="31.4" width="13" height="3.2" rx="1.6"></rect> <rect class="slt-card" x="32" y="7" width="58" height="50" rx="4"></rect> <rect class="slt-strong" x="37" y="12" width="18" height="4" rx="2"></rect> <rect class="slt-line" x="37" y="21" width="24" height="2.4" rx="1.2"></rect> <rect class="slt-faint" x="37" y="27" width="21" height="2.4" rx="1.2"></rect> <rect class="slt-faint" x="37" y="33" width="23" height="2.4" rx="1.2"></rect> <rect class="slt-faint" x="37" y="39" width="18" height="2.4" rx="1.2"></rect> <rect class="slt-divider" x="67.5" y="11" width="1" height="42"></rect> <rect class="slt-line" x="72" y="13" width="13" height="2.4" rx="1.2"></rect> <rect class="slt-faint" x="72" y="19" width="10" height="2.4" rx="1.2"></rect> <rect class="slt-faint" x="72" y="25" width="12" height="2.4" rx="1.2"></rect> </svg> <span class="site-layout-option__label">内嵌</span> </button> <button class="site-layout-option" type="button" data-layout-option="floating" aria-pressed="false"> <span class="site-layout-option__check" aria-hidden="true"> <svg viewBox="0 0 24 24" width="11" height="11" focusable="false"> <path fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" d="M20 6L9 17l-5-5"></path> </svg> </span> <svg viewBox="0 0 96 64" class="site-layout-option__thumb" aria-hidden="true"> <rect class="slt-bg" x="0" y="0" width="96" height="64" rx="4"></rect> <rect class="slt-card" x="5" y="9" width="22" height="42" rx="4"></rect> <circle class="slt-strong" cx="11.5" cy="16" r="2"></circle> <rect class="slt-faint" x="16" y="14.4" width="8" height="3.2" rx="1.6"></rect> <circle class="slt-line" cx="11.5" cy="26" r="2"></circle> <rect class="slt-faint" x="16" y="24.4" width="6.5" height="3.2" rx="1.6"></rect> <circle class="slt-line" cx="11.5" cy="36" r="2"></circle> <rect class="slt-faint" x="16" y="34.4" width="8.5" height="3.2" rx="1.6"></rect> <rect class="slt-strong" x="34" y="10" width="18" height="4" rx="2"></rect> <rect class="slt-line" x="34" y="19" width="30" height="2.4" rx="1.2"></rect> <rect class="slt-faint" x="34" y="25" width="27" height="2.4" rx="1.2"></rect> <rect class="slt-faint" x="34" y="31" width="29" height="2.4" rx="1.2"></rect> <rect class="slt-faint" x="34" y="37" width="24" height="2.4" rx="1.2"></rect> <rect class="slt-faint" x="34" y="43" width="26" height="2.4" rx="1.2"></rect> <rect class="slt-line" x="70" y="12" width="12" height="2.4" rx="1.2"></rect> <rect class="slt-faint" x="70" y="18" width="9" height="2.4" rx="1.2"></rect> <rect class="slt-faint" x="70" y="24" width="11" height="2.4" rx="1.2"></rect> </svg> <span class="site-layout-option__label">浮动</span> </button> <button class="site-layout-option" type="button" data-layout-option="flat" aria-pressed="false"> <span class="site-layout-option__check" aria-hidden="true"> <svg viewBox="0 0 24 24" width="11" height="11" focusable="false"> <path fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" d="M20 6L9 17l-5-5"></path> </svg> </span> <svg viewBox="0 0 96 64" class="site-layout-option__thumb" aria-hidden="true"> <rect class="slt-bg" x="0" y="0" width="96" height="64" rx="4"></rect> <circle class="slt-strong" cx="11" cy="14" r="2"></circle> <rect class="slt-faint" x="15.5" y="12.4" width="9" height="3.2" rx="1.6"></rect> <circle class="slt-line" cx="11" cy="24" r="2"></circle> <rect class="slt-faint" x="15.5" y="22.4" width="7" height="3.2" rx="1.6"></rect> <circle class="slt-line" cx="11" cy="34" r="2"></circle> <rect class="slt-faint" x="15.5" y="32.4" width="8.5" height="3.2" rx="1.6"></rect> <rect class="slt-strong" x="33.5" y="10" width="16" height="4" rx="2"></rect> <rect class="slt-line" x="33.5" y="19" width="34" height="2.4" rx="1.2"></rect> <rect class="slt-faint" x="33.5" y="25" width="30" height="2.4" rx="1.2"></rect> <rect class="slt-faint" x="33.5" y="31" width="33" height="2.4" rx="1.2"></rect> <rect class="slt-faint" x="33.5" y="37" width="26" height="2.4" rx="1.2"></rect> <rect class="slt-faint" x="33.5" y="43" width="29" height="2.4" rx="1.2"></rect> <rect class="slt-line" x="76" y="12" width="12" height="2.4" rx="1.2"></rect> <rect class="slt-faint" x="76" y="18" width="9" height="2.4" rx="1.2"></rect> <rect class="slt-faint" x="76" y="24" width="11" height="2.4" rx="1.2"></rect> </svg> <span class="site-layout-option__label">平铺</span> </button> </div> </div> </div> <div id="docsearch"></div> </nav> </header> <!-- <div class="back-to-top-btn" id="backToTopBtn"  onclick="window.scrollTo({top: 0})">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" fill="currentColor"/>
+    </svg>
+</div> --> <div class="md-container" data-md-component="container"> <nav class="md-tabs" aria-label="标签" data-md-component="tabs"> <div class="md-grid"> <ul class="md-tabs__list"> <li class="md-tabs__item"> <a href="../../../.." class="md-tabs__link"> 主页 </a> </li> <li class="md-tabs__item"> <a href="../../../../timeline/timeline/" class="md-tabs__link"> 网站时间线 </a> </li> <li class="md-tabs__item md-tabs__item--nested"> <a href="../../../../front-end/" class="md-tabs__link"> 前端开发 <svg class="md-tabs__arrow" viewBox="0 0 24 24" aria-hidden="true"> <path fill="currentColor" d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path> </svg> </a> <ul class="md-tabs__dropdown"> <li class="md-tabs__dropdown-item"> <a href="../../../../front-end/" class="md-tabs__dropdown-link"> 章节目录 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../html-css/" class="md-tabs__dropdown-link"> HTML与CSS </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../javascript-lang/" class="md-tabs__dropdown-link"> JavaScript </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../vue/" class="md-tabs__dropdown-link"> Vue </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../qt/" class="md-tabs__dropdown-link"> Qt </a> </li> </ul> </li> <li class="md-tabs__item md-tabs__item--active md-tabs__item--nested"> <a href="../../../../backend/" class="md-tabs__link"> 后端开发 <svg class="md-tabs__arrow" viewBox="0 0 24 24" aria-hidden="true"> <path fill="currentColor" d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path> </svg> </a> <ul class="md-tabs__dropdown"> <li class="md-tabs__dropdown-item"> <a href="../../../../backend/" class="md-tabs__dropdown-link"> 章节目录 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../languages/" class="md-tabs__dropdown-link"> 后端编程语言 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../" class="md-tabs__dropdown-link md-tabs__dropdown-link--active"> JavaEE应用开发 </a> </li> </ul> </li> <li class="md-tabs__item md-tabs__item--nested"> <a href="../../../../data-structure-algo/" class="md-tabs__link"> 数据结构与算法 <svg class="md-tabs__arrow" viewBox="0 0 24 24" aria-hidden="true"> <path fill="currentColor" d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path> </svg> </a> <ul class="md-tabs__dropdown"> <li class="md-tabs__dropdown-item"> <a href="../../../../data-structure-algo/" class="md-tabs__dropdown-link"> 章节目录 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../data-structure/" class="md-tabs__dropdown-link"> 数据结构 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../algorithm/" class="md-tabs__dropdown-link"> 算法 </a> </li> </ul> </li> <li class="md-tabs__item md-tabs__item--nested"> <a href="../../../../Linux/" class="md-tabs__link"> Linux <svg class="md-tabs__arrow" viewBox="0 0 24 24" aria-hidden="true"> <path fill="currentColor" d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path> </svg> </a> <ul class="md-tabs__dropdown"> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/" class="md-tabs__dropdown-link"> 章节目录 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/options-commands/options-commands/" class="md-tabs__dropdown-link"> Linux常用选项和指令 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/permission/permission/" class="md-tabs__dropdown-link"> Linux权限相关 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/software-installation/software-installation/" class="md-tabs__dropdown-link"> CentOS软件安装 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/gcc-gdb/gcc-gdb/" class="md-tabs__dropdown-link"> Linux下的gcc与gdb </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/makefile-progress-bar/makefile-progress-bar/" class="md-tabs__dropdown-link"> Linux下的Makefile与进度条程序 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/os-basic/os-basic/" class="md-tabs__dropdown-link"> 操作系统基础知识 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/process-basic/process-basic/" class="md-tabs__dropdown-link"> Linux进程基础 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/process-state-priority/process-state-priority/" class="md-tabs__dropdown-link"> Linux进程状态与进程优先级 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/process-switch-scheduling/process-switch-scheduling/" class="md-tabs__dropdown-link"> Linux进程切换以及调度算法 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/command-line-env/command-line-env/" class="md-tabs__dropdown-link"> Linux命令行与环境变量 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/process-address-space/process-address-space/" class="md-tabs__dropdown-link"> Linux进程地址空间 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/process-control/process-control/" class="md-tabs__dropdown-link"> Linux进程控制 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/linux-fileop/linux-fileop/" class="md-tabs__dropdown-link"> Linux文件操作基础 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/io-process/io-process/" class="md-tabs__dropdown-link"> Linux中输入和输出基本过程 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/file-system/file-system/" class="md-tabs__dropdown-link"> Linux文件系统 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/soft-hard-link/soft-hard-link/" class="md-tabs__dropdown-link"> Linux软链接和硬链接 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/com-process/com-anonymous-pipe/com-anonymous-pipe/" class="md-tabs__dropdown-link"> Linux进程间通信 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/signals-os-principles/signals-os-principles/" class="md-tabs__dropdown-link"> Linux信号与操作系统原理 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/linux-thread/thread-concept-op/thread-concept-op/" class="md-tabs__dropdown-link"> Linux线程 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/net-basic/net-basic/" class="md-tabs__dropdown-link"> 网络基础知识 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/socket-basic/socket-basic/" class="md-tabs__dropdown-link"> Socket编程基础 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/udp/udp-basic/udp-basic/" class="md-tabs__dropdown-link"> UDP编程 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/tcp-basic/tcp-basic/" class="md-tabs__dropdown-link"> TCP编程接口基本使用 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/serialization-net-cal/serialization-net-cal/" class="md-tabs__dropdown-link"> 序列化和反序列化与网络计算器 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/process-relationship-daemon/process-relationship-daemon/" class="md-tabs__dropdown-link"> 进程间关系和守护进程 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/http/http-basic-httpserver/http-basic-httpserver/" class="md-tabs__dropdown-link"> 应用层协议HTTP </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/udp-principles/udp-principles/" class="md-tabs__dropdown-link"> UDP协议原理 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/tcp-principles/tcp-principles/" class="md-tabs__dropdown-link"> TCP协议原理 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/tcp-connection-backlog/tcp-connection-backlog/" class="md-tabs__dropdown-link"> 理解Linux如何看待连接以及TCP全连接队列 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/ip/ip/" class="md-tabs__dropdown-link"> 网络层IP协议 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/datalink/datalink/" class="md-tabs__dropdown-link"> 数据链路层协议 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/dns-icmp/dns-icmp/" class="md-tabs__dropdown-link"> DNS与ICMP </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/nat-proxy/nat-proxy/" class="md-tabs__dropdown-link"> NAT技术、代理服务器和内网穿透 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/io-model-select-poll/io-model-select-poll/" class="md-tabs__dropdown-link"> 五种IO模型与select和poll分别实现多路转接 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/epoll/epoll/" class="md-tabs__dropdown-link"> epoll实现多路转接 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../Linux/reactor-et/reactor-et/" class="md-tabs__dropdown-link"> Reactor模式与完善基于边缘触发模式epoll实现TCP服务器 </a> </li> </ul> </li> <li class="md-tabs__item md-tabs__item--nested"> <a href="../../../../basic-service-component/" class="md-tabs__link"> 基础服务组件 <svg class="md-tabs__arrow" viewBox="0 0 24 24" aria-hidden="true"> <path fill="currentColor" d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path> </svg> </a> <ul class="md-tabs__dropdown"> <li class="md-tabs__dropdown-item"> <a href="../../../../basic-service-component/" class="md-tabs__dropdown-link"> 章节目录 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../MySQL/" class="md-tabs__dropdown-link"> MySQL </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../rabbitmq/" class="md-tabs__dropdown-link"> RabbitMQ </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../elastic-search/elastic-search/" class="md-tabs__dropdown-link"> ElasticSearch安装与基本使用 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../redis/" class="md-tabs__dropdown-link"> Redis </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../docker/" class="md-tabs__dropdown-link"> Docker </a> </li> </ul> </li> <li class="md-tabs__item md-tabs__item--nested"> <a href="../../../../software-test/" class="md-tabs__link"> 软件测试 <svg class="md-tabs__arrow" viewBox="0 0 24 24" aria-hidden="true"> <path fill="currentColor" d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path> </svg> </a> <ul class="md-tabs__dropdown"> <li class="md-tabs__dropdown-item"> <a href="../../../../software-test/" class="md-tabs__dropdown-link"> 章节目录 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../software-test/basic-concept/basic-concept/" class="md-tabs__dropdown-link"> 软件测试相关概念 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../software-test/automatic-test/automatic-test/" class="md-tabs__dropdown-link"> 自动化测试概念及UI自动化测试 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../software-test/performance-test/performance-test/" class="md-tabs__dropdown-link"> 性能测试 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../software-test/api-automatic-test/api-automatic-test/" class="md-tabs__dropdown-link"> 接口自动化测试 </a> </li> </ul> </li> <li class="md-tabs__item md-tabs__item--nested"> <a href="../../../../tooltips/" class="md-tabs__link"> 工具帮助与知识扩展 <svg class="md-tabs__arrow" viewBox="0 0 24 24" aria-hidden="true"> <path fill="currentColor" d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path> </svg> </a> <ul class="md-tabs__dropdown"> <li class="md-tabs__dropdown-item"> <a href="../../../../tooltips/" class="md-tabs__dropdown-link"> 章节目录 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../tooltips/vscode-snippets/vscode-snippets/" class="md-tabs__dropdown-link"> vscode中添加代码片段 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../tooltips/windows-vmware-linux/windows-vmware-linux/" class="md-tabs__dropdown-link"> Windows系统下在VMware中配置Linux环境并通过客户端进行连接 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../tooltips/sunshine-moonlight/sunshine-moonlight/" class="md-tabs__dropdown-link"> Sunshine+Moonlight实现屏幕内容串流 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../tooltips/vim/vim/" class="md-tabs__dropdown-link"> vim使用帮助 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../tooltips/frp/frp/" class="md-tabs__dropdown-link"> 内网穿透部署 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../tooltips/mcps/mcps/" class="md-tabs__dropdown-link"> 常见MCP工具配置 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../tooltips/func-stack-c/func-stack-c/" class="md-tabs__dropdown-link"> 关于函数栈帧（C语言演示） </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../tooltips/xml/xml/" class="md-tabs__dropdown-link"> 关于XML文件 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../tooltips/jsoncpp/jsoncpp/" class="md-tabs__dropdown-link"> 关于JSONCPP库 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../tooltips/spdlog/spdlog/" class="md-tabs__dropdown-link"> 关于C++日志库spdlog </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../tooltips/git/git-basic/git-basic/" class="md-tabs__dropdown-link"> 关于Git </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../tooltips/muduo/muduo/" class="md-tabs__dropdown-link"> 关于Muduo库 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../tooltips/cmake/cmake-basic/cmake-basic/" class="md-tabs__dropdown-link"> 关于CMake </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../tooltips/yaml/yaml/" class="md-tabs__dropdown-link"> 关于YAML文件 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../tooltips/json_schema/json_schema/" class="md-tabs__dropdown-link"> 关于JSON Schema </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../tooltips/regex/regex/" class="md-tabs__dropdown-link"> 关于正则表达式 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../tooltips/easy-excel/easy-excel/" class="md-tabs__dropdown-link"> 关于EasyExcel </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../tooltips/knife4j/knife4j/" class="md-tabs__dropdown-link"> 关于Knife4j </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../tooltips/word/word/" class="md-tabs__dropdown-link"> Word排版教程参考 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../tooltips/alibaba-code-guideline/alibaba-code-guideline/" class="md-tabs__dropdown-link"> Java开发手册（黄山版） </a> </li> </ul> </li> <li class="md-tabs__item md-tabs__item--nested"> <a href="../../../../projects/" class="md-tabs__link"> 项目 <svg class="md-tabs__arrow" viewBox="0 0 24 24" aria-hidden="true"> <path fill="currentColor" d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path> </svg> </a> <ul class="md-tabs__dropdown"> <li class="md-tabs__dropdown-item"> <a href="../../../../projects/" class="md-tabs__dropdown-link"> 章节目录 </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../projects/boost-searching-engine/boost-searching-engine/" class="md-tabs__dropdown-link"> Boost库搜索引擎（C++） </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../projects/reactor-server/intro/intro/" class="md-tabs__dropdown-link"> 仿Muduo库的高并发服务器（C++） </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../projects/json-rpc/intro/intro/" class="md-tabs__dropdown-link"> 基于JSON的RPC框架（C++） </a> </li> <li class="md-tabs__dropdown-item"> <a href="../../../../projects/pet-store-community/intro/intro/" class="md-tabs__dropdown-link"> 宠物商城与社区系统（Java） </a> </li> </ul> </li> </ul> </div> </nav> <main class="md-main" data-md-component="main"> <div class="md-main__inner md-grid"> <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation"> <div class="md-sidebar__scrollwrap"> <div class="md-sidebar__inner"> <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0"> <label class="md-nav__title" for="__drawer"> <a href="../../../.." title="柯懒的知识库" class="md-nav__button md-logo" aria-label="柯懒的知识库" data-md-component="logo"> <img src="../../../../assets/logo.png" alt="logo"> </a> 柯懒的知识库 </label> <ul class="md-nav__list" data-md-scrollfix=""> <li class="md-nav__item"> <a href="../../../.." class="md-nav__link"> <span class="md-ellipsis"> 主页 </span> </a> </li> <li class="md-nav__item"> <a href="../../../../timeline/timeline/" class="md-nav__link"> <span class="md-ellipsis"> 网站时间线 </span> </a> </li> <li class="md-nav__item md-nav__item--pruned md-nav__item--nested"> <a href="../../../../front-end/" class="md-nav__link"> <span class="md-ellipsis"> 前端开发 </span> <span class="md-nav__icon md-icon"></span> </a> </li> <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested"> <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked=""> <div class="md-nav__link md-nav__container"> <a href="../../../../backend/" class="md-nav__link "> <span class="md-ellipsis"> 后端开发 </span> </a> <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex=""> <span class="md-nav__icon md-icon"></span> </label> </div> <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true"> <label class="md-nav__title" for="__nav_4"> <span class="md-nav__icon md-icon"></span> 后端开发 </label> <ul class="md-nav__list" data-md-scrollfix=""> <li class="md-nav__item md-nav__item--section md-nav__item--nested"> <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2"> <div class="md-nav__link md-nav__container"> <a href="../../../../languages/" class="md-nav__link "> <span class="md-ellipsis"> 后端编程语言 </span> </a> <label class="md-nav__link " for="__nav_4_2" id="__nav_4_2_label" tabindex=""> <span class="md-nav__icon md-icon"></span> </label> </div> <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false"> <label class="md-nav__title" for="__nav_4_2"> <span class="md-nav__icon md-icon"></span> 后端编程语言 </label> <ul class="md-nav__list" data-md-scrollfix=""> <li class="md-nav__item md-nav__item--pruned md-nav__item--nested"> <a href="../../../../c-lang/" class="md-nav__link"> <span class="md-ellipsis"> C语言 </span> <span class="md-nav__icon md-icon"></span> </a> </li> <li class="md-nav__item md-nav__item--pruned md-nav__item--nested"> <a href="../../../../cpp/" class="md-nav__link"> <span class="md-ellipsis"> C++ </span> <span class="md-nav__icon md-icon"></span> </a> </li> <li class="md-nav__item md-nav__item--pruned md-nav__item--nested"> <a href="../../../../Java/" class="md-nav__link"> <span class="md-ellipsis"> Java </span> <span class="md-nav__icon md-icon"></span> </a> </li> <li class="md-nav__item md-nav__item--pruned md-nav__item--nested"> <a href="../../../../python/" class="md-nav__link"> <span class="md-ellipsis"> Python </span> <span class="md-nav__icon md-icon"></span> </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested"> <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" checked=""> <div class="md-nav__link md-nav__container"> <a href="../../../" class="md-nav__link "> <span class="md-ellipsis"> JavaEE应用开发 </span> </a> <label class="md-nav__link " for="__nav_4_3" id="__nav_4_3_label" tabindex=""> <span class="md-nav__icon md-icon"></span> </label> </div> <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="true"> <label class="md-nav__title" for="__nav_4_3"> <span class="md-nav__icon md-icon"></span> JavaEE应用开发 </label> <ul class="md-nav__list" data-md-scrollfix=""> <li class="md-nav__item md-nav__item--active md-nav__item--nested"> <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_2" checked=""> <div class="md-nav__link md-nav__container"> <a href="../../" class="md-nav__link "> <span class="md-ellipsis"> Spring MVC/Spring Boot </span> </a> <label class="md-nav__link " for="__nav_4_3_2" id="__nav_4_3_2_label" tabindex="0"> <span class="md-nav__icon md-icon"></span> </label> </div> <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_2_label" aria-expanded="true"> <label class="md-nav__title" for="__nav_4_3_2"> <span class="md-nav__icon md-icon"></span> Spring MVC/Spring Boot </label> <ul class="md-nav__list" data-md-scrollfix=""> <li class="md-nav__item"> <a href="../../springmvc-basic/springmvc-basic/" class="md-nav__link"> <span class="md-ellipsis"> Spring MVC基础 </span> </a> </li> <li class="md-nav__item"> <a href="../../spring-aop/spring-aop/" class="md-nav__link"> <span class="md-ellipsis"> Spring AOP </span> </a> </li> <li class="md-nav__item md-nav__item--active"> <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc"> <label class="md-nav__link md-nav__link--active" for="__toc"> <span class="md-ellipsis"> Spring的Bean相关知识及Spring Boot自动配置 </span> <span class="md-nav__icon md-icon"></span> </label> <a href="./" class="md-nav__link md-nav__link--active"> <span class="md-ellipsis"> Spring的Bean相关知识及Spring Boot自动配置 </span> </a> <nav class="md-nav md-nav--secondary" aria-label="本节目录"> <label class="md-nav__title" for="__toc"> <span class="md-nav__icon md-icon"></span> 本节目录 </label> <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix=""> <li class="md-nav__item"> <a href="#bean" class="md-nav__link"> <span class="md-ellipsis"> Bean的作用域 </span> </a> </li> <li class="md-nav__item"> <a href="#bean_1" class="md-nav__link"> <span class="md-ellipsis"> Bean的生命周期 </span> </a> </li> <li class="md-nav__item"> <a href="#spring_boot" class="md-nav__link"> <span class="md-ellipsis"> Spring Boot加载非本包下的自定义配置类 </span> </a> <nav class="md-nav" aria-label="Spring Boot加载非本包下的自定义配置类"> <ul class="md-nav__list"> <li class="md-nav__item"> <a href="#_1" class="md-nav__link"> <span class="md-ellipsis"> 概览 </span> </a> </li> <li class="md-nav__item"> <a href="#componentscan" class="md-nav__link"> <span class="md-ellipsis"> @ComponentScan 方式 </span> </a> </li> <li class="md-nav__item"> <a href="#import" class="md-nav__link"> <span class="md-ellipsis"> @Import 方式 </span> </a> </li> <li class="md-nav__item"> <a href="#importselector" class="md-nav__link"> <span class="md-ellipsis"> 实现ImportSelector </span> </a> </li> <li class="md-nav__item"> <a href="#spring" class="md-nav__link"> <span class="md-ellipsis"> 使用Spring配置文件 </span> </a> </li> </ul> </nav> </li> <li class="md-nav__item"> <a href="#spring_boot_1" class="md-nav__link"> <span class="md-ellipsis"> Spring Boot的自动配置 </span> </a> <nav class="md-nav" aria-label="Spring Boot的自动配置"> <ul class="md-nav__list"> <li class="md-nav__item"> <a href="#_2" class="md-nav__link"> <span class="md-ellipsis"> 核心流程 </span> </a> </li> <li class="md-nav__item"> <a href="#_3" class="md-nav__link"> <span class="md-ellipsis"> 自动配置和自动装配的区别 </span> </a> </li> <li class="md-nav__item"> <a href="#_4" class="md-nav__link"> <span class="md-ellipsis"> 源码查看 </span> </a> </li> </ul> </nav> </li> <li class="md-nav__item"> <a href="#_5" class="md-nav__link"> <span class="md-ellipsis"> 自动配置的过滤与条件装配 </span> </a> </li> <li class="md-nav__item"> <a href="#_6" class="md-nav__link"> <span class="md-ellipsis"> 禁用自动配置的几种方式 </span> </a> <nav class="md-nav" aria-label="禁用自动配置的几种方式"> <ul class="md-nav__list"> <li class="md-nav__item"> <a href="#_7" class="md-nav__link"> <span class="md-ellipsis"> 概览 </span> </a> </li> <li class="md-nav__item"> <a href="#_8" class="md-nav__link"> <span class="md-ellipsis"> 在启动类上进行排除 </span> </a> </li> <li class="md-nav__item"> <a href="#_9" class="md-nav__link"> <span class="md-ellipsis"> 在配置文件中进行排除 </span> </a> </li> </ul> </nav> </li> </ul> </nav> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--pruned md-nav__item--nested"> <a href="../../../spring-cloud/" class="md-nav__link"> <span class="md-ellipsis"> Spring Cloud </span> <span class="md-nav__icon md-icon"></span> </a> </li> <li class="md-nav__item md-nav__item--pruned md-nav__item--nested"> <a href="../../../spring-ai/" class="md-nav__link"> <span class="md-ellipsis"> Spring AI </span> <span class="md-nav__icon md-icon"></span> </a> </li> <li class="md-nav__item"> <a href="../../../spring-security/spring-security/" class="md-nav__link"> <span class="md-ellipsis"> Spring Security基本使用 </span> </a> </li> <li class="md-nav__item"> <a href="../../../mybatis-plus/mybatis-plus/" class="md-nav__link"> <span class="md-ellipsis"> MyBatis Plus </span> </a> </li> <li class="md-nav__item"> <a href="../../../springboot-help/springboot-help/" class="md-nav__link"> <span class="md-ellipsis"> Spring Boot常见YML配置、配置类和工具类代码参考 </span> </a> </li> <li class="md-nav__item"> <a href="../../../spring-sse/spring-sse/" class="md-nav__link"> <span class="md-ellipsis"> 流式编程 </span> </a> </li> </ul> </nav> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--pruned md-nav__item--nested"> <a href="../../../../data-structure-algo/" class="md-nav__link"> <span class="md-ellipsis"> 数据结构与算法 </span> <span class="md-nav__icon md-icon"></span> </a> </li> <li class="md-nav__item md-nav__item--pruned md-nav__item--nested"> <a href="../../../../Linux/" class="md-nav__link"> <span class="md-ellipsis"> Linux </span> <span class="md-nav__icon md-icon"></span> </a> </li> <li class="md-nav__item md-nav__item--pruned md-nav__item--nested"> <a href="../../../../basic-service-component/" class="md-nav__link"> <span class="md-ellipsis"> 基础服务组件 </span> <span class="md-nav__icon md-icon"></span> </a> </li> <li class="md-nav__item md-nav__item--pruned md-nav__item--nested"> <a href="../../../../software-test/" class="md-nav__link"> <span class="md-ellipsis"> 软件测试 </span> <span class="md-nav__icon md-icon"></span> </a> </li> <li class="md-nav__item md-nav__item--pruned md-nav__item--nested"> <a href="../../../../tooltips/" class="md-nav__link"> <span class="md-ellipsis"> 工具帮助与知识扩展 </span> <span class="md-nav__icon md-icon"></span> </a> </li> <li class="md-nav__item md-nav__item--pruned md-nav__item--nested"> <a href="../../../../projects/" class="md-nav__link"> <span class="md-ellipsis"> 项目 </span> <span class="md-nav__icon md-icon"></span> </a> </li> </ul> </nav> </div> </div> </div> <div class="md-content" data-md-component="content"> <article class="md-content__inner md-typeset"> <h1 id="springbeanspring_boot">Spring的Bean相关知识及Spring Boot自动配置<a class="headerlink" href="#springbeanspring_boot" title="Permanent link">¶</a></h1> <div style="margin-top: -30px; font-size: 0.75em; opacity: 0.7;"> <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10h-2a8 8 0 0 1-8 8 8 8 0 0 1-8-8 8 8 0 0 1 8-8zm6.78 1a.7.7 0 0 0-.48.2l-1.22 1.21 2.5 2.5L20.8 5.7c.26-.26.26-.7 0-.95L19.25 3.2c-.13-.13-.3-.2-.47-.2m-2.41 2.12L9 12.5V15h2.5l7.37-7.38z"></path></svg></span> 约 1675 个字 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M360.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6m64.6 136.1c-12.5 12.5-12.5 32.8 0 45.3l73.4 73.4-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l96-96c12.5-12.5 12.5-32.8 0-45.3l-96-96c-12.5-12.5-32.8-12.5-45.3 0zm-274.7 0c-12.5-12.5-32.8-12.5-45.3 0l-96 96c-12.5 12.5-12.5 32.8 0 45.3l96 96c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l73.3-73.4c12.5-12.5 12.5-32.8 0-45.3z"></path></svg></span> 401 行代码 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 17H7V3h14m0-2H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2M3 5H1v16a2 2 0 0 0 2 2h16v-2H3m12.96-10.71-2.75 3.54-1.96-2.36L8.5 15h11z"></path></svg></span> 2 张图片 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c4.42 0 8-3.58 8-8s-3.58-8-8-8-8 3.58-8 8 3.58 8 8 8m0-18c5.5 0 10 4.5 10 10s-4.5 10-10 10C6.47 22 2 17.5 2 12S6.5 2 12 2m.5 11H11V7h1.5v4.26l3.7-2.13.75 1.3z"></path></svg></span> 预计阅读时间 11 分钟</p> </div> <h2 id="bean">Bean的作用域<a class="headerlink" href="#bean" title="Permanent link">¶</a></h2> <p>Bean的六种作用域与演示，除了不演示websocket（比较麻烦，不过可以进一步研究一下ServletContext作用域，结合微服务）</p> <p>根据<a href="https://docs.spring.io/spring-framework/reference/core/beans/factory-scopes.html">官方文档</a>的介绍，Bean有六种作用域，分别是：singleton（单例）、prototype（原型）、request（请求）、session（会话）、application（全局）和 websocket，其中后四种需要在 Web 环境下生效</p> <p>测试代码：</p> <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><input id="__tabbed_1_3" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">自定义类</label><label for="__tabbed_1_2">自定义配置类</label><label for="__tabbed_1_3">Controller</label></div> <div class="tabbed-content"> <div class="tabbed-block"> <div class="language-java highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">Java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><span class="kn">package</span><span class="w"> </span><span class="nn">org.epsda.springprinciple.model</span><span class="p">;</span>
+</span><span id="__span-0-2">
+</span><span id="__span-0-3"><span class="kn">import</span><span class="w"> </span><span class="nn">lombok.Getter</span><span class="p">;</span>
+</span><span id="__span-0-4"><span class="kn">import</span><span class="w"> </span><span class="nn">lombok.Setter</span><span class="p">;</span>
+</span><span id="__span-0-5">
+</span><span id="__span-0-6"><span class="cm">/**</span>
+</span><span id="__span-0-7"><span class="cm"> * Created with IntelliJ IDEA.</span>
+</span><span id="__span-0-8"><span class="cm"> * Description:</span>
+</span><span id="__span-0-9"><span class="cm"> * User: 18483</span>
+</span><span id="__span-0-10"><span class="cm"> * Date: 2026/07/27</span>
+</span><span id="__span-0-11"><span class="cm"> * Time: 9:51</span>
+</span><span id="__span-0-12"><span class="cm"> *</span>
+</span><span id="__span-0-13"><span class="cm"> * @Author: 憨八嘎</span>
+</span><span id="__span-0-14"><span class="cm"> */</span>
+</span><span id="__span-0-15"><span class="nd">@Getter</span>
+</span><span id="__span-0-16"><span class="nd">@Setter</span>
+</span><span id="__span-0-17"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Student</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-18"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+</span><span id="__span-0-19">
+</span><span id="__span-0-20"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">Student</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-21"><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+</span><span id="__span-0-22"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-23"><span class="p">}</span>
+</span></code></pre></div></td></tr></tbody></table></div> </div> <div class="tabbed-block"> <div class="language-java highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">Java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><span class="kn">package</span><span class="w"> </span><span class="nn">org.epsda.springprinciple.config</span><span class="p">;</span>
+</span><span id="__span-1-2">
+</span><span id="__span-1-3"><span class="kn">import</span><span class="w"> </span><span class="nn">org.epsda.springprinciple.model.Student</span><span class="p">;</span>
+</span><span id="__span-1-4"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.beans.factory.config.ConfigurableBeanFactory</span><span class="p">;</span>
+</span><span id="__span-1-5"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Bean</span><span class="p">;</span>
+</span><span id="__span-1-6"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Configuration</span><span class="p">;</span>
+</span><span id="__span-1-7"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Scope</span><span class="p">;</span>
+</span><span id="__span-1-8"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.context.annotation.ApplicationScope</span><span class="p">;</span>
+</span><span id="__span-1-9"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.context.annotation.RequestScope</span><span class="p">;</span>
+</span><span id="__span-1-10"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.context.annotation.SessionScope</span><span class="p">;</span>
+</span><span id="__span-1-11">
+</span><span id="__span-1-12"><span class="cm">/**</span>
+</span><span id="__span-1-13"><span class="cm"> * Created with IntelliJ IDEA.</span>
+</span><span id="__span-1-14"><span class="cm"> * Description:</span>
+</span><span id="__span-1-15"><span class="cm"> * User: 18483</span>
+</span><span id="__span-1-16"><span class="cm"> * Date: 2026/07/27</span>
+</span><span id="__span-1-17"><span class="cm"> * Time: 9:55</span>
+</span><span id="__span-1-18"><span class="cm"> *</span>
+</span><span id="__span-1-19"><span class="cm"> * @Author: 憨八嘎</span>
+</span><span id="__span-1-20"><span class="cm"> */</span>
+</span><span id="__span-1-21"><span class="nd">@Configuration</span>
+</span><span id="__span-1-22"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">StudentConfig</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-23">
+</span><span id="__span-1-24"><span class="w">    </span><span class="c1">// 单例</span>
+</span><span id="__span-1-25"><span class="w">    </span><span class="nd">@Bean</span><span class="p">(</span><span class="s">"single"</span><span class="p">)</span>
+</span><span id="__span-1-26"><span class="w">    </span><span class="nd">@Scope</span><span class="p">(</span><span class="n">ConfigurableBeanFactory</span><span class="p">.</span><span class="na">SCOPE_SINGLETON</span><span class="p">)</span>
+</span><span id="__span-1-27"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Student</span><span class="w"> </span><span class="nf">student1</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-28"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Student</span><span class="p">(</span><span class="s">"张三"</span><span class="p">);</span>
+</span><span id="__span-1-29"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-1-30">
+</span><span id="__span-1-31"><span class="w">    </span><span class="c1">// 多例</span>
+</span><span id="__span-1-32"><span class="w">    </span><span class="nd">@Bean</span><span class="p">(</span><span class="s">"prototype"</span><span class="p">)</span>
+</span><span id="__span-1-33"><span class="w">    </span><span class="nd">@Scope</span><span class="p">(</span><span class="n">ConfigurableBeanFactory</span><span class="p">.</span><span class="na">SCOPE_PROTOTYPE</span><span class="p">)</span>
+</span><span id="__span-1-34"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Student</span><span class="w"> </span><span class="nf">student2</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-35"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Student</span><span class="p">(</span><span class="s">"李四"</span><span class="p">);</span>
+</span><span id="__span-1-36"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-1-37">
+</span><span id="__span-1-38"><span class="w">    </span><span class="c1">// 请求</span>
+</span><span id="__span-1-39"><span class="w">    </span><span class="nd">@Bean</span><span class="p">(</span><span class="s">"request"</span><span class="p">)</span>
+</span><span id="__span-1-40"><span class="w">    </span><span class="nd">@RequestScope</span><span class="w"> </span><span class="c1">// 相当于@Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)</span>
+</span><span id="__span-1-41"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Student</span><span class="w"> </span><span class="nf">student3</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-42"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Student</span><span class="p">(</span><span class="s">"王五"</span><span class="p">);</span>
+</span><span id="__span-1-43"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-1-44">
+</span><span id="__span-1-45"><span class="w">    </span><span class="c1">// 会话</span>
+</span><span id="__span-1-46"><span class="w">    </span><span class="nd">@Bean</span><span class="p">(</span><span class="s">"session"</span><span class="p">)</span>
+</span><span id="__span-1-47"><span class="w">    </span><span class="nd">@SessionScope</span><span class="w"> </span><span class="c1">// 相当于@Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)</span>
+</span><span id="__span-1-48"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Student</span><span class="w"> </span><span class="nf">student4</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-49"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Student</span><span class="p">(</span><span class="s">"赵六"</span><span class="p">);</span>
+</span><span id="__span-1-50"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-1-51">
+</span><span id="__span-1-52"><span class="w">    </span><span class="c1">// Servlet</span>
+</span><span id="__span-1-53"><span class="w">    </span><span class="nd">@Bean</span><span class="p">(</span><span class="s">"servlet"</span><span class="p">)</span>
+</span><span id="__span-1-54"><span class="w">    </span><span class="nd">@ApplicationScope</span><span class="w"> </span><span class="c1">// 相当于@Scope(value = WebApplicationContext.SCOPE_APPLICATION, proxyMode = ScopedProxyMode.TARGET_CLASS)</span>
+</span><span id="__span-1-55"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Student</span><span class="w"> </span><span class="nf">student5</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-56"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Student</span><span class="p">(</span><span class="s">"田七"</span><span class="p">);</span>
+</span><span id="__span-1-57"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-1-58"><span class="p">}</span>
+</span></code></pre></div></td></tr></tbody></table></div> </div> <div class="tabbed-block"> <div class="language-java highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">Java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><span class="kn">package</span><span class="w"> </span><span class="nn">org.epsda.springprinciple.controller</span><span class="p">;</span>
+</span><span id="__span-2-2">
+</span><span id="__span-2-3"><span class="kn">import</span><span class="w"> </span><span class="nn">jakarta.annotation.Resource</span><span class="p">;</span>
+</span><span id="__span-2-4"><span class="kn">import</span><span class="w"> </span><span class="nn">org.epsda.springprinciple.model.Student</span><span class="p">;</span>
+</span><span id="__span-2-5"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.ApplicationContext</span><span class="p">;</span>
+</span><span id="__span-2-6"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.annotation.RequestMapping</span><span class="p">;</span>
+</span><span id="__span-2-7"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.web.bind.annotation.RestController</span><span class="p">;</span>
+</span><span id="__span-2-8">
+</span><span id="__span-2-9"><span class="cm">/**</span>
+</span><span id="__span-2-10"><span class="cm"> * Created with IntelliJ IDEA.</span>
+</span><span id="__span-2-11"><span class="cm"> * Description:</span>
+</span><span id="__span-2-12"><span class="cm"> * User: 18483</span>
+</span><span id="__span-2-13"><span class="cm"> * Date: 2026/07/27</span>
+</span><span id="__span-2-14"><span class="cm"> * Time: 10:03</span>
+</span><span id="__span-2-15"><span class="cm"> *</span>
+</span><span id="__span-2-16"><span class="cm"> * @Author: 憨八嘎</span>
+</span><span id="__span-2-17"><span class="cm"> */</span>
+</span><span id="__span-2-18"><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">"/student"</span><span class="p">)</span>
+</span><span id="__span-2-19"><span class="nd">@RestController</span>
+</span><span id="__span-2-20"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">StudentController</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-21"><span class="w">    </span><span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"single"</span><span class="p">)</span>
+</span><span id="__span-2-22"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Student</span><span class="w"> </span><span class="n">singleStudent</span><span class="p">;</span>
+</span><span id="__span-2-23"><span class="w">    </span><span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"prototype"</span><span class="p">)</span>
+</span><span id="__span-2-24"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Student</span><span class="w"> </span><span class="n">prototypeStudent</span><span class="p">;</span>
+</span><span id="__span-2-25"><span class="w">    </span><span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"request"</span><span class="p">)</span>
+</span><span id="__span-2-26"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Student</span><span class="w"> </span><span class="n">requestStudent</span><span class="p">;</span>
+</span><span id="__span-2-27"><span class="w">    </span><span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"session"</span><span class="p">)</span>
+</span><span id="__span-2-28"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Student</span><span class="w"> </span><span class="n">sessionStudent</span><span class="p">;</span>
+</span><span id="__span-2-29"><span class="w">    </span><span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"servlet"</span><span class="p">)</span>
+</span><span id="__span-2-30"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Student</span><span class="w"> </span><span class="n">servletStudent</span><span class="p">;</span>
+</span><span id="__span-2-31"><span class="w">    </span><span class="nd">@Resource</span>
+</span><span id="__span-2-32"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">ApplicationContext</span><span class="w"> </span><span class="n">context</span><span class="p">;</span>
+</span><span id="__span-2-33">
+</span><span id="__span-2-34"><span class="w">    </span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">"/single"</span><span class="p">)</span>
+</span><span id="__span-2-35"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">s1</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-36"><span class="w">        </span><span class="c1">// 先从容器里拿</span>
+</span><span id="__span-2-37"><span class="w">        </span><span class="n">Student</span><span class="w"> </span><span class="n">single</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Student</span><span class="p">)</span><span class="w"> </span><span class="n">context</span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="s">"single"</span><span class="p">);</span>
+</span><span id="__span-2-38"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">"获取到Student对象："</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">singleStudent</span><span class="p">.</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">"，地址为："</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">singleStudent</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">"，容器中的对象为："</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">single</span><span class="p">;</span>
+</span><span id="__span-2-39"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-40">
+</span><span id="__span-2-41"><span class="w">    </span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">"/prototype"</span><span class="p">)</span>
+</span><span id="__span-2-42"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">s2</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-43"><span class="w">        </span><span class="n">Student</span><span class="w"> </span><span class="n">student</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Student</span><span class="p">)</span><span class="w"> </span><span class="n">context</span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="s">"prototype"</span><span class="p">);</span>
+</span><span id="__span-2-44"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">"获取到Student对象："</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">prototypeStudent</span><span class="p">.</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">"，地址为："</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">prototypeStudent</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">"，容器中的对象为："</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">student</span><span class="p">;</span>
+</span><span id="__span-2-45"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-46">
+</span><span id="__span-2-47"><span class="w">    </span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">"/request"</span><span class="p">)</span>
+</span><span id="__span-2-48"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">s3</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-49"><span class="w">        </span><span class="n">Student</span><span class="w"> </span><span class="n">student</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Student</span><span class="p">)</span><span class="w"> </span><span class="n">context</span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="s">"request"</span><span class="p">);</span>
+</span><span id="__span-2-50"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">"获取到Student对象："</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">requestStudent</span><span class="p">.</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">"，地址为："</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">requestStudent</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">"，容器中的对象为："</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">student</span><span class="p">;</span>
+</span><span id="__span-2-51"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-52">
+</span><span id="__span-2-53"><span class="w">    </span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">"/session"</span><span class="p">)</span>
+</span><span id="__span-2-54"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">s4</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-55"><span class="w">        </span><span class="n">Student</span><span class="w"> </span><span class="n">student</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Student</span><span class="p">)</span><span class="w"> </span><span class="n">context</span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="s">"session"</span><span class="p">);</span>
+</span><span id="__span-2-56"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">"获取到Student对象："</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">sessionStudent</span><span class="p">.</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">"，地址为："</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">sessionStudent</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">"，容器中的对象为："</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">student</span><span class="p">;</span>
+</span><span id="__span-2-57"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-58">
+</span><span id="__span-2-59"><span class="w">    </span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">"/servlet"</span><span class="p">)</span>
+</span><span id="__span-2-60"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">s5</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-61"><span class="w">        </span><span class="n">Student</span><span class="w"> </span><span class="n">student</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Student</span><span class="p">)</span><span class="w"> </span><span class="n">context</span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="s">"servlet"</span><span class="p">);</span>
+</span><span id="__span-2-62"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">"获取到Student对象："</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">servletStudent</span><span class="p">.</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">"，地址为："</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">servletStudent</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">"，容器中的对象为："</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">student</span><span class="p">;</span>
+</span><span id="__span-2-63"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-2-64"><span class="p">}</span>
+</span></code></pre></div></td></tr></tbody></table></div> </div> </div> </div> <p>下面是除了websocket作用域以外的五种作用域测试结果：</p> <div class="tabbed-set tabbed-alternate" data-tabs="2:4"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio"><input id="__tabbed_2_2" name="__tabbed_2" type="radio"><input id="__tabbed_2_3" name="__tabbed_2" type="radio"><input id="__tabbed_2_4" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="__tabbed_2_1">singleton测试结果</label><label for="__tabbed_2_2">request测试结果</label><label for="__tabbed_2_3">session测试结果</label><label for="__tabbed_2_4">servlet测试结果</label></div> <div class="tabbed-content"> <div class="tabbed-block"> <div class="language-java highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">Java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-3-1"><span class="n">获取到Student对象</span><span class="err">：</span><span class="n">张三</span><span class="err">，</span><span class="n">地址为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">1400493</span><span class="n">b</span><span class="err">，</span><span class="n">容器中的对象为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">1400493</span><span class="n">b</span>
+</span><span id="__span-3-2">
+</span><span id="__span-3-3"><span class="n">获取到Student对象</span><span class="err">：</span><span class="n">张三</span><span class="err">，</span><span class="n">地址为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">1400493</span><span class="n">b</span><span class="err">，</span><span class="n">容器中的对象为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">1400493</span><span class="n">b</span>
+</span><span id="__span-3-4">
+</span><span id="__span-3-5"><span class="n">获取到Student对象</span><span class="err">：</span><span class="n">张三</span><span class="err">，</span><span class="n">地址为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">1400493</span><span class="n">b</span><span class="err">，</span><span class="n">容器中的对象为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">1400493</span><span class="n">b</span>
+</span></code></pre></div></td></tr></tbody></table></div> <p>prototype测试结果</p> <div class="language-java highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">Java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-4-1"><span class="n">获取到Student对象</span><span class="err">：</span><span class="n">李四</span><span class="err">，</span><span class="n">地址为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">7</span><span class="n">a6e2809</span><span class="err">，</span><span class="n">容器中的对象为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">46</span><span class="n">a439aa</span>
+</span><span id="__span-4-2">
+</span><span id="__span-4-3"><span class="n">获取到Student对象</span><span class="err">：</span><span class="n">李四</span><span class="err">，</span><span class="n">地址为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">7</span><span class="n">a6e2809</span><span class="err">，</span><span class="n">容器中的对象为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">3732</span><span class="n">c321</span>
+</span><span id="__span-4-4">
+</span><span id="__span-4-5"><span class="n">获取到Student对象</span><span class="err">：</span><span class="n">李四</span><span class="err">，</span><span class="n">地址为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">7</span><span class="n">a6e2809</span><span class="err">，</span><span class="n">容器中的对象为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">2</span><span class="n">a5c99cf</span>
+</span></code></pre></div></td></tr></tbody></table></div> <p>注入的对象当Spring程序启动之后就已经确定了对象，所以一直保持不变。但是容器中是每一次取一个新的，所以地址一直在改变</p> </div> <div class="tabbed-block"> <div class="language-java highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">Java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-5-1"><span class="n">获取到Student对象</span><span class="err">：</span><span class="n">王五</span><span class="err">，</span><span class="n">地址为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mf">4e410f9d</span><span class="err">，</span><span class="n">容器中的对象为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mf">4e410f9d</span>
+</span><span id="__span-5-2">
+</span><span id="__span-5-3"><span class="n">获取到Student对象</span><span class="err">：</span><span class="n">王五</span><span class="err">，</span><span class="n">地址为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="nd">@e007e14</span><span class="err">，</span><span class="n">容器中的对象为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="nd">@e007e14</span>
+</span><span id="__span-5-4">
+</span><span id="__span-5-5"><span class="n">获取到Student对象</span><span class="err">：</span><span class="n">王五</span><span class="err">，</span><span class="n">地址为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">7</span><span class="n">ca5c255</span><span class="err">，</span><span class="n">容器中的对象为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">7</span><span class="n">ca5c255</span>
+</span></code></pre></div></td></tr></tbody></table></div> <p>request 作用域的 Bean 由<strong>作用域代理（scoped proxy）</strong>承载，每次 HTTP 请求进来，代理再去当前请求的 <code>RequestAttributes</code> 里取真正的 Student（注入的对象实际上并不是真正的Student对象），即<strong>每个请求都会新建一个真实实例</strong>，所以注入的对象和每次从容器中获取的对象都是同一个</p> </div> <div class="tabbed-block"> <div class="language-java highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">Java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-6-1"><span class="c1">// 同一个客户端重复发起三次请求</span>
+</span><span id="__span-6-2"><span class="n">获取到Student对象</span><span class="err">：</span><span class="n">赵六</span><span class="err">，</span><span class="n">地址为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mf">1f</span><span class="mi">0</span><span class="n">aee7d</span><span class="err">，</span><span class="n">容器中的对象为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mf">1f</span><span class="mi">0</span><span class="n">aee7d</span>
+</span><span id="__span-6-3">
+</span><span id="__span-6-4"><span class="n">获取到Student对象</span><span class="err">：</span><span class="n">赵六</span><span class="err">，</span><span class="n">地址为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mf">1f</span><span class="mi">0</span><span class="n">aee7d</span><span class="err">，</span><span class="n">容器中的对象为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mf">1f</span><span class="mi">0</span><span class="n">aee7d</span>
+</span><span id="__span-6-5">
+</span><span id="__span-6-6"><span class="n">获取到Student对象</span><span class="err">：</span><span class="n">赵六</span><span class="err">，</span><span class="n">地址为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mf">1f</span><span class="mi">0</span><span class="n">aee7d</span><span class="err">，</span><span class="n">容器中的对象为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mf">1f</span><span class="mi">0</span><span class="n">aee7d</span>
+</span><span id="__span-6-7">
+</span><span id="__span-6-8"><span class="c1">// 关闭客户端后重新请求</span>
+</span><span id="__span-6-9"><span class="n">获取到Student对象</span><span class="err">：</span><span class="n">赵六</span><span class="err">，</span><span class="n">地址为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">571</span><span class="n">d3c6e</span><span class="err">，</span><span class="n">容器中的对象为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">571</span><span class="n">d3c6e</span>
+</span><span id="__span-6-10">
+</span><span id="__span-6-11"><span class="n">获取到Student对象</span><span class="err">：</span><span class="n">赵六</span><span class="err">，</span><span class="n">地址为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">571</span><span class="n">d3c6e</span><span class="err">，</span><span class="n">容器中的对象为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">571</span><span class="n">d3c6e</span>
+</span><span id="__span-6-12">
+</span><span id="__span-6-13"><span class="n">获取到Student对象</span><span class="err">：</span><span class="n">赵六</span><span class="err">，</span><span class="n">地址为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">571</span><span class="n">d3c6e</span><span class="err">，</span><span class="n">容器中的对象为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">571</span><span class="n">d3c6e</span>
+</span><span id="__span-6-14">
+</span><span id="__span-6-15"><span class="c1">// 切换客户端重新请求</span>
+</span><span id="__span-6-16"><span class="n">获取到Student对象</span><span class="err">：</span><span class="n">赵六</span><span class="err">，</span><span class="n">地址为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">329</span><span class="n">bba7f</span><span class="err">，</span><span class="n">容器中的对象为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">329</span><span class="n">bba7f</span>
+</span><span id="__span-6-17">
+</span><span id="__span-6-18"><span class="n">获取到Student对象</span><span class="err">：</span><span class="n">赵六</span><span class="err">，</span><span class="n">地址为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">329</span><span class="n">bba7f</span><span class="err">，</span><span class="n">容器中的对象为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">329</span><span class="n">bba7f</span>
+</span><span id="__span-6-19">
+</span><span id="__span-6-20"><span class="n">获取到Student对象</span><span class="err">：</span><span class="n">赵六</span><span class="err">，</span><span class="n">地址为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">329</span><span class="n">bba7f</span><span class="err">，</span><span class="n">容器中的对象为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mi">329</span><span class="n">bba7f</span>
+</span></code></pre></div></td></tr></tbody></table></div> <p>session和request比较类似，但是session的范围比request大，session不局限于一个请求，而是一个JSESSIONID对应着一个客户端，所以只要JSESSIONID一致，不论请求多少次都是通过同一个代理获取到对象</p> </div> <div class="tabbed-block"> <div class="language-java highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">Java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-7-1"><span class="c1">// 不同客户端多次请求</span>
+</span><span id="__span-7-2"><span class="n">获取到Student对象</span><span class="err">：</span><span class="n">田七</span><span class="err">，</span><span class="n">地址为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mf">1d</span><span class="n">a7a93</span><span class="err">，</span><span class="n">容器中的对象为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mf">1d</span><span class="n">a7a93</span>
+</span><span id="__span-7-3">
+</span><span id="__span-7-4"><span class="n">获取到Student对象</span><span class="err">：</span><span class="n">田七</span><span class="err">，</span><span class="n">地址为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mf">1d</span><span class="n">a7a93</span><span class="err">，</span><span class="n">容器中的对象为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mf">1d</span><span class="n">a7a93</span>
+</span><span id="__span-7-5">
+</span><span id="__span-7-6"><span class="n">获取到Student对象</span><span class="err">：</span><span class="n">田七</span><span class="err">，</span><span class="n">地址为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mf">1d</span><span class="n">a7a93</span><span class="err">，</span><span class="n">容器中的对象为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mf">1d</span><span class="n">a7a93</span>
+</span><span id="__span-7-7">
+</span><span id="__span-7-8"><span class="n">获取到Student对象</span><span class="err">：</span><span class="n">田七</span><span class="err">，</span><span class="n">地址为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mf">1d</span><span class="n">a7a93</span><span class="err">，</span><span class="n">容器中的对象为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mf">1d</span><span class="n">a7a93</span>
+</span><span id="__span-7-9">
+</span><span id="__span-7-10"><span class="n">获取到Student对象</span><span class="err">：</span><span class="n">田七</span><span class="err">，</span><span class="n">地址为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mf">1d</span><span class="n">a7a93</span><span class="err">，</span><span class="n">容器中的对象为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mf">1d</span><span class="n">a7a93</span>
+</span><span id="__span-7-11">
+</span><span id="__span-7-12"><span class="n">获取到Student对象</span><span class="err">：</span><span class="n">田七</span><span class="err">，</span><span class="n">地址为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mf">1d</span><span class="n">a7a93</span><span class="err">，</span><span class="n">容器中的对象为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mf">1d</span><span class="n">a7a93</span>
+</span><span id="__span-7-13">
+</span><span id="__span-7-14"><span class="c1">// 不同的Spring Boot应用</span>
+</span><span id="__span-7-15"><span class="n">获取到Student对象</span><span class="err">：</span><span class="n">田七</span><span class="err">，</span><span class="n">地址为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mf">6f</span><span class="n">d11976</span><span class="err">，</span><span class="n">容器中的对象为</span><span class="err">：</span><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">springprinciple</span><span class="p">.</span><span class="na">model</span><span class="p">.</span><span class="na">Student</span><span class="err">@</span><span class="mf">6f</span><span class="n">d11976</span>
+</span></code></pre></div></td></tr></tbody></table></div> <p>因为servlet对应的是一个Spring应用，只要是同一个应用，获取到的对象都是一样的。但是需要注意servlet与singleton的区别：servlet作用域是ServletContext级别的单例，而singleton是ApplicationContext级别的单例，在一个Web容器中可以有多个ApplicationContext，所以对于不同的Web容器，同一个类也会有多个单例对象</p> </div> </div> </div> <h2 id="bean_1">Bean的生命周期<a class="headerlink" href="#bean_1" title="Permanent link">¶</a></h2> <p>简单了解生命周期的过程</p> <ol> <li>实例化：Spring 通过反射调用构造方法创建 Bean 对象，但是这个时候还没有任何的属性内容</li> <li>属性注入：通过 setter 方法或字段反射把依赖的其他 Bean 塞进去</li> <li>Aware 接口回调：如果 Bean 实现了 <code>BeanNameAware</code>、<code>BeanFactoryAware</code>、<code>ApplicationContextAware</code> 这些接口，Spring 会把对应的容器信息注入进来</li> <li><code>BeanPostProcessor</code> 前置处理：所有 <code>BeanPostProcessor</code> 的 <code>postProcessBeforeInitialization</code> 方法会被调用</li> <li>初始化：按顺序执行 <code>@PostConstruct</code> 注解方法、<code>InitializingBean</code> 的 <code>afterPropertiesSet</code> 方法、<code>@Bean</code> 指定的<code>initMethod</code></li> <li><code>BeanPostProcessor</code> 后置处理：所有 <code>BeanPostProcessor</code> 的 <code>postProcessAfterInitialization</code> 方法会被调用，AOP 代理通常就在这一步生成</li> <li>Bean 就绪：可以被其他组件使用了</li> <li>销毁：容器关闭时按顺序执行 <code>@PreDestroy</code> 注解方法、<code>DisposableBean</code> 的 <code>destroy</code> 方法、<code>@Bean</code> 指定的<code>destroyMethod</code></li> </ol> <p>参考图如下：</p> <p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="https://help-site.oss-cn-hangzhou.aliyuncs.com/images/JavaEE/Spring/spring-autoconfiguration/image.png" data-desc-position="bottom"><img src="https://help-site.oss-cn-hangzhou.aliyuncs.com/images/JavaEE/Spring/spring-autoconfiguration/image.png"></a></p> <h2 id="spring_boot">Spring Boot加载非本包下的自定义配置类<a class="headerlink" href="#spring_boot" title="Permanent link">¶</a></h2> <h3 id="_1">概览<a class="headerlink" href="#_1" title="Permanent link">¶</a></h3> <p>在Spring中，可以通过下面几种方式实现加载第三方包中的类：</p> <ol> <li>启动类上使用<code>@ComponentScan</code>，其中的<code>basePackage</code>和<code>basePackages</code>即可配置包路径</li> <li>使用<code>@Import</code>注解，直接导入第三方配置类的 <code>class</code> 对象</li> <li>自定义类实现<code>ImportSelector</code>接口，通过<code>Import注解导入</code>，结合自定义注解实现快速导入</li> <li>创建<code>META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports</code>文件并写入需要Spring帮忙扫描的包路径</li> </ol> <p>创建一个第三方包和类：</p> <div class="language-java highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">Java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-8-1"><span class="kn">package</span><span class="w"> </span><span class="nn">org.epsda.diyconfig</span><span class="p">;</span>
+</span><span id="__span-8-2">
+</span><span id="__span-8-3"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Bean</span><span class="p">;</span>
+</span><span id="__span-8-4"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Configuration</span><span class="p">;</span>
+</span><span id="__span-8-5">
+</span><span id="__span-8-6"><span class="nd">@Configuration</span>
+</span><span id="__span-8-7"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SelfConfig</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-8">
+</span><span id="__span-8-9"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">use</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-10"><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"使用自定义配置"</span><span class="p">);</span>
+</span><span id="__span-8-11"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-8-12"><span class="p">}</span>
+</span></code></pre></div></td></tr></tbody></table></div> <p>以上面的配置类为例演示上面的四种方式</p> <h3 id="componentscan"><code>@ComponentScan</code> 方式<a class="headerlink" href="#componentscan" title="Permanent link">¶</a></h3> <div class="language-java highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">Java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-9-1"><span class="c1">// 使用@ComponentScan，注意观察第三方配置类所在的包和启动程序所在的包</span>
+</span><span id="__span-9-2"><span class="kn">package</span><span class="w"> </span><span class="nn">org.epsda.springprinciple</span><span class="p">;</span>
+</span><span id="__span-9-3">
+</span><span id="__span-9-4"><span class="kn">import</span><span class="w"> </span><span class="nn">org.epsda.diyconfig.SelfConfig</span><span class="p">;</span>
+</span><span id="__span-9-5"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.SpringApplication</span><span class="p">;</span>
+</span><span id="__span-9-6"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="p">;</span>
+</span><span id="__span-9-7"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.ApplicationContext</span><span class="p">;</span>
+</span><span id="__span-9-8"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.ComponentScan</span><span class="p">;</span>
+</span><span id="__span-9-9">
+</span><span id="__span-9-10"><span class="nd">@ComponentScan</span><span class="p">(</span><span class="s">"org.epsda.diyconfig"</span><span class="p">)</span>
+</span><span id="__span-9-11"><span class="nd">@SpringBootApplication</span>
+</span><span id="__span-9-12"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SpringPrincipleApplication</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-13"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-14"><span class="w">        </span><span class="n">ApplicationContext</span><span class="w"> </span><span class="n">applicationContext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">SpringPrincipleApplication</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">);</span>
+</span><span id="__span-9-15">
+</span><span id="__span-9-16"><span class="w">        </span><span class="n">SelfConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">SelfConfig</span><span class="p">)</span><span class="w"> </span><span class="n">applicationContext</span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="s">"selfConfig"</span><span class="p">);</span>
+</span><span id="__span-9-17"><span class="w">        </span><span class="n">config</span><span class="p">.</span><span class="na">use</span><span class="p">();</span>
+</span><span id="__span-9-18"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-9-19"><span class="p">}</span>
+</span></code></pre></div></td></tr></tbody></table></div> <p>但是需要注意的是，上面的代码只是在<code>@ComponentScan</code>中配置扫描了<code>org.epsda.diyconfig</code>，此时原来默认扫描启动程序所在包的行为就没了，所以一般情况下都是配置当前启动程序所在的包以及第三方配置的包：</p> <div class="language-java highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">Java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-10-1"><span class="kn">package</span><span class="w"> </span><span class="nn">org.epsda.springprinciple</span><span class="p">;</span>
+</span><span id="__span-10-2">
+</span><span id="__span-10-3"><span class="kn">import</span><span class="w"> </span><span class="nn">org.epsda.diyconfig.SelfConfig</span><span class="p">;</span>
+</span><span id="__span-10-4"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.SpringApplication</span><span class="p">;</span>
+</span><span id="__span-10-5"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="p">;</span>
+</span><span id="__span-10-6"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.ApplicationContext</span><span class="p">;</span>
+</span><span id="__span-10-7"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.ComponentScan</span><span class="p">;</span>
+</span><span id="__span-10-8">
+</span><span id="__span-10-9"><span class="c1">// 配置启动类所在的包和第三方配置所在的包</span>
+</span><span id="__span-10-10"><span class="nd">@ComponentScan</span><span class="p">(</span><span class="n">basePackages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-11"><span class="w">        </span><span class="s">"org.epsda.diyconfig"</span><span class="p">,</span>
+</span><span id="__span-10-12"><span class="w">        </span><span class="s">"org.epsda.springprinciple"</span><span class="w"> </span>
+</span><span id="__span-10-13"><span class="p">})</span>
+</span><span id="__span-10-14"><span class="nd">@SpringBootApplication</span>
+</span><span id="__span-10-15"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SpringPrincipleApplication</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-16"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-17"><span class="w">        </span><span class="n">ApplicationContext</span><span class="w"> </span><span class="n">applicationContext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">SpringPrincipleApplication</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">);</span>
+</span><span id="__span-10-18">
+</span><span id="__span-10-19"><span class="w">        </span><span class="n">SelfConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">SelfConfig</span><span class="p">)</span><span class="w"> </span><span class="n">applicationContext</span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="s">"selfConfig"</span><span class="p">);</span>
+</span><span id="__span-10-20"><span class="w">        </span><span class="n">config</span><span class="p">.</span><span class="na">use</span><span class="p">();</span>
+</span><span id="__span-10-21"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-10-22"><span class="p">}</span>
+</span></code></pre></div></td></tr></tbody></table></div> <h3 id="import"><code>@Import</code> 方式<a class="headerlink" href="#import" title="Permanent link">¶</a></h3> <div class="language-java highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">Java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-11-1"><span class="kn">package</span><span class="w"> </span><span class="nn">org.epsda.springprinciple</span><span class="p">;</span>
+</span><span id="__span-11-2">
+</span><span id="__span-11-3"><span class="kn">import</span><span class="w"> </span><span class="nn">org.epsda.diyconfig.SelfConfig</span><span class="p">;</span>
+</span><span id="__span-11-4"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.SpringApplication</span><span class="p">;</span>
+</span><span id="__span-11-5"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="p">;</span>
+</span><span id="__span-11-6"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.ApplicationContext</span><span class="p">;</span>
+</span><span id="__span-11-7"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Import</span><span class="p">;</span>
+</span><span id="__span-11-8">
+</span><span id="__span-11-9"><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Arrays</span><span class="p">;</span>
+</span><span id="__span-11-10">
+</span><span id="__span-11-11"><span class="nd">@Import</span><span class="p">(</span><span class="n">SelfConfig</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
+</span><span id="__span-11-12"><span class="nd">@SpringBootApplication</span>
+</span><span id="__span-11-13"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SpringPrincipleApplication</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-14"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-15"><span class="w">        </span><span class="n">ApplicationContext</span><span class="w"> </span><span class="n">applicationContext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">SpringPrincipleApplication</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">);</span>
+</span><span id="__span-11-16">
+</span><span id="__span-11-17"><span class="w">        </span><span class="c1">// 使用下面的代码查看类的Bean名称</span>
+</span><span id="__span-11-18"><span class="w">        </span><span class="c1">// String[] beanNamesForType = applicationContext.getBeanNamesForType(SelfConfig.class);</span>
+</span><span id="__span-11-19"><span class="w">        </span><span class="c1">// System.out.println(Arrays.toString(beanNamesForType));</span>
+</span><span id="__span-11-20"><span class="w">        </span><span class="c1">// 需要注意，使用@Import导入，Bean的名称必须为类的全限定名</span>
+</span><span id="__span-11-21"><span class="w">        </span><span class="n">SelfConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">SelfConfig</span><span class="p">)</span><span class="w"> </span><span class="n">applicationContext</span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="s">"org.epsda.diyconfig.SelfConfig"</span><span class="p">);</span>
+</span><span id="__span-11-22"><span class="w">        </span><span class="n">config</span><span class="p">.</span><span class="na">use</span><span class="p">();</span>
+</span><span id="__span-11-23"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-11-24"><span class="p">}</span>
+</span></code></pre></div></td></tr></tbody></table></div> <p><code>@Import</code>最大的缺点就是需要一个一个导入，如果有多个配置类需要导入就需要写多个<code>@Import</code></p> <h3 id="importselector">实现<code>ImportSelector</code><a class="headerlink" href="#importselector" title="Permanent link">¶</a></h3> <p>使用<code>ImportSelector</code>接口实现类，可以在<code>selectImports</code>方法中返回需要导入的配置类的全限定类名数组，从而一次性导入多个配置类。这种方式比逐个使用<code>@Import</code>更加灵活，也便于结合自定义注解实现批量导入</p> <div class="language-java highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">Java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-12-1"><span class="kn">package</span><span class="w"> </span><span class="nn">org.epsda.springprinciple</span><span class="p">;</span>
+</span><span id="__span-12-2">
+</span><span id="__span-12-3"><span class="kn">import</span><span class="w"> </span><span class="nn">org.epsda.diyconfig.SelfConfig</span><span class="p">;</span>
+</span><span id="__span-12-4"><span class="kn">import</span><span class="w"> </span><span class="nn">org.epsda.diyconfig.SelfImportSelector</span><span class="p">;</span>
+</span><span id="__span-12-5"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.SpringApplication</span><span class="p">;</span>
+</span><span id="__span-12-6"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="p">;</span>
+</span><span id="__span-12-7"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.ApplicationContext</span><span class="p">;</span>
+</span><span id="__span-12-8"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Import</span><span class="p">;</span>
+</span><span id="__span-12-9">
+</span><span id="__span-12-10"><span class="nd">@Import</span><span class="p">(</span><span class="n">SelfImportSelector</span><span class="p">.</span><span class="na">class</span><span class="p">)</span><span class="w"> </span><span class="c1">// 此时只需要导入实现ImportSelector的类</span>
+</span><span id="__span-12-11"><span class="nd">@SpringBootApplication</span>
+</span><span id="__span-12-12"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SpringPrincipleApplication</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-13"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-14"><span class="w">        </span><span class="n">ApplicationContext</span><span class="w"> </span><span class="n">applicationContext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">SpringPrincipleApplication</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">);</span>
+</span><span id="__span-12-15">
+</span><span id="__span-12-16"><span class="w">        </span><span class="c1">// 需要注意，使用@Import导入，Bean的名称必须为类的全限定名</span>
+</span><span id="__span-12-17"><span class="w">        </span><span class="n">SelfConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">SelfConfig</span><span class="p">)</span><span class="w"> </span><span class="n">applicationContext</span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="s">"org.epsda.diyconfig.SelfConfig"</span><span class="p">);</span>
+</span><span id="__span-12-18"><span class="w">        </span><span class="n">config</span><span class="p">.</span><span class="na">use</span><span class="p">();</span>
+</span><span id="__span-12-19"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-12-20"><span class="p">}</span>
+</span></code></pre></div></td></tr></tbody></table></div> <p>上面的使用方式还是相对繁琐，在常规的使用中，一般会配合自定义主键进行使用，例如：</p> <div class="language-java highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">Java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-13-1"><span class="kn">package</span><span class="w"> </span><span class="nn">org.epsda.diyconfig</span><span class="p">;</span>
+</span><span id="__span-13-2">
+</span><span id="__span-13-3"><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Import</span><span class="p">;</span>
+</span><span id="__span-13-4">
+</span><span id="__span-13-5"><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.annotation.ElementType</span><span class="p">;</span>
+</span><span id="__span-13-6"><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.annotation.Retention</span><span class="p">;</span>
+</span><span id="__span-13-7"><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.annotation.RetentionPolicy</span><span class="p">;</span>
+</span><span id="__span-13-8"><span class="kn">import</span><span class="w"> </span><span class="nn">java.lang.annotation.Target</span><span class="p">;</span>
+</span><span id="__span-13-9">
+</span><span id="__span-13-10"><span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span>
+</span><span id="__span-13-11"><span class="nd">@Target</span><span class="p">(</span><span class="n">ElementType</span><span class="p">.</span><span class="na">TYPE</span><span class="p">)</span>
+</span><span id="__span-13-12"><span class="nd">@Import</span><span class="p">(</span><span class="n">SelfImportSelector</span><span class="p">.</span><span class="na">class</span><span class="p">)</span><span class="w"> </span><span class="c1">// 自定义注解引入</span>
+</span><span id="__span-13-13"><span class="kd">public</span><span class="w"> </span><span class="nd">@interface</span><span class="w"> </span><span class="n">EnableSelfConfig</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-13-14"><span class="p">}</span>
+</span></code></pre></div></td></tr></tbody></table></div> <p>接着在启动类上使用自定义注解</p> <div class="language-java highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">Java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span>
+<span class="normal">8</span>
+<span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-14-1"><span class="nd">@EnableSelfConfig</span><span class="w"> </span><span class="c1">// 使用自定义注解</span>
+</span><span id="__span-14-2"><span class="nd">@SpringBootApplication</span>
+</span><span id="__span-14-3"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">SpringPrincipleApplication</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-14-4"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-14-5"><span class="w">        </span><span class="n">ApplicationContext</span><span class="w"> </span><span class="n">applicationContext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">SpringPrincipleApplication</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">);</span>
+</span><span id="__span-14-6"><span class="w">        </span><span class="n">SelfConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">SelfConfig</span><span class="p">)</span><span class="w"> </span><span class="n">applicationContext</span><span class="p">.</span><span class="na">getBean</span><span class="p">(</span><span class="s">"org.epsda.diyconfig.SelfConfig"</span><span class="p">);</span>
+</span><span id="__span-14-7"><span class="w">        </span><span class="n">config</span><span class="p">.</span><span class="na">use</span><span class="p">();</span>
+</span><span id="__span-14-8"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-14-9"><span class="p">}</span>
+</span></code></pre></div></td></tr></tbody></table></div> <h3 id="spring">使用Spring配置文件<a class="headerlink" href="#spring" title="Permanent link">¶</a></h3> <p>在第三方配置包下的<code>resources</code>目录添加<code>META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports</code>文件：</p> <p><a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="https://help-site.oss-cn-hangzhou.aliyuncs.com/images/JavaEE/Spring/spring-autoconfiguration/image1.png" data-desc-position="bottom"><img src="https://help-site.oss-cn-hangzhou.aliyuncs.com/images/JavaEE/Spring/spring-autoconfiguration/image1.png"></a></p> <p>文件中可以写入<code>SelfConfig</code>类或者<code>SelfImportSelector</code>类：</p> <div class="language-java highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">Java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-15-1"><span class="n">org</span><span class="p">.</span><span class="na">epsda</span><span class="p">.</span><span class="na">diyconfig</span><span class="p">.</span><span class="na">SelfImportSelector</span>
+</span></code></pre></div></td></tr></tbody></table></div> <p>直接启动主程序即可看到可以正常识别到自定义配置类</p> <h2 id="spring_boot_1">Spring Boot的自动配置<a class="headerlink" href="#spring_boot_1" title="Permanent link">¶</a></h2> <h3 id="_2">核心流程<a class="headerlink" href="#_2" title="Permanent link">¶</a></h3> <p>自动配置的核心在于 Spring Boot 启动时，通过 <code>@EnableAutoConfiguration</code> 注解，利用 <code>AutoConfigurationImportSelector</code> 加载 <code>META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports</code> 文件中定义的配置类，并结合 <code>@Conditional</code> 系列注解进行条件过滤，最终将有条件的、符合当前环境依赖的 Bean 自动注入到 IoC 容器中</p> <h3 id="_3">自动配置和自动装配的区别<a class="headerlink" href="#_3" title="Permanent link">¶</a></h3> <table> <thead> <tr> <th></th> <th><strong>自动装配（Autowiring）</strong></th> <th><strong>自动配置（Auto-configuration）</strong></th> </tr> </thead> <tbody> <tr> <td>解决的问题</td> <td>已存在的 Bean 之间，依赖怎么注入</td> <td>根据 classpath 和配置，<strong>决定要不要创建某个 Bean</strong></td> </tr> <tr> <td>属于</td> <td>Spring Framework 核心（DI 的一部分）</td> <td>Spring Boot 独有</td> </tr> <tr> <td>触发点</td> <td><code>@Autowired</code> / <code>@Resource</code> / 构造器注入</td> <td><code>@EnableAutoConfiguration</code>（藏在 <code>@SpringBootApplication</code> 里）</td> </tr> <tr> <td>发生时机</td> <td>每个 Bean 创建时填属性</td> <td>容器启动、扫描配置阶段</td> </tr> </tbody> </table> <h3 id="_4">源码查看<a class="headerlink" href="#_4" title="Permanent link">¶</a></h3> <p>进入<code>@EnableAutoConfiguration</code>注解的内部，核心是<code>@Import(AutoConfigurationImportSelector.class)</code>，它会去读取<code>META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports</code>文件中定义的配置类，有条件地将其导入到IoC容器中</p> <div class="language-java highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">Java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-16-1"><span class="nd">@Target</span><span class="p">({</span><span class="n">ElementType</span><span class="p">.</span><span class="na">TYPE</span><span class="p">})</span>
+</span><span id="__span-16-2"><span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span>
+</span><span id="__span-16-3"><span class="nd">@Documented</span>
+</span><span id="__span-16-4"><span class="nd">@Inherited</span>
+</span><span id="__span-16-5"><span class="nd">@AutoConfigurationPackage</span>
+</span><span id="__span-16-6"><span class="nd">@Import</span><span class="p">({</span><span class="n">AutoConfigurationImportSelector</span><span class="p">.</span><span class="na">class</span><span class="p">})</span>
+</span><span id="__span-16-7"><span class="kd">public</span><span class="w"> </span><span class="nd">@interface</span><span class="w"> </span><span class="n">EnableAutoConfiguration</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-16-8"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">ENABLED_OVERRIDE_PROPERTY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"spring.boot.enableautoconfiguration"</span><span class="p">;</span>
+</span><span id="__span-16-9">
+</span><span id="__span-16-10"><span class="w">    </span><span class="n">Class</span><span class="o">&lt;?&gt;[]</span><span class="w"> </span><span class="nf">exclude</span><span class="p">()</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{};</span>
+</span><span id="__span-16-11">
+</span><span id="__span-16-12"><span class="w">    </span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="nf">excludeName</span><span class="p">()</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="p">{};</span>
+</span><span id="__span-16-13"><span class="p">}</span>
+</span></code></pre></div></td></tr></tbody></table></div> <p>进入<code>AutoConfigurationImportSelector</code>：</p> <div class="language-java highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">Java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-17-1"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">AutoConfigurationImportSelector</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">DeferredImportSelector</span><span class="p">,</span><span class="w"> </span><span class="n">BeanClassLoaderAware</span><span class="p">,</span>
+</span><span id="__span-17-2"><span class="w">        </span><span class="n">ResourceLoaderAware</span><span class="p">,</span><span class="w"> </span><span class="n">BeanFactoryAware</span><span class="p">,</span><span class="w"> </span><span class="n">EnvironmentAware</span><span class="p">,</span><span class="w"> </span><span class="n">Ordered</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-17-3">
+</span><span id="__span-17-4"><span class="w">    </span><span class="c1">// ...</span>
+</span><span id="__span-17-5">
+</span><span id="__span-17-6"><span class="w">    </span><span class="nd">@Override</span>
+</span><span id="__span-17-7"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="nf">selectImports</span><span class="p">(</span><span class="n">AnnotationMetadata</span><span class="w"> </span><span class="n">annotationMetadata</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-17-8"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">isEnabled</span><span class="p">(</span><span class="n">annotationMetadata</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-17-9"><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">NO_IMPORTS</span><span class="p">;</span>
+</span><span id="__span-17-10"><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-17-11"><span class="w">        </span><span class="n">AutoConfigurationEntry</span><span class="w"> </span><span class="n">autoConfigurationEntry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getAutoConfigurationEntry</span><span class="p">(</span><span class="n">annotationMetadata</span><span class="p">);</span>
+</span><span id="__span-17-12"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">StringUtils</span><span class="p">.</span><span class="na">toStringArray</span><span class="p">(</span><span class="n">autoConfigurationEntry</span><span class="p">.</span><span class="na">getConfigurations</span><span class="p">());</span>
+</span><span id="__span-17-13"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-17-14"><span class="p">}</span>
+</span></code></pre></div></td></tr></tbody></table></div> <p>进入<code>getAutoConfigurationEntry</code>方法：</p> <div class="language-java highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">Java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-18-1"><span class="kd">protected</span><span class="w"> </span><span class="n">AutoConfigurationEntry</span><span class="w"> </span><span class="nf">getAutoConfigurationEntry</span><span class="p">(</span><span class="n">AnnotationMetadata</span><span class="w"> </span><span class="n">annotationMetadata</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-18-2"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">isEnabled</span><span class="p">(</span><span class="n">annotationMetadata</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-18-3"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">EMPTY_ENTRY</span><span class="p">;</span>
+</span><span id="__span-18-4"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-18-5"><span class="w">    </span><span class="n">AnnotationAttributes</span><span class="w"> </span><span class="n">attributes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getAttributes</span><span class="p">(</span><span class="n">annotationMetadata</span><span class="p">);</span>
+</span><span id="__span-18-6"><span class="w">    </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">configurations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getCandidateConfigurations</span><span class="p">(</span><span class="n">annotationMetadata</span><span class="p">,</span><span class="w"> </span><span class="n">attributes</span><span class="p">);</span>
+</span><span id="__span-18-7"><span class="w">    </span><span class="n">configurations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">removeDuplicates</span><span class="p">(</span><span class="n">configurations</span><span class="p">);</span>
+</span><span id="__span-18-8"><span class="w">    </span><span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">exclusions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getExclusions</span><span class="p">(</span><span class="n">annotationMetadata</span><span class="p">,</span><span class="w"> </span><span class="n">attributes</span><span class="p">);</span>
+</span><span id="__span-18-9"><span class="w">    </span><span class="n">checkExcludedClasses</span><span class="p">(</span><span class="n">configurations</span><span class="p">,</span><span class="w"> </span><span class="n">exclusions</span><span class="p">);</span>
+</span><span id="__span-18-10"><span class="w">    </span><span class="n">configurations</span><span class="p">.</span><span class="na">removeAll</span><span class="p">(</span><span class="n">exclusions</span><span class="p">);</span>
+</span><span id="__span-18-11"><span class="w">    </span><span class="n">configurations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getConfigurationClassFilter</span><span class="p">().</span><span class="na">filter</span><span class="p">(</span><span class="n">configurations</span><span class="p">);</span>
+</span><span id="__span-18-12"><span class="w">    </span><span class="n">fireAutoConfigurationImportEvents</span><span class="p">(</span><span class="n">configurations</span><span class="p">,</span><span class="w"> </span><span class="n">exclusions</span><span class="p">);</span>
+</span><span id="__span-18-13"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">AutoConfigurationEntry</span><span class="p">(</span><span class="n">configurations</span><span class="p">,</span><span class="w"> </span><span class="n">exclusions</span><span class="p">);</span>
+</span><span id="__span-18-14"><span class="p">}</span>
+</span></code></pre></div></td></tr></tbody></table></div> <p>进入<code>getCandidateConfigurations</code>方法，该方法会读取<code>META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports</code>和<code>META-INF/spring.factories</code>两个文件中定义的所有自动配置类，并将它们返回作为候选配置集合：</p> <div class="language-java highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">Java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-19-1"><span class="kd">protected</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">getCandidateConfigurations</span><span class="p">(</span><span class="n">AnnotationMetadata</span><span class="w"> </span><span class="n">metadata</span><span class="p">,</span><span class="w"> </span><span class="n">AnnotationAttributes</span><span class="w"> </span><span class="n">attributes</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-19-2"><span class="w">    </span><span class="n">ImportCandidates</span><span class="w"> </span><span class="n">importCandidates</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ImportCandidates</span><span class="p">.</span><span class="na">load</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">autoConfigurationAnnotation</span><span class="p">,</span>
+</span><span id="__span-19-3"><span class="w">            </span><span class="n">getBeanClassLoader</span><span class="p">());</span>
+</span><span id="__span-19-4"><span class="w">    </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">configurations</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">importCandidates</span><span class="p">.</span><span class="na">getCandidates</span><span class="p">();</span>
+</span><span id="__span-19-5"><span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">state</span><span class="p">(</span><span class="o">!</span><span class="n">CollectionUtils</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">(</span><span class="n">configurations</span><span class="p">),</span>
+</span><span id="__span-19-6"><span class="w">            </span><span class="s">"No auto configuration classes found in "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">"META-INF/spring/"</span>
+</span><span id="__span-19-7"><span class="w">                    </span><span class="o">+</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">autoConfigurationAnnotation</span><span class="p">.</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">".imports. If you "</span>
+</span><span id="__span-19-8"><span class="w">                    </span><span class="o">+</span><span class="w"> </span><span class="s">"are using a custom packaging, make sure that file is correct."</span><span class="p">);</span>
+</span><span id="__span-19-9"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">configurations</span><span class="p">;</span>
+</span><span id="__span-19-10"><span class="p">}</span>
+</span></code></pre></div></td></tr></tbody></table></div> <p>进入<code>load</code>方法：</p> <div class="language-java highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">Java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-20-1"><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">ImportCandidates</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="n">Class</span><span class="o">&lt;?&gt;</span><span class="w"> </span><span class="n">annotation</span><span class="p">,</span><span class="w"> </span><span class="n">ClassLoader</span><span class="w"> </span><span class="n">classLoader</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-20-2"><span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">notNull</span><span class="p">(</span><span class="n">annotation</span><span class="p">,</span><span class="w"> </span><span class="s">"'annotation' must not be null"</span><span class="p">);</span>
+</span><span id="__span-20-3"><span class="w">    </span><span class="n">ClassLoader</span><span class="w"> </span><span class="n">classLoaderToUse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">decideClassloader</span><span class="p">(</span><span class="n">classLoader</span><span class="p">);</span>
+</span><span id="__span-20-4"><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">"META-INF/spring/%s.imports"</span><span class="p">,</span><span class="w"> </span><span class="n">annotation</span><span class="p">.</span><span class="na">getName</span><span class="p">());</span>
+</span><span id="__span-20-5"><span class="w">    </span><span class="n">Enumeration</span><span class="o">&lt;</span><span class="n">URL</span><span class="o">&gt;</span><span class="w"> </span><span class="n">urls</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">findUrlsInClasspath</span><span class="p">(</span><span class="n">classLoaderToUse</span><span class="p">,</span><span class="w"> </span><span class="n">location</span><span class="p">);</span>
+</span><span id="__span-20-6"><span class="w">    </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">importCandidates</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="p">();</span>
+</span><span id="__span-20-7">
+</span><span id="__span-20-8"><span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="n">urls</span><span class="p">.</span><span class="na">hasMoreElements</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-20-9"><span class="w">        </span><span class="n">URL</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">URL</span><span class="p">)</span><span class="n">urls</span><span class="p">.</span><span class="na">nextElement</span><span class="p">();</span>
+</span><span id="__span-20-10"><span class="w">        </span><span class="n">importCandidates</span><span class="p">.</span><span class="na">addAll</span><span class="p">(</span><span class="n">readCandidateConfigurations</span><span class="p">(</span><span class="n">url</span><span class="p">));</span>
+</span><span id="__span-20-11"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-20-12">
+</span><span id="__span-20-13"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ImportCandidates</span><span class="p">(</span><span class="n">importCandidates</span><span class="p">);</span>
+</span><span id="__span-20-14"><span class="p">}</span>
+</span></code></pre></div></td></tr></tbody></table></div> <h2 id="_5">自动配置的过滤与条件装配<a class="headerlink" href="#_5" title="Permanent link">¶</a></h2> <p>通过<code>getCandidateConfigurations</code>方法获取到的自动配置类数量非常多，但并不是所有配置类都会被加载到IoC容器中。Spring Boot在<code>getAutoConfigurationEntry</code>方法中会通过<code>getConfigurationClassFilter().filter(configurations)</code>对候选配置类进行过滤，这个过滤机制会结合每个自动配置类上的<code>@Conditional</code>系列注解（如<code>@ConditionalOnClass</code>、<code>@ConditionalOnMissingBean</code>、<code>@ConditionalOnProperty</code>等）来判断当前环境中是否满足该配置类的生效条件，只有满足所有条件注解的配置类才会被最终导入，从而实现按需加载和有条件装配。</p> <p>例如下面的测试代码：</p> <div class="language-java highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">Java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-21-1"><span class="nd">@Configuration</span>
+</span><span id="__span-21-2"><span class="nd">@ConditionalOnClass</span><span class="p">(</span><span class="n">DataSource</span><span class="p">.</span><span class="na">class</span><span class="p">)</span><span class="w">  </span><span class="c1">// classpath 里有 DataSource 类才生效</span>
+</span><span id="__span-21-3"><span class="nd">@ConditionalOnMissingBean</span><span class="p">(</span><span class="n">DataSource</span><span class="p">.</span><span class="na">class</span><span class="p">)</span><span class="w">  </span><span class="c1">// 容器里没有 DataSource Bean 才生效</span>
+</span><span id="__span-21-4"><span class="nd">@ConditionalOnProperty</span><span class="p">(</span><span class="n">prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"spring.datasource"</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"url"</span><span class="p">)</span><span class="w">  </span><span class="c1">// 配置文件里有这个属性才生效</span>
+</span><span id="__span-21-5"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">DataSourceAutoConfiguration</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-21-6"><span class="w">    </span><span class="nd">@Bean</span>
+</span><span id="__span-21-7"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">DataSource</span><span class="w"> </span><span class="nf">dataSource</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-21-8"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HikariDataSource</span><span class="p">();</span>
+</span><span id="__span-21-9"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-21-10"><span class="p">}</span>
+</span></code></pre></div></td></tr></tbody></table></div> <h2 id="_6">禁用自动配置的几种方式<a class="headerlink" href="#_6" title="Permanent link">¶</a></h2> <h3 id="_7">概览<a class="headerlink" href="#_7" title="Permanent link">¶</a></h3> <ol> <li>在启动类上进行排除</li> <li>在配置文件中进行排除</li> </ol> <h3 id="_8">在启动类上进行排除<a class="headerlink" href="#_8" title="Permanent link">¶</a></h3> <div class="language-java highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">Java</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-22-1"><span class="nd">@SpringBootApplication</span><span class="p">(</span><span class="n">exclude</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="n">DataSourceAutoConfiguration</span><span class="p">.</span><span class="na">class</span><span class="p">})</span><span class="w"> </span><span class="c1">// 不加载DataSourceAutoConfiguration</span>
+</span><span id="__span-22-2"><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MyApplication</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-22-3"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-22-4"><span class="w">        </span><span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">MyApplication</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">);</span>
+</span><span id="__span-22-5"><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-22-6"><span class="p">}</span>
+</span></code></pre></div></td></tr></tbody></table></div> <h3 id="_9">在配置文件中进行排除<a class="headerlink" href="#_9" title="Permanent link">¶</a></h3> <div class="language-yaml highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">YAML</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-23-1"><span class="nt">spring</span><span class="p">:</span>
+</span><span id="__span-23-2"><span class="w">  </span><span class="nt">autoconfigure</span><span class="p">:</span>
+</span><span id="__span-23-3"><span class="w">    </span><span class="nt">exclude</span><span class="p">:</span>
+</span><span id="__span-23-4"><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration</span>
+</span></code></pre></div></td></tr></tbody></table></div> <aside class="md-source-file"> <span class="md-source-file__fact"> <span class="md-icon" title="最后更新"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg> </span> <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2026年7月27日</span> </span> </aside> <!-- Waline 评论系统 --> <div id="waline"></div> <!-- Waline 评论系统 --> <div id="waline"></div> </article> <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc"> <div class="md-sidebar__scrollwrap"> <div class="md-sidebar__inner"> <nav class="md-nav md-nav--secondary" aria-label="本节目录"> <label class="md-nav__title" for="__toc"> <span class="md-nav__icon md-icon"></span> 本节目录 </label> <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix=""> <li class="md-nav__item"> <a href="#bean" class="md-nav__link"> <span class="md-ellipsis"> Bean的作用域 </span> </a> </li> <li class="md-nav__item"> <a href="#bean_1" class="md-nav__link"> <span class="md-ellipsis"> Bean的生命周期 </span> </a> </li> <li class="md-nav__item"> <a href="#spring_boot" class="md-nav__link"> <span class="md-ellipsis"> Spring Boot加载非本包下的自定义配置类 </span> </a> <nav class="md-nav" aria-label="Spring Boot加载非本包下的自定义配置类"> <ul class="md-nav__list"> <li class="md-nav__item"> <a href="#_1" class="md-nav__link"> <span class="md-ellipsis"> 概览 </span> </a> </li> <li class="md-nav__item"> <a href="#componentscan" class="md-nav__link"> <span class="md-ellipsis"> @ComponentScan 方式 </span> </a> </li> <li class="md-nav__item"> <a href="#import" class="md-nav__link"> <span class="md-ellipsis"> @Import 方式 </span> </a> </li> <li class="md-nav__item"> <a href="#importselector" class="md-nav__link"> <span class="md-ellipsis"> 实现ImportSelector </span> </a> </li> <li class="md-nav__item"> <a href="#spring" class="md-nav__link"> <span class="md-ellipsis"> 使用Spring配置文件 </span> </a> </li> </ul> </nav> </li> <li class="md-nav__item"> <a href="#spring_boot_1" class="md-nav__link"> <span class="md-ellipsis"> Spring Boot的自动配置 </span> </a> <nav class="md-nav" aria-label="Spring Boot的自动配置"> <ul class="md-nav__list"> <li class="md-nav__item"> <a href="#_2" class="md-nav__link"> <span class="md-ellipsis"> 核心流程 </span> </a> </li> <li class="md-nav__item"> <a href="#_3" class="md-nav__link"> <span class="md-ellipsis"> 自动配置和自动装配的区别 </span> </a> </li> <li class="md-nav__item"> <a href="#_4" class="md-nav__link"> <span class="md-ellipsis"> 源码查看 </span> </a> </li> </ul> </nav> </li> <li class="md-nav__item"> <a href="#_5" class="md-nav__link"> <span class="md-ellipsis"> 自动配置的过滤与条件装配 </span> </a> </li> <li class="md-nav__item"> <a href="#_6" class="md-nav__link"> <span class="md-ellipsis"> 禁用自动配置的几种方式 </span> </a> <nav class="md-nav" aria-label="禁用自动配置的几种方式"> <ul class="md-nav__list"> <li class="md-nav__item"> <a href="#_7" class="md-nav__link"> <span class="md-ellipsis"> 概览 </span> </a> </li> <li class="md-nav__item"> <a href="#_8" class="md-nav__link"> <span class="md-ellipsis"> 在启动类上进行排除 </span> </a> </li> <li class="md-nav__item"> <a href="#_9" class="md-nav__link"> <span class="md-ellipsis"> 在配置文件中进行排除 </span> </a> </li> </ul> </nav> </li> </ul> </nav> </div> </div> </div> </div> <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script> </div> <button type="button" class="md-top md-icon" data-md-component="top" hidden=""> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg> 回到页面顶部 </button> </main> <footer class="md-footer"> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class="md-copyright"> <div class="md-footer-copyright__highlight"> Copyright © 2024-2026 柯懒不是柯南 </div> </div> <div class="site-footer-disclaimer"> 本网站的内容不具有权威性，请注意对信息进行甄别 </div> <div class="md-social"> <a href="https://github.com/H0308" target="_blank" rel="noopener" title="github.com" class="md-social__link"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg> </a> <a href="https://www.help-doc.top/author/contact/contact/" target="_blank" rel="noopener" title="www.help-doc.top" class="md-social__link"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M434.1 420.4c-11.5 1.4-44.9-52.7-44.9-52.7 0 31.3-16.1 72.2-51 101.8 16.8 5.2 54.8 19.2 45.8 34.4-7.3 12.3-125.5 7.9-159.6 4-34.1 3.8-152.3 8.3-159.6-4-9-15.2 28.9-29.2 45.8-34.4-34.9-29.5-51.1-70.4-51.1-101.8 0 0-33.3 54.1-44.9 52.7-5.4-.6-12.4-29.6 9.3-99.7 10.3-33 22-60.5 40.1-105.8C60.9 98 109.2-.1 224.3-.1 338-.1 387.5 96 384.6 214.9c18.1 45.2 29.9 72.9 40.1 105.8 21.8 70.1 14.7 99.1 9.3 99.7z"></path></svg> </a> <a href="mailto:watneymark82@gmail.com" target="_blank" rel="noopener" title="" class="md-social__link"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M536.4-26.3c9.8-3.5 20.6-1 28 6.3s9.8 18.2 6.3 28l-178 496.9c-5 13.9-18.1 23.1-32.8 23.1-14.2 0-27-8.6-32.3-21.7l-64.2-158c-4.5-11-2.5-23.6 5.2-32.6l94.5-112.4c5.1-6.1 4.7-15-.9-20.6s-14.6-6-20.6-.9l-112.4 94.3c-9.1 7.6-21.6 9.6-32.6 5.2L38.1 216.8c-13.1-5.3-21.7-18.1-21.7-32.3 0-14.7 9.2-27.8 23.1-32.8z"></path></svg> </a> </div> </div> </div> </footer> </div> <div class="md-dialog" data-md-component="dialog"> <div class="md-dialog__inner md-typeset"></div> </div> <div class="md-progress" data-md-component="progress" role="progressbar"></div> <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress", "navigation.indexes", "navigation.prune", "navigation.tabs", "navigation.sections", "toc.follow", "content.code.copy", "navigation.top"], "search": "../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script> <script src="../../../../assets/javascripts/bundle.e71a0d61.min.js"></script> <script src="../../../../javascripts/other.min.js"></script> <script src="../../../../javascripts/contact.min.js"></script> <script src="../../../../javascripts/copyright.min.js"></script> <script src="../../../../javascripts/recent-updates.min.js"></script> <script src="../../../../javascripts/waline.min.js"></script> <script src="../../../../javascripts/docsearch.min.js"></script> <script src="../../../../javascripts/katex.min.js"></script> <script src="../../../../javascripts/navigation-overlay.min.js"></script> <script src="../../../../javascripts/link-preview.min.js"></script> <script src="../../../../javascripts/context-menu.min.js"></script> <script src="../../../../javascripts/theme-force-dark.min.js"></script> <script src="../../../../javascripts/layout-toggle.min.js"></script> <script src="https://help-site.oss-cn-hangzhou.aliyuncs.com/js/docsearch3.js"></script>  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

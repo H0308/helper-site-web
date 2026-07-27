@@ -1,9 +1,16 @@
 [
   {
-    "title": "Java中的Junit、类加载时机与机制、反射、注解及枚举",
-    "url": "Java/junit-reflect-annotation-enum/junit-reflect-annotation-enum/",
+    "title": "Spring的Bean相关知识及Spring Boot自动配置",
+    "url": "JavaEE/springmvc-springboot/spring-autoconfiguration/spring-autoconfiguration/",
     "nav_path": null,
-    "created_str": "2026-03-26",
+    "created_str": "2026-07-27",
+    "modified_str": "2026-07-27"
+  },
+  {
+    "title": "Java 开发手册（黄山版）",
+    "url": "tooltips/alibaba-code-guideline/alibaba-code-guideline/",
+    "nav_path": null,
+    "created_str": "2026-07-18",
     "modified_str": "2026-07-23"
   },
   {
@@ -18,13 +25,6 @@
     "url": "JavaEE/springmvc-springboot/spring-aop/spring-aop/",
     "nav_path": null,
     "created_str": "2026-07-23",
-    "modified_str": "2026-07-23"
-  },
-  {
-    "title": "Java 开发手册（黄山版）",
-    "url": "tooltips/alibaba-code-guideline/alibaba-code-guideline/",
-    "nav_path": null,
-    "created_str": "2026-07-18",
     "modified_str": "2026-07-23"
   }
 ]
